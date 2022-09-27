@@ -90,7 +90,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/cookie-session@^2.0.44":
+"@types/cookie-session@2.0.44":
   version "2.0.44"
   resolved "https://registry.yarnpkg.com/@types/cookie-session/-/cookie-session-2.0.44.tgz#86f3810bf19716ff716e08f877ce40cee9062267"
   integrity sha512-3DheOZ41pql6raSIkqEPphJdhA2dX2bkS+s2Qacv8YMKkoCbAIEXbsDil7351ARzMqvfyDUGNeHGiRZveIzhqQ==
@@ -98,7 +98,7 @@
     "@types/express" "*"
     "@types/keygrip" "*"
 
-"@types/cors@^2.8.12":
+"@types/cors@2.8.12":
   version "2.8.12"
   resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.12.tgz#6b2c510a7ad7039e98e7b8d3d6598f4359e5c080"
   integrity sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==
@@ -158,7 +158,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/passport-google-oauth20@^2.0.11":
+"@types/passport-google-oauth20@2.0.11":
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/@types/passport-google-oauth20/-/passport-google-oauth20-2.0.11.tgz#271ec71de3030a3e1c004b24e633e4b298ccba97"
   integrity sha512-9XMT1GfwhZL7UQEiCepLef55RNPHkbrCtsU7rsWPTEOsmu5qVIW8nSemtB4p+P24CuOhA+IKkv8LsPThYghGww==
@@ -176,7 +176,7 @@
     "@types/oauth" "*"
     "@types/passport" "*"
 
-"@types/passport@*", "@types/passport@^1.0.11":
+"@types/passport@*", "@types/passport@1.0.11":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@types/passport/-/passport-1.0.11.tgz#d046b41e28b280f4e7994614fb976e9b449cb7c6"
   integrity sha512-pz1cx9ptZvozyGKKKIPLcVDVHwae4hrH5d6g5J+DkMRRjR3cVETb4jMabhXAUbg3Ov7T22nFHEgaK2jj+5CBpw==
@@ -244,7 +244,7 @@ acorn@^8.4.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
   integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
-add@^2.0.6:
+add@2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
   integrity sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==
@@ -1410,7 +1410,7 @@ tr46@^3.0.0:
   dependencies:
     punycode "^2.1.1"
 
-ts-node@^10.9.1:
+ts-node@10.9.1:
   version "10.9.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.9.1.tgz#e73de9102958af9e1f0b168a6ff320e25adcff4b"
   integrity sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==
@@ -1447,7 +1447,7 @@ type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescript@^4.8.3:
+typescript@4.8.3:
   version "4.8.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.8.3.tgz#d59344522c4bc464a65a730ac695007fdb66dd88"
   integrity sha512-goMHfm00nWPa8UvR/CPSvykqf6dVV8x/dp0c5mFTMTIu0u0FlGWRioyy7Nn0PGAdHxpJZnuO/ut+PpQ8UiHAig==
@@ -1518,6 +1518,7 @@ yallist@^4.0.0:
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
 yarn@^1.22.19:
+
   version "1.22.19"
   resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.19.tgz#4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
   integrity sha512-/0V5q0WbslqnwP91tirOvldvYISzaqhClxzyUKXYxs07yUILIs5jx/k6CFe8bvKSkds5w+eiOqta39Wk3WxdcQ==
