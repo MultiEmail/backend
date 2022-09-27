@@ -55,4 +55,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 # Wanna join the team?
 
 - [Discord server](https://discord.gg/8kTdfWmuQa)
-- [Postman tema](https://www.postman.com/multiemail/workspace/muti-email-rest-api/overview)
+- [Postman team](https://www.postman.com/multiemail/workspace/muti-email-rest-api/overview)
