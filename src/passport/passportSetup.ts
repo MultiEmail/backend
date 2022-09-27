@@ -1,6 +1,8 @@
 const passport = require('passport');
 import { Strategy } from 'passport-google-oauth20';
 import { config } from 'dotenv';
+import { UserDocumentType } from '../types/User.types';
+import Userdata from '../Database/Models/User';
 config();
 
 passport.serializeUser(function (user, done) {
@@ -27,3 +29,16 @@ passport.use(
     }
   )
 );
+
+async function validateUser(userDetails: UserDocumentType) {
+  const user = await Userdata.findOne({
+    email: userDetails.email,
+  });
+  if (user) return user;
+  console.log('No user found... Creatingf....');
+
+  await Userdata.create({
+    email: userDetails.email,
+    username: userDetails.username,
+  }).then(() => console.log('Created user ' + userDetails.username));
+}

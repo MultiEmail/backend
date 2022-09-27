@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import express, { Application } from 'express';
-import cookieSession from 'cookie-session';
+const session = require('express-session');
 import passport from 'passport';
 import connectDB from './Database/database';
 import { router } from './auth/authRoute';
@@ -13,12 +13,23 @@ connectDB(process.env.DB_URI);
 
 const app: Application = express();
 
+/*
 app.use(
   cookieSession({
     maxAge: 60 * 60 * 24 * 1000,
     keys: [process.env.COOKIE_KEY],
     secret: process.env.COOKIE_KEY,
     httpOnly: true,
+  })
+);
+*/
+
+app.use(
+  session({
+    secret: 'somethingsecretgoeshere',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
   })
 );
 

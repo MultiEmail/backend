@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import passport from 'passport';
-
+import Userdata from '../Database/Models/User';
+import { UserDocumentType } from '../types/User.types';
 export const router: Router = Router();
 
 export const isLoggedIn = (req, res, next) => {
   console.log(req.user);
   if (req.user) {
+    res.sendStatus(200);
     next();
   } else {
     res.sendStatus(401);
@@ -19,6 +21,7 @@ router.get('/good', isLoggedIn, (req, res) =>
 
 router.get(
   '/google',
+
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
