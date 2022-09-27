@@ -1,0 +1,22 @@
+name: "♻ Refactor Code"
+description: "Refactor your code"
+title: "[REFACTOR] :recycle: <title>"
+labels: [":recycle: refactor"]
+body:
+    - type: textarea
+      id: description
+      attributes:
+          label: Description
+          description: A concise description of how we can refactor our code
+      validations:
+          required: false
+    - type: textarea
+      id: anything_else
+      attributes:
+          label: Anything else?
+          description: |
+              Links? References? Anything that will give us more context about the issue you are encountering!
+
+              Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+      validations:
+          required: false
