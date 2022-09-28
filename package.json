@@ -12,7 +12,7 @@
     "http-status-codes": "^2.2.0",
     "mongoose": "^6.6.1",
     "nodemon": "^2.0.20",
-    "passport": "0.5.3",
+    "passport": "0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "pino": "^8.6.0",
     "pino-pretty": "^9.1.0",
