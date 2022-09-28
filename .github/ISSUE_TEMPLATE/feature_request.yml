@@ -1,7 +1,7 @@
 name: "✨ Feature Request"
 description: "Suggest and idea for this project"
 title: "[FEAT] :sparkles: <title>"
-labels: [":sparkles: enhancement"]
+labels: ["enhancement"]
 body:
   - type: textarea
     id: description
