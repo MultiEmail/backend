@@ -2,7 +2,11 @@ import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import passport from 'passport';
 import { isLoggedin, logoutHandler } from '../controllers/auth.controller';
-
+import { compare, hash } from 'bcryptjs';
+import logger from '../util/logger.util';
+import { JwtModel } from '../models/jwt.model';
+import { sendRefreshToken } from '../util/sendRefreshToken';
+import { createAccessToken, createRefreshToken } from '../util/authTokens';
 const authRouter: Router = Router();
 
 authRouter.get(
@@ -30,4 +34,42 @@ authRouter.get('/auth/google/success', isLoggedin, async (req, res) => {
 
 authRouter.get('/auth/logout', logoutHandler);
 
+authRouter.post('/local/signup', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!(email && password))
+    return res.status(500).send('You must provide an email and password');
+
+  const hashedPass = await hash(password, 12);
+  try {
+    await JwtModel.create({
+      email,
+      password: hashedPass,
+    }).then(() => logger.info('Created user with email ' + email));
+  } catch (err) {
+    logger.error(err);
+  }
+  res.status(201).send({ message: `Created user with email ${email}` });
+});
+
+authRouter.post('/local/login', async (req, res) => {
+  const { email, password } = await req.body;
+
+  if (!passport || !email)
+    return res.status(500).send('You must provide an email and password');
+
+  const user = await JwtModel.findOne({ email });
+  if (!user)
+    return res.status(404).send('Failed to find user with the provided email');
+
+  const valid = await compare(password, user.password);
+  if (!valid) return res.status(401).send('Invalid password');
+
+  let refreshToken = await sendRefreshToken(res, createRefreshToken(user));
+  let accessToken = await createAccessToken(user);
+
+  console.log([accessToken, refreshToken].join('\n'));
+
+  return res.status(200).send(`Successfully logged in as ${user.email}`);
+});
 export default authRouter;
