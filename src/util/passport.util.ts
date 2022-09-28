@@ -1,10 +1,8 @@
 import passport from 'passport';
 import { Strategy } from 'passport-google-oauth20';
-import { config } from 'dotenv';
+import 'dotenv/config';
 import UserModel from '../models/user.model';
 import logger from './logger.util';
-
-config();
 
 passport.use(
   new Strategy(
@@ -17,7 +15,10 @@ passport.use(
 
     async function (accessToken, refreshToken, profile, done) {
       const user = await UserModel.findOne({ email: profile.emails[0].value });
-      if (user) return logger.info(`Email ${user.email} already exists`);
+      if (user) {
+        logger.info(`Email ${user.email} already exists`);
+        return done(null, profile);
+      }
       await UserModel.create({
         email: profile.emails[0].value,
         username: profile.displayName,
