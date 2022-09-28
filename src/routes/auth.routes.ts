@@ -37,6 +37,12 @@ authRouter.get('/auth/logout', logoutHandler);
 authRouter.post('/local/signup', async (req, res) => {
   const { email, password } = req.body;
 
+  const user = await JwtModel.findOne({ email });
+  if (user)
+    return res
+      .status(500)
+      .send('A user with the provided email already exists');
+
   if (!(email && password))
     return res.status(500).send('You must provide an email and password');
 
@@ -65,10 +71,8 @@ authRouter.post('/local/login', async (req, res) => {
   const valid = await compare(password, user.password);
   if (!valid) return res.status(401).send('Invalid password');
 
-  let refreshToken = await sendRefreshToken(res, createRefreshToken(user));
-  let accessToken = await createAccessToken(user);
-
-  console.log([accessToken, refreshToken].join('\n'));
+  await sendRefreshToken(res, createRefreshToken(user));
+  await createAccessToken(user);
 
   return res.status(200).send(`Successfully logged in as ${user.email}`);
 });
