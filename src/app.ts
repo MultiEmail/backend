@@ -8,30 +8,28 @@ import logger from "./util/logger.util";
 import "./util/passport.util";
 
 import authRouter from "./routes/auth.routes";
+import cookieSession from "cookie-session";
 
 config();
 
 const app: Application = express();
 
-/*
 app.use(
-  cookieSession({
-    maxAge: 60 * 60 * 24 * 1000,
-    keys: [process.env.COOKIE_KEY],
-    secret: process.env.COOKIE_KEY,
-    httpOnly: true,
-  })
-);
-*/
-
-app.use(
-	session({
-		secret: "somethingsecretgoeshere",
-		resave: false,
-		saveUninitialized: true,
-		cookie: { secure: true },
+	cookieSession({
+		maxAge: 60 * 60 * 24 * 1000,
+		keys: ["secret"],
+		secret: "secret",
 	})
 );
+
+// app.use(
+// 	session({
+// 		secret: "somethingsecretgoeshere",
+// 		resave: false,
+// 		saveUninitialized: true,
+// 		cookie: { secure: true },
+// 	})
+// );
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
