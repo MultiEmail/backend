@@ -1,7 +1,7 @@
 name: "♻ Refactor Code"
 description: "Refactor your code"
 title: "[REFACTOR] :recycle: <title>"
-labels: [refactor"]
+labels: ["refactor"]
 body:
   - type: textarea
     id: description
