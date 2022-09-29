@@ -39,7 +39,7 @@ app.use(passport.session());
 
 app.use("/api", authRouter);
 
-mongoose.connect(process.env.DB_URI, () => {
+mongoose.connect(process.env.DB_URI as string, () => {
 	const PORT = process.env.PORT || 3001;
 
 	logger.info("Connected to Database!");
