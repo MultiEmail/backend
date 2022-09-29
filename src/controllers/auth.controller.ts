@@ -5,6 +5,7 @@ import {
 	createUserService,
 	findUserByEitherEmailOrUsernameService,
 } from "../services/user.service";
+import { sendEmail } from "../util/email.util";
 import logger from "../util/logger.util";
 
 export async function signupHandler(
@@ -25,9 +26,18 @@ export async function signupHandler(
 			});
 		}
 
-		await createUserService({ username, email, password, role: "user" });
+		const createdUser = await createUserService({
+			username,
+			email,
+			password,
+			role: "user",
+		});
 
-		// TODO: send verification email
+		sendEmail(
+			email,
+			"OTP for Multi Email",
+			`Welcome to Multi Email your OTP is ${createdUser.verificationCode}`
+		);
 
 		return res.status(StatusCodes.CREATED).json({
 			message: "User created successfully",
