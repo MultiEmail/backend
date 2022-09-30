@@ -15,7 +15,11 @@ export function signJWT(
 	keyName: "ACCESS_TOKEN_PRIVATE_KEY" | "REFRESH_TOKEN_PRIVATE_KEY",
 	options?: jwt.SignOptions
 ): string {
-	const privateKey = process.env[keyName];
+	const privateKey = process.env[keyName] as string;
+
+	console.log("====================================");
+	console.log(privateKey);
+	console.log("====================================");
 
 	return jwt.sign(payload, privateKey, {
 		...(options && options),
@@ -32,7 +36,7 @@ export function verifyJWT<T>(
 	token: string,
 	keyName: "ACCESS_TOKEN_PUBLIC_KEY" | "REFRESH_TOKEN_PUBLIC_KEY"
 ): T | null {
-	const publicKey = process.env[keyName];
+	const publicKey = process.env[keyName] as string;
 
 	try {
 		return jwt.verify(token, publicKey, {

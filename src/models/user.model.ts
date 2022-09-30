@@ -71,6 +71,14 @@ export class User {
 	public passwordResetCode: string | null;
 
 	// TODO: add more fields for email services
+
+	/**
+	 * Check if the password is correct or not
+	 * @param password password to compare with the user password
+	 */
+	public comparePassword(password: string) {
+		return compare(password, this.password);
+	}
 }
 
 const UserModel = getModelForClass(User, {

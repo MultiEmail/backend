@@ -1,7 +1,7 @@
 import { DocumentDefinition } from "mongoose";
 import { User, userModalPrivateFields } from "../models/user.model";
 import { omit } from "lodash";
-import { signJWT } from "src/util/jwt.util";
+import { signJWT } from "../util/jwt.util";
 import { createSessionService } from "./session.service";
 
 /**

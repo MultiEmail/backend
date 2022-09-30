@@ -2,11 +2,16 @@ import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import passport from "passport";
 import {
+	loginHandler,
 	signupHandler,
 	verifyUserHandler,
 } from "../controllers/auth.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
-import { signupSchema, verifyUserSchema } from "../schemas/auth.schema";
+import {
+	loginSchema,
+	signupSchema,
+	verifyUserSchema,
+} from "../schemas/auth.schema";
 const authRouter: Router = Router();
 
 authRouter.post(
@@ -20,6 +25,12 @@ authRouter.get(
 	"/auth/local/verify/:email/:verificationCode",
 	validateRequest(verifyUserSchema),
 	verifyUserHandler
+);
+
+authRouter.post(
+	"/auth/local/login",
+	validateRequest(loginSchema),
+	loginHandler
 );
 
 authRouter.get(

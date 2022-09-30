@@ -1,6 +1,14 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { SignupSchema, VerifyUserSchema } from "../schemas/auth.schema";
+import {
+	LoginSchema,
+	SignupSchema,
+	VerifyUserSchema,
+} from "../schemas/auth.schema";
+import {
+	signAccessTokenService,
+	signRefreshTokenService,
+} from "../services/auth.service";
 import {
 	createUserService,
 	findUserByEitherEmailOrUsernameService,
@@ -99,6 +107,48 @@ export async function verifyUserHandler(
 			message: "User verified successfully",
 		});
 	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal server error",
+		});
+	}
+}
+
+export async function loginHandler(
+	req: Request<{}, {}, LoginSchema["body"]>,
+	res: Response
+) {
+	const { email, password } = req.body;
+	try {
+		const user = await findUserByEmailService(email);
+
+		if (!user) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		const isPasswordCorrect = await user.comparePassword(password);
+
+		if (!isPasswordCorrect) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: "Invalid credentials",
+			});
+		}
+
+		// sign access and refresh token
+		const accessToken = signAccessTokenService(user);
+		const refreshToken = signRefreshTokenService(user._id);
+
+		return res.status(StatusCodes.OK).json({
+			message: "User logged in successfully",
+			access_token: accessToken,
+			refresh_token: refreshToken,
+		});
+	} catch (err) {
+		logger.error(err);
+
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal server error",
 		});
