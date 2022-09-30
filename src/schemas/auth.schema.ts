@@ -18,7 +18,23 @@ export const signupSchema = z.object({
 				.string({ required_error: "Confirm password is required" })
 				.min(6, "Password must be at least 6 characters"),
 		})
-		.refine(data => data.password === data.cpassword, {}),
+		.refine(data => data.password === data.cpassword, {
+			path: ["custom"],
+			message: "Password and Confirm password do not match",
+		}),
 });
 
 export type SignupSchema = z.TypeOf<typeof signupSchema>;
+
+export const verifyUserSchema = z.object({
+	params: z.object({
+		verificationCode: z.string({
+			required_error: "Verification code is required",
+		}),
+		email: z
+			.string({ required_error: "Email is required" })
+			.email("Please enter a valid email"),
+	}),
+});
+
+export type VerifyUserSchema = z.TypeOf<typeof verifyUserSchema>;

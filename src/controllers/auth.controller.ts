@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { SignupSchema } from "../schemas/auth.schema";
+import { SignupSchema, VerifyUserSchema } from "../schemas/auth.schema";
 import {
 	createUserService,
 	findUserByEitherEmailOrUsernameService,
+	findUserByEmailService,
 } from "../services/user.service";
 import { sendEmail } from "../util/email.util";
 import logger from "../util/logger.util";
@@ -51,6 +52,53 @@ export async function signupHandler(
 			});
 		}
 
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal server error",
+		});
+	}
+}
+
+export async function verifyUserHandler(
+	req: Request<VerifyUserSchema["params"]>,
+	res: Response
+) {
+	const { email, verificationCode } = req.params;
+
+	try {
+		// QUESTION: should we use username to find the user or email?
+		const user = await findUserByEmailService(email);
+
+		if (!user) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		if (user.verified) {
+			return res.status(StatusCodes.OK).json({
+				message: "User verified successfully",
+			});
+		}
+
+		if (!parseInt(verificationCode)) {
+			return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+				error: "Invalid verification code",
+			});
+		}
+
+		if (user.verificationCode !== +verificationCode) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: "Invalid verification code",
+			});
+		}
+
+		user.verified = true;
+		await user.save();
+
+		return res.status(StatusCodes.OK).json({
+			message: "User verified successfully",
+		});
+	} catch (err) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal server error",
 		});

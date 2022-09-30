@@ -1,15 +1,25 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import passport from "passport";
-import { signupHandler } from "../controllers/auth.controller";
+import {
+	signupHandler,
+	verifyUserHandler,
+} from "../controllers/auth.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
-import { signupSchema } from "../schemas/auth.schema";
+import { signupSchema, verifyUserSchema } from "../schemas/auth.schema";
 const authRouter: Router = Router();
 
 authRouter.post(
 	"/auth/local/signup",
 	validateRequest(signupSchema),
 	signupHandler
+);
+
+authRouter.get(
+	// QUESTION: should we use username to find the user or email?
+	"/auth/local/verify/:email/:verificationCode",
+	validateRequest(verifyUserSchema),
+	verifyUserHandler
 );
 
 authRouter.get(
