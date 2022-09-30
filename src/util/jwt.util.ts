@@ -10,21 +10,19 @@ config();
  * @param keyName which key should be used for signing token
  * @param options additional options for JWT library
  */
-export function signJWT(
+export async function signJWT(
 	payload: object,
 	keyName: "ACCESS_TOKEN_PRIVATE_KEY" | "REFRESH_TOKEN_PRIVATE_KEY",
 	options?: jwt.SignOptions
-): string {
+): Promise<string> {
 	const privateKey = process.env[keyName] as string;
-
-	console.log("====================================");
-	console.log(privateKey);
-	console.log("====================================");
-
-	return jwt.sign(payload, privateKey, {
+	const token = (await jwt.sign(payload, privateKey, {
 		...(options && options),
-		algorithm: "RS256",
-	});
+		algorithm: "HS256",
+	})) as string;
+
+	// jwt.sign() --> Promise. 1.) Promise wrapper. 2.) async await, return
+	return token;
 }
 
 /**
@@ -32,16 +30,18 @@ export function signJWT(
  * @param token encoded token which will be verified/decoded
  * @param keyName key which will be used to decode token (should be same as private key)
  */
-export function verifyJWT<T>(
+export async function verifyJWT<T>(
 	token: string,
 	keyName: "ACCESS_TOKEN_PUBLIC_KEY" | "REFRESH_TOKEN_PUBLIC_KEY"
-): T | null {
+): Promise<T | null> {
 	const publicKey = process.env[keyName] as string;
-
+	let decoded: T;
 	try {
-		return jwt.verify(token, publicKey, {
-			algorithms: ["RS256"],
-		}) as T;
+		decoded = (await jwt.verify(token, publicKey, {
+			algorithms: ["HS256"],
+		})) as T;
+
+		return decoded;
 	} catch (error) {
 		logger.error(error);
 		return null;

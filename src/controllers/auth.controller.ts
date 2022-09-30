@@ -138,8 +138,8 @@ export async function loginHandler(
 		}
 
 		// sign access and refresh token
-		const accessToken = signAccessTokenService(user);
-		const refreshToken = signRefreshTokenService(user._id);
+		const accessToken = await signAccessTokenService(user);
+		const refreshToken = await signRefreshTokenService(user._id);
 
 		return res.status(StatusCodes.OK).json({
 			message: "User logged in successfully",
