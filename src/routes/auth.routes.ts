@@ -6,6 +6,7 @@ import {
 	getCurrentUserHandler,
 	loginHandler,
 	logoutHandler,
+	refreshAccessTokenHandler,
 	resetPasswordHandler,
 	signupHandler,
 	verifyUserHandler,
@@ -46,6 +47,8 @@ authRouter.patch(
 	validateRequest(resetPasswordSchema),
 	resetPasswordHandler
 );
+
+authRouter.get("/auth/refresh", refreshAccessTokenHandler);
 
 authRouter.get(
 	"/auth/oauth/google",

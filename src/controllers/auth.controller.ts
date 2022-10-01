@@ -15,6 +15,7 @@ import {
 	createUserService,
 	findUserByEitherEmailOrUsernameService,
 	findUserByEmailService,
+	findUserByIdService,
 } from "../services/user.service";
 import { findSessionByIdService } from "../services/session.service";
 import { sendEmail } from "../utils/email.util";
@@ -306,6 +307,59 @@ export async function resetPasswordHandler(
 
 		return res.status(StatusCodes.OK).json({
 			message: "Password reset successfully",
+		});
+	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+}
+
+/* --------------------------------- ANCHOR Refresh Access token --------------------------------- */
+export async function refreshAccessTokenHandler(req: Request, res: Response) {
+	const refreshToken = req.headers["x-refresh"] as string;
+
+	if (!refreshToken) {
+		return res.status(StatusCodes.UNAUTHORIZED).json({
+			error: "Invalid refresh token",
+		});
+	}
+
+	try {
+		const decoded = await verifyJWT<{ session: string }>(
+			refreshToken,
+			"REFRESH_TOKEN_PUBLIC_KEY"
+		);
+
+		if (!decoded) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: "Invalid refresh token",
+			});
+		}
+
+		const session = await findSessionByIdService(decoded.session);
+
+		if (!session || !session.valid) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: "Session is not valid",
+			});
+		}
+
+		const user =
+			session.user && (await findUserByIdService(session.user.toString()));
+
+		if (!user) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		const accessToken = await signAccessTokenService(user);
+
+		return res.status(StatusCodes.OK).json({
+			access_token: accessToken,
 		});
 	} catch (err) {
 		logger.error(err);
