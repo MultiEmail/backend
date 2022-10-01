@@ -16,7 +16,11 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/69336518?v=4",
       "profile": "https://shriproperty.com",
       "contributions": [
-        "code"
+        "code",
+        "review",
+        "doc",
+        "maintenance",
+        "projectManagement"
       ]
     },
     {
