@@ -2,6 +2,14 @@ import { DocumentDefinition } from "mongoose";
 import UserModel, { User } from "../models/user.model";
 
 /**
+ * Find user by Id
+ * @param id this is the id of the user
+ */
+export function findUserByIdService(id: string) {
+	return UserModel.findById(id);
+}
+
+/**
  * Find a user from the database with matching email
  * @param email this is email of the user
  */

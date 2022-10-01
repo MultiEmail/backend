@@ -2,6 +2,7 @@ import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import passport from "passport";
 import {
+	getCurrentUserHandler,
 	loginHandler,
 	logoutHandler,
 	signupHandler,
@@ -15,26 +16,20 @@ import {
 } from "../schemas/auth.schema";
 const authRouter: Router = Router();
 
-authRouter.post(
-	"/auth/local/signup",
-	validateRequest(signupSchema),
-	signupHandler
-);
+authRouter.post("/auth/signup", validateRequest(signupSchema), signupHandler);
 
 authRouter.get(
 	// QUESTION: should we use username to find the user or email?
-	"/auth/local/verify/:email/:verificationCode",
+	"/auth/verify/:email/:verificationCode",
 	validateRequest(verifyUserSchema),
 	verifyUserHandler
 );
 
-authRouter.post(
-	"/auth/local/login",
-	validateRequest(loginSchema),
-	loginHandler
-);
+authRouter.post("/auth/login", validateRequest(loginSchema), loginHandler);
 
-authRouter.get("/auth/local/logout", logoutHandler);
+authRouter.get("/auth/logout", logoutHandler);
+
+authRouter.get("/auth/me", getCurrentUserHandler);
 
 authRouter.get(
 	"/auth/oauth/google",

@@ -1,12 +1,12 @@
 import { config } from "dotenv";
 import express, { Application } from "express";
-import session from "express-session";
 import passport from "passport";
 import cors from "cors";
 import mongoose from "mongoose";
-import logger from "./util/logger.util";
-import "./util/passport.util";
+import logger from "./utils/logger.util";
+import "./utils/passport.util";
 
+import deserializeUser from "./middleware/deserializeUser.middleware";
 import authRouter from "./routes/auth.routes";
 import cookieSession from "cookie-session";
 
@@ -22,21 +22,13 @@ app.use(
 	})
 );
 
-// app.use(
-// 	session({
-// 		secret: "somethingsecretgoeshere",
-// 		resave: false,
-// 		saveUninitialized: true,
-// 		cookie: { secure: true },
-// 	})
-// );
-
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(deserializeUser);
 app.use("/api", authRouter);
 
 mongoose.connect(process.env.DB_URI as string, () => {

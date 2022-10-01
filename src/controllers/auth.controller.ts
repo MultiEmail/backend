@@ -15,9 +15,11 @@ import {
 	findUserByEmailService,
 } from "../services/user.service";
 import { findSessionByIdService } from "../services/session.service";
-import { sendEmail } from "../util/email.util";
-import { verifyJWT } from "../util/jwt.util";
-import logger from "../util/logger.util";
+import { sendEmail } from "../utils/email.util";
+import { verifyJWT } from "../utils/jwt.util";
+import logger from "../utils/logger.util";
+import { omit } from "lodash";
+import { userModalPrivateFields } from "../models/user.model";
 
 export async function signupHandler(
 	req: Request<{}, {}, SignupSchema["body"]>,
@@ -201,4 +203,25 @@ export async function logoutHandler(req: Request, res: Response) {
 			error: "Internal server error",
 		});
 	}
+}
+
+export function getCurrentUserHandler(req: Request, res: Response) {
+	const { user } = res.locals;
+
+	if (!user) {
+		return res.status(StatusCodes.OK).json({
+			message: "User is not logged In",
+			user: null,
+		});
+	}
+
+	const removePrivateFieldsFromUser = omit(
+		user.toJSON(),
+		userModalPrivateFields
+	);
+
+	return res.status(StatusCodes.OK).json({
+		message: "User is logged In",
+		user: removePrivateFieldsFromUser,
+	});
 }

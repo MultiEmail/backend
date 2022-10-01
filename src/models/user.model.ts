@@ -10,14 +10,13 @@ import {
 	createCounterService,
 	incrementCounterService,
 } from "../services/counter.service";
-import { createRandomOTP } from "../util/otp.util";
+import { createRandomOTP } from "../utils/otp.util";
 
 export const userModalPrivateFields = [
 	"password",
 	"__v",
 	"verificationCode",
 	"passwordResetCode",
-	"verified",
 ];
 
 @index({ uid: 1, email: 1, username: 1 })

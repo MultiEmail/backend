@@ -1,7 +1,7 @@
 import { DocumentType } from "@typegoose/typegoose";
 import { User, userModalPrivateFields } from "../models/user.model";
 import { omit } from "lodash";
-import { signJWT } from "../util/jwt.util";
+import { signJWT } from "../utils/jwt.util";
 import { createSessionService } from "./session.service";
 
 /**
