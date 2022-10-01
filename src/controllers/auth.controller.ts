@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import {
 	ForgotPasswordSchema,
 	LoginSchema,
+	ResetPasswordSchema,
 	SignupSchema,
 	VerifyUserSchema,
 } from "../schemas/auth.schema";
@@ -267,6 +268,50 @@ export async function forgotPasswordHandler(
 
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal server error",
+		});
+	}
+}
+
+export async function resetPasswordHandler(
+	req: Request<ResetPasswordSchema["params"], {}, ResetPasswordSchema["body"]>,
+	res: Response
+) {
+	const { email, passwordResetCode } = req.params;
+	const { password } = req.body;
+
+	try {
+		const user = await findUserByEmailService(email);
+
+		if (!user) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		if (
+			!user?.passwordResetCode ||
+			user?.passwordResetCode !== parseInt(passwordResetCode)
+		) {
+			return res.status(StatusCodes.FORBIDDEN).json({
+				error: "Invalid password reset code",
+			});
+		}
+
+		user.passwordResetCode = null;
+
+		// NOTE: password will be hashed in user model
+		user.password = password;
+
+		await user.save();
+
+		return res.status(StatusCodes.OK).json({
+			message: "Password reset successfully",
+		});
+	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
 		});
 	}
 }

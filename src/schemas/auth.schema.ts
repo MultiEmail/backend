@@ -62,3 +62,33 @@ export const forgotPasswordSchema = z.object({
 });
 
 export type ForgotPasswordSchema = z.TypeOf<typeof forgotPasswordSchema>;
+
+export const resetPasswordSchema = z.object({
+	params: z.object({
+		email: z
+			.string({ required_error: "email is required" })
+			.email("Please provide a valid email"),
+		passwordResetCode: z
+			.string({
+				required_error: "passwordResetCode is required",
+			})
+			.min(4, "passwordResetCode must be 4 characters long")
+			.max(4, "passwordResetCode must be 4 characters long"),
+	}),
+	body: z
+		.object({
+			password: z
+				.string({ required_error: "password is required" })
+				.min(6, "password should be longer than 4 characters"),
+
+			cpassword: z
+				.string({ required_error: "cpassword is required" })
+				.min(6, "password should be longer than 4 characters"),
+		})
+		.refine(data => data.password === data.cpassword, {
+			message: "Password and confirm password do not match",
+			path: ["cpassword"],
+		}),
+});
+
+export type ResetPasswordSchema = z.TypeOf<typeof resetPasswordSchema>;

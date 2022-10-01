@@ -6,6 +6,7 @@ import {
 	getCurrentUserHandler,
 	loginHandler,
 	logoutHandler,
+	resetPasswordHandler,
 	signupHandler,
 	verifyUserHandler,
 } from "../controllers/auth.controller";
@@ -13,6 +14,7 @@ import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	forgotPasswordSchema,
 	loginSchema,
+	resetPasswordSchema,
 	signupSchema,
 	verifyUserSchema,
 } from "../schemas/auth.schema";
@@ -37,6 +39,12 @@ authRouter.post(
 	"/auth/forgotpassword",
 	validateRequest(forgotPasswordSchema),
 	forgotPasswordHandler
+);
+
+authRouter.patch(
+	"/auth/resetpassword/:email/:passwordResetCode",
+	validateRequest(resetPasswordSchema),
+	resetPasswordHandler
 );
 
 authRouter.get(
