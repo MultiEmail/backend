@@ -7,13 +7,18 @@ import logger from "./logger.util";
 passport.use(
 	new Strategy(
 		{
-			clientID: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-			callbackURL: process.env.GOOGLE_CALL_BACK_URL,
+			clientID: process.env.GOOGLE_CLIENT_ID as string,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+			callbackURL: process.env.GOOGLE_CALL_BACK_URL as string,
 			scope: ["profile", "email"],
 		},
 
-		async function (accessToken, refreshToken, profile, done) {
+		async function (
+			accessToken: string,
+			refreshToken: string,
+			profile: any,
+			done: any
+		) {
 			const user = await UserModel.findOne({ email: profile.emails[0].value });
 			if (user) {
 				logger.info(`Email ${user.email} already exists`);
@@ -33,10 +38,10 @@ passport.use(
 	)
 );
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function (user: any, done: any) {
 	done(null, user);
 });
 
-passport.deserializeUser(function (user, done) {
+passport.deserializeUser(function (user: any, done: any) {
 	done(null, user);
 });

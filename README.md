@@ -1,5 +1,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -29,10 +31,16 @@ yarn install
 yarn dev
 ```
 
-# Linux
+## Linux
 
 ```
 git clone https://github.com/MultiEmail/MultiEmail-backend.git && cd MultiEmail-backend && yarn install && yarn dev
+```
+
+# Create admin user
+
+```bash
+npm i -g .
 ```
 
 # Acknowledgements
