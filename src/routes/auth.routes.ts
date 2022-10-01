@@ -2,6 +2,7 @@ import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import passport from "passport";
 import {
+	forgotPasswordHandler,
 	getCurrentUserHandler,
 	loginHandler,
 	logoutHandler,
@@ -10,6 +11,7 @@ import {
 } from "../controllers/auth.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
 import {
+	forgotPasswordSchema,
 	loginSchema,
 	signupSchema,
 	verifyUserSchema,
@@ -30,6 +32,12 @@ authRouter.post("/auth/login", validateRequest(loginSchema), loginHandler);
 authRouter.get("/auth/logout", logoutHandler);
 
 authRouter.get("/auth/me", getCurrentUserHandler);
+
+authRouter.post(
+	"/auth/forgotpassword",
+	validateRequest(forgotPasswordSchema),
+	forgotPasswordHandler
+);
 
 authRouter.get(
 	"/auth/oauth/google",

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import {
+	ForgotPasswordSchema,
 	LoginSchema,
 	SignupSchema,
 	VerifyUserSchema,
@@ -20,6 +21,7 @@ import { verifyJWT } from "../utils/jwt.util";
 import logger from "../utils/logger.util";
 import { omit } from "lodash";
 import { userModalPrivateFields } from "../models/user.model";
+import { generateRandomOTP } from "../utils/otp.util";
 
 export async function signupHandler(
 	req: Request<{}, {}, SignupSchema["body"]>,
@@ -224,4 +226,47 @@ export function getCurrentUserHandler(req: Request, res: Response) {
 		message: "User is logged In",
 		user: removePrivateFieldsFromUser,
 	});
+}
+
+export async function forgotPasswordHandler(
+	req: Request<{}, {}, ForgotPasswordSchema["body"]>,
+	res: Response
+) {
+	const { email } = req.body;
+
+	try {
+		const user = await findUserByEmailService(email);
+
+		if (!user) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		if (!user.verified) {
+			return res.status(StatusCodes.FORBIDDEN).json({
+				error: "User is not verified",
+			});
+		}
+
+		// generate password reset code and send that to users email
+		const passwordResetCode = generateRandomOTP();
+		user.passwordResetCode = passwordResetCode;
+		await user.save();
+		await sendEmail(
+			email,
+			"OTP to password reset for Multi Email",
+			`Your OTP to reset password is ${passwordResetCode}`
+		);
+
+		return res.status(StatusCodes.OK).json({
+			message: "Password reset code sent to your email",
+		});
+	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal server error",
+		});
+	}
 }

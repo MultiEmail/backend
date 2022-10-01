@@ -10,7 +10,7 @@ import {
 	createCounterService,
 	incrementCounterService,
 } from "../services/counter.service";
-import { createRandomOTP } from "../utils/otp.util";
+import { generateRandomOTP } from "../utils/otp.util";
 
 export const userModalPrivateFields = [
 	"password",
@@ -63,11 +63,11 @@ export class User {
 	@prop({ required: true, default: false })
 	public verified: boolean;
 
-	@prop({ required: true, default: () => createRandomOTP() })
+	@prop({ required: true, default: () => generateRandomOTP() })
 	public verificationCode: number;
 
 	@prop()
-	public passwordResetCode: string | null;
+	public passwordResetCode: number | null;
 
 	// TODO: add more fields for email services
 

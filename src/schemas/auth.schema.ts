@@ -52,3 +52,13 @@ export const loginSchema = z.object({
 });
 
 export type LoginSchema = z.TypeOf<typeof loginSchema>;
+
+export const forgotPasswordSchema = z.object({
+	body: z.object({
+		email: z
+			.string({ required_error: "Email is required" })
+			.email("Please enter a valid email"),
+	}),
+});
+
+export type ForgotPasswordSchema = z.TypeOf<typeof forgotPasswordSchema>;
