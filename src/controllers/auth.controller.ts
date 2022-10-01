@@ -12,15 +12,10 @@ export async function signupHandler(
 	req: Request<{}, {}, SignupSchema["body"]>,
 	res: Response
 ) {
-	const { email, password } = req.body;
+	const { password } = req.body;
 	const username = req.body.username.toLowerCase().trim();
+	const email = req.body.email.toLowerCase().trim();
 
-	if(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~ ]/g.test(username)){
-		return res.status(StatusCodes.BAD_REQUEST).json({
-			message: "Username cannot contain special characters",
-		});
-	}
-	
 	try {
 		const existingUser = await findUserByEitherEmailOrUsernameService(
 			email,
