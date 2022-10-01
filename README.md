@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -59,6 +59,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center"><a href="https://shriproperty.com"><img src="https://avatars.githubusercontent.com/u/69336518?v=4?s=100" width="100px;" alt="Ayush Chugh"/><br /><sub><b>Ayush Chugh</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=aayushchugh" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/DaatUserName"><img src="https://avatars.githubusercontent.com/u/40370496?v=4?s=100" width="100px;" alt="Toby"/><br /><sub><b>Toby</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=DaatUserName" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
