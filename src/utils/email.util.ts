@@ -7,7 +7,7 @@ const user = process.env.EMAIL_ID as string;
 const pass = process.env.EMAIL_PASSWORD as string;
 
 const transporter = createTransport({
-	host: "smtp.gmail.com",
+	host: "smtppro.zoho.in",
 	port: 587,
 	secure: false,
 	requireTLS: true,
