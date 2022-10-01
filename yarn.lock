@@ -948,7 +948,7 @@ agent-base@6:
   dependencies:
     debug "4"
 
-all-contributors-cli@^6.22.0:
+all-contributors-cli@6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/all-contributors-cli/-/all-contributors-cli-6.22.0.tgz#4921a88e69a59c2f24c93285817820d7b251cb21"
   integrity sha512-oYm0aNsVHq1igdtM8DG6o6G082iufRml5lbLNDOdYlpMnrLZhP9IaCXx1AXVToRG8Os1NVrXEC5hc5PneXJFhQ==
@@ -2512,7 +2512,7 @@ jest-worker@^29.1.2:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jest@^29.1.2:
+jest@29.1.2:
   version "29.1.2"
   resolved "https://registry.yarnpkg.com/jest/-/jest-29.1.2.tgz#f821a1695ffd6cd0efc3b59d2dfcc70a98582499"
   integrity sha512-5wEIPpCezgORnqf+rCaYD1SK+mNN7NsstWzIsuvsnrhR/hSxXWd82oI7DkrbJ+XTD28/eG8SmxdGvukrGGK6Tw==
