@@ -2,8 +2,8 @@ import yargs from 'yargs';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import { exit } from 'process';
-import { AdminSchema } from '../schemas/admin.schema';
-import { hashPassword } from './hashPass.util';
+import UserModel from '../models/user.model';
+import logger from './logger.util';
 
 const { email, username, password } = yargs(process.argv.slice(3))
   .usage('admin -e <email> -p <password>')
@@ -14,22 +14,19 @@ const { email, username, password } = yargs(process.argv.slice(3))
   })
   .parseSync();
 
-let hashPass = hashPassword(password);
 mongoose.connect(process.env.DB_URI as string, () => {
-  AdminSchema.create({
-    email,
+  UserModel.create({
+    role: 'admin',
     username,
-    password: hashPass,
+    email,
+    password,
   })
     .then(() => {
-      console.log('✔ Admin created successfully');
-
+      logger.info('Created admin account successfully');
       exit(0);
     })
     .catch((err) => {
-      console.log(err);
-      if (err) console.log('❌ Admin user already exists');
-
+      console.log('Failed to create admin account ' + err);
       exit(1);
     });
 });
