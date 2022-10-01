@@ -1,8 +1,9 @@
+#!/usr/bin/env node
 import yargs from 'yargs';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import { exit } from 'process';
-import UserModel from '../models/user.model';
+import UserModel from '../src/models/user.model';
 
 const { email, username, password } = yargs(process.argv.slice(3))
   .usage('admin -e <email> -u <username> -p <password>')
@@ -18,6 +19,7 @@ mongoose.connect(process.env.DB_URI as string, () => {
     role: 'admin',
     username,
     email,
+    verified: true,
     password,
   })
     .then(() => {
