@@ -18,6 +18,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "DaatUserName",
+      "name": "Toby",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40370496?v=4",
+      "profile": "https://github.com/DaatUserName",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
