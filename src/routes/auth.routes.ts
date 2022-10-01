@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import passport from "passport";
 import {
 	loginHandler,
+	logoutHandler,
 	signupHandler,
 	verifyUserHandler,
 } from "../controllers/auth.controller";
@@ -32,6 +33,8 @@ authRouter.post(
 	validateRequest(loginSchema),
 	loginHandler
 );
+
+authRouter.get("/auth/local/logout", logoutHandler);
 
 authRouter.get(
 	"/auth/oauth/google",

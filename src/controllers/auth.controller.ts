@@ -14,7 +14,9 @@ import {
 	findUserByEitherEmailOrUsernameService,
 	findUserByEmailService,
 } from "../services/user.service";
+import { findSessionByIdService } from "../services/session.service";
 import { sendEmail } from "../util/email.util";
+import { verifyJWT } from "../util/jwt.util";
 import logger from "../util/logger.util";
 
 export async function signupHandler(
@@ -148,6 +150,52 @@ export async function loginHandler(
 		});
 	} catch (err) {
 		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal server error",
+		});
+	}
+}
+
+export async function logoutHandler(req: Request, res: Response) {
+	const refreshToken = req.headers["x-refresh"] as string;
+
+	if (!refreshToken) {
+		return res.status(StatusCodes.UNAUTHORIZED).json({
+			error: "Invalid refresh token",
+		});
+	}
+
+	try {
+		// verify if refresh token is valid
+		const decoded = await verifyJWT<{ session: string }>(
+			refreshToken,
+			"REFRESH_TOKEN_PUBLIC_KEY"
+		);
+
+		if (!decoded) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: "Invalid refresh token",
+			});
+		}
+
+		// make session invalid
+		const session = await findSessionByIdService(decoded.session);
+
+		if (!session || !session.valid) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: "Session is not valid",
+			});
+		}
+
+		session.valid = false;
+		await session.save();
+
+		res.status(StatusCodes.OK).json({
+			message: "User logged out successfully",
+		});
+	} catch (err) {
+		logger.info(err);
 
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal server error",

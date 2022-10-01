@@ -18,10 +18,9 @@ export async function signJWT(
 	const privateKey = process.env[keyName] as string;
 	const token = (await jwt.sign(payload, privateKey, {
 		...(options && options),
-		algorithm: "HS256",
+		algorithm: "RS256",
 	})) as string;
 
-	// jwt.sign() --> Promise. 1.) Promise wrapper. 2.) async await, return
 	return token;
 }
 
@@ -38,7 +37,7 @@ export async function verifyJWT<T>(
 	let decoded: T;
 	try {
 		decoded = (await jwt.verify(token, publicKey, {
-			algorithms: ["HS256"],
+			algorithms: ["RS256"],
 		})) as T;
 
 		return decoded;
