@@ -1,16 +1,54 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import passport from "passport";
-import { signupHandler } from "../controllers/auth.controller";
+import {
+	forgotPasswordHandler,
+	getCurrentUserHandler,
+	loginHandler,
+	logoutHandler,
+	refreshAccessTokenHandler,
+	resetPasswordHandler,
+	signupHandler,
+	verifyUserHandler,
+} from "../controllers/auth.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
-import { signupSchema } from "../schemas/auth.schema";
+import {
+	forgotPasswordSchema,
+	loginSchema,
+	resetPasswordSchema,
+	signupSchema,
+	verifyUserSchema,
+} from "../schemas/auth.schema";
 const authRouter: Router = Router();
 
-authRouter.post(
-	"/auth/local/signup",
-	validateRequest(signupSchema),
-	signupHandler
+authRouter.post("/auth/signup", validateRequest(signupSchema), signupHandler);
+
+authRouter.get(
+	// QUESTION: should we use username to find the user or email?
+	"/auth/verify/:email/:verificationCode",
+	validateRequest(verifyUserSchema),
+	verifyUserHandler
 );
+
+authRouter.post("/auth/login", validateRequest(loginSchema), loginHandler);
+
+authRouter.get("/auth/logout", logoutHandler);
+
+authRouter.get("/auth/me", getCurrentUserHandler);
+
+authRouter.post(
+	"/auth/forgotpassword",
+	validateRequest(forgotPasswordSchema),
+	forgotPasswordHandler
+);
+
+authRouter.patch(
+	"/auth/resetpassword/:email/:passwordResetCode",
+	validateRequest(resetPasswordSchema),
+	resetPasswordHandler
+);
+
+authRouter.get("/auth/refresh", refreshAccessTokenHandler);
 
 authRouter.get(
 	"/auth/oauth/google",

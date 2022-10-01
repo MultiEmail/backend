@@ -1,26 +1,37 @@
-// TODO: implement deserializeUser middleware
-
-// import { Request, Response, NextFunction } from "express";
-// import { verifyJWT } from "../utils/jwt.util";
+import { Request, Response, NextFunction } from "express";
+import { findUserByIdService } from "../services/user.service";
+import { verifyJWT } from "../utils/jwt.util";
 
 /**
  * This function will be called before every route
  * and will deserialize the user from the cookie token
  * and attach it to the req.locals
  */
-// function deserializeUser(req: Request, res: Response, next: NextFunction) {
-// 	const accessToken = (req.headers.authorization || "").replace(
-// 		/^Bearer\s/,
-// 		""
-// 	);
+async function deserializeUser(
+	req: Request,
+	res: Response,
+	next: NextFunction
+) {
+	const accessToken = (req.headers.authorization || "").replace(
+		/^Bearer\s/,
+		""
+	);
 
-// 	if (!accessToken) return next();
+	if (!accessToken) return next();
 
-// 	const decoded = verifyJWT(accessToken, "accessTokenPublicKey");
+	const decoded = await verifyJWT<{ _id: string }>(
+		accessToken,
+		"ACCESS_TOKEN_PUBLIC_KEY"
+	);
 
-// 	res.locals.user = decoded || null;
+	if (decoded) {
+		const user = await findUserByIdService(decoded._id);
+		res.locals.user = user;
+	} else {
+		res.locals.user = null;
+	}
 
-// 	return next();
-// }
+	return next();
+}
 
-// export default deserializeUser;
+export default deserializeUser;

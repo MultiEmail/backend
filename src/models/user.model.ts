@@ -10,14 +10,13 @@ import {
 	createCounterService,
 	incrementCounterService,
 } from "../services/counter.service";
-import { createRandomOTP } from "../util/otp.util";
+import { generateRandomOTP } from "../utils/otp.util";
 
 export const userModalPrivateFields = [
 	"password",
 	"__v",
 	"verificationCode",
 	"passwordResetCode",
-	"verified",
 ];
 
 @index({ uid: 1, email: 1, username: 1 })
@@ -64,13 +63,21 @@ export class User {
 	@prop({ required: true, default: false })
 	public verified: boolean;
 
-	@prop({ required: true, default: () => createRandomOTP() })
+	@prop({ required: true, default: () => generateRandomOTP() })
 	public verificationCode: number;
 
 	@prop()
-	public passwordResetCode: string | null;
+	public passwordResetCode: number | null;
 
 	// TODO: add more fields for email services
+
+	/**
+	 * Check if the password is correct or not
+	 * @param password password to compare with the user password
+	 */
+	public comparePassword(password: string) {
+		return compare(password, this.password);
+	}
 }
 
 const UserModel = getModelForClass(User, {
