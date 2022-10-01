@@ -45,6 +45,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "is-it-ayush",
+      "name": "Ayush",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36449128?v=4",
+      "profile": "https://github.com/is-it-ayush",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
