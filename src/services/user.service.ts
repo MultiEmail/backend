@@ -18,6 +18,14 @@ export function findUserByEmailService(email: string) {
 }
 
 /**
+ * Find user from database with given username
+ * @param {string} username user's username to find in database
+ */
+export function findUserByUsernameService(username: string) {
+	return UserModel.findOne({ username });
+}
+
+/**
  * This will find a user from the database with matching username or email
  * @param {string} email email of the user
  * @param {string} username username of the user

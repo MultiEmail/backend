@@ -17,3 +17,14 @@ export const patchMarkUserVerifiedSchema = z.object({
 export type PatchMarkUserVerifiedSchema = z.infer<
 	typeof patchMarkUserVerifiedSchema
 >;
+
+export const patchUserSchema = z.object({
+	params: z.object({
+		id: z.string({ required_error: "Id is required" }),
+	}),
+	body: z.object({
+		username: z.string().optional(),
+	}),
+});
+
+export type PatchUserSchema = z.infer<typeof patchUserSchema>;

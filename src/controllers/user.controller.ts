@@ -3,9 +3,11 @@ import { StatusCodes } from "http-status-codes";
 import {
 	DeleteUserSchema,
 	PatchMarkUserVerifiedSchema,
+	PatchUserSchema,
 } from "../schemas/user.schema";
 import {
 	deleteUserByIdService,
+	findUserByUsernameService,
 	findUsersService,
 	updateUserByIdService,
 } from "../services/user.service";
@@ -72,6 +74,48 @@ export async function patchMarkUserVerifiedHandler(
 
 		return res.status(StatusCodes.OK).json({
 			message: "User verified successfully",
+		});
+	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+}
+
+export async function patchUserHandler(
+	req: Request<PatchUserSchema["params"], {}, PatchUserSchema["body"]>,
+	res: Response
+) {
+	const { id } = req.params;
+	const { username } = req.body;
+
+	try {
+		// check if username is already taken
+
+		const existingUserWithSameUsername = await findUserByUsernameService(
+			username || ""
+		);
+
+		if (existingUserWithSameUsername) {
+			return res.status(StatusCodes.CONFLICT).json({
+				error: "Username is already taken",
+			});
+		}
+
+		const updatedUser = await updateUserByIdService(id, { username });
+
+		console.log(updatedUser);
+
+		if (!updatedUser) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		return res.status(StatusCodes.OK).json({
+			message: "User updated successfully",
 		});
 	} catch (err) {
 		logger.error(err);
