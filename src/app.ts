@@ -9,6 +9,7 @@ import "./utils/passport.util";
 import deserializeUser from "./middleware/deserializeUser.middleware";
 import authRouter from "./routes/auth.routes";
 import cookieSession from "cookie-session";
+import userRouter from "./routes/user.routes";
 
 config();
 
@@ -30,6 +31,7 @@ app.use(passport.session());
 
 app.use(deserializeUser);
 app.use("/api", authRouter);
+app.use("/api", userRouter);
 
 mongoose.connect(process.env.DB_URI as string, () => {
 	const PORT = process.env.PORT || 3001;

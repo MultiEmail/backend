@@ -1,4 +1,4 @@
-import { DocumentDefinition } from "mongoose";
+import { DocumentDefinition, FilterQuery } from "mongoose";
 import UserModel, { User } from "../models/user.model";
 
 /**
@@ -29,6 +29,10 @@ export function findUserByEitherEmailOrUsernameService(
 	return UserModel.findOne({ $or: [{ email }, { username }] });
 }
 
+/**
+ * This will create a new user in the database
+ * @param payload this is the payload of the user
+ */
 export function createUserService(
 	payload: DocumentDefinition<
 		Omit<
@@ -42,4 +46,12 @@ export function createUserService(
 	>
 ) {
 	return UserModel.create(payload);
+}
+
+/**
+ * Find all users in database with given query
+ * @param {object | undefined} query this is filter which will be used to find the user
+ */
+export function findUsersService(query?: FilterQuery<User>) {
+	return UserModel.find(query || {});
 }
