@@ -32,17 +32,6 @@ export async function signupHandler(
 	const { username, email, password } = req.body;
 
 	try {
-		const existingUser = await findUserByEitherEmailOrUsernameService(
-			email,
-			username
-		);
-
-		if (existingUser) {
-			return res.status(StatusCodes.CONFLICT).json({
-				error: "User with same email or username already exists",
-			});
-		}
-
 		const createdUser = await createUserService({
 			username,
 			email,
@@ -63,7 +52,7 @@ export async function signupHandler(
 		logger.error(err);
 
 		if (err.code === 11000) {
-			return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+			return res.status(StatusCodes.CONFLICT).json({
 				error: "User with same email or username already exists",
 			});
 		}

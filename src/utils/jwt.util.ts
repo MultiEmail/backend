@@ -42,7 +42,6 @@ export async function verifyJWT<T>(
 
 		return decoded;
 	} catch (error) {
-		logger.error(error);
 		return null;
 	}
 }

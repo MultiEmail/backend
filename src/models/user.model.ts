@@ -6,10 +6,6 @@ import {
 	getModelForClass,
 	Severity,
 } from "@typegoose/typegoose";
-import {
-	createCounterService,
-	incrementCounterService,
-} from "../services/counter.service";
 import { generateRandomOTP } from "../utils/otp.util";
 
 export const userModalPrivateFields = [
@@ -21,19 +17,6 @@ export const userModalPrivateFields = [
 
 @index({ uid: 1, email: 1, username: 1 })
 @pre<User>("save", async function (next) {
-	// create a uid for the user
-	if (this.isNew) {
-		let counter = await incrementCounterService("user_uid");
-
-		if (!counter) {
-			counter = await createCounterService("user_uid");
-		}
-
-		if (counter) {
-			this.uid = counter.sequence_value;
-		}
-	}
-
 	// hash password before user is created or updated
 	if (!this.isModified("password")) {
 		return next();
@@ -45,9 +28,6 @@ export const userModalPrivateFields = [
 	next();
 })
 export class User {
-	@prop({ unique: true })
-	public uid: number; // this is not replace `_id` this is serial number of the user
-
 	@prop({ required: true, default: "user" })
 	public role: "admin" | "user";
 
