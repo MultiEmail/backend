@@ -10,11 +10,15 @@ function checkAdminRole() {
     try {
       const currentUser: User = res.locals.user;
       if (currentUser == null || currentUser.role !== "admin") {
-        return res.sendStatus(StatusCodes.FORBIDDEN);
+        return res.status(StatusCodes.FORBIDDEN).json({
+          error: "Insufficient rights",
+        });
       }
       return next();
     } catch (err) {
-      return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: "Internal Server Error",
+      });
     }
   };
 }
