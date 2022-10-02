@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -42,6 +42,20 @@ npm i -g .
 multi-email-admin -e <email> -u <username> -p <password>
 ```
 
+# Environment Variables
+
+- `DB_URI`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `GOOGLE_CALL_BACK_URL`
+- `NODE_ENV`
+- `EMAIL_ID`
+- `EMAIL_PASSWORD`
+- `ACCESS_TOKEN_PRIVATE_KEY`
+- `ACCESS_TOKEN_PUBLIC_KEY`
+- `REFRESH_TOKEN_PRIVATE_KEY`
+- `REFRESH_TOKEN_PUBLIC_KEY`
+
 # Acknowledgements
 
 ## Credits to
@@ -72,6 +86,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="https://github.com/is-it-ayush"><img src="https://avatars.githubusercontent.com/u/36449128?v=4?s=100" width="100px;" alt="Ayush"/><br /><sub><b>Ayush</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=is-it-ayush" title="Code">💻</a> <a href="#mentoring-is-it-ayush" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/MultiEmail/MultiEmail-backend/pulls?q=is%3Apr+reviewed-by%3Ais-it-ayush" title="Reviewed Pull Requests">👀</a> <a href="#maintenance-is-it-ayush" title="Maintenance">🚧</a></td>
       <td align="center"><a href="https://www.jamesmesser.xyz"><img src="https://avatars.githubusercontent.com/u/71551059?v=4?s=100" width="100px;" alt="James"/><br /><sub><b>James</b></sub></a><br /><a href="#financial-CodesWithJames" title="Financial">💵</a></td>
       <td align="center"><a href="https://github.com/AndrewFirePvP7"><img src="https://avatars.githubusercontent.com/u/29314485?v=4?s=100" width="100px;" alt="AndrewDev"/><br /><sub><b>AndrewDev</b></sub></a><br /><a href="#ideas-AndrewFirePvP7" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
+    <tr>
+      <td align="center"><a href="https://arpitchugh.live/"><img src="https://avatars.githubusercontent.com/u/63435960?v=4?s=100" width="100px;" alt="Arpit Chugh"/><br /><sub><b>Arpit Chugh</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=Arpitchugh" title="Documentation">📖</a></td>
     </tr>
   </tbody>
   <tfoot>

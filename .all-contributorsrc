@@ -83,6 +83,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "Arpitchugh",
+      "name": "Arpit Chugh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63435960?v=4",
+      "profile": "https://arpitchugh.live/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
