@@ -1,25 +1,26 @@
-import { config } from "dotenv";
-import express, { Application } from "express";
-import passport from "passport";
-import cors from "cors";
-import mongoose from "mongoose";
-import logger from "./utils/logger.util";
-import "./utils/passport.util";
+import { config } from 'dotenv';
+import express, { Application } from 'express';
+import passport from 'passport';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import logger from './utils/logger.util';
+import './utils/passport.util';
 
-import deserializeUser from "./middleware/deserializeUser.middleware";
-import authRouter from "./routes/auth.routes";
-import cookieSession from "cookie-session";
+import deserializeUser from './middleware/deserializeUser.middleware';
+import authRouter from './routes/auth.routes';
+import cookieSession from 'cookie-session';
+import { supportRoute } from './routes/support/support.route';
 
 config();
 
 const app: Application = express();
 
 app.use(
-	cookieSession({
-		maxAge: 60 * 60 * 24 * 1000,
-		keys: ["secret"],
-		secret: "secret",
-	})
+  cookieSession({
+    maxAge: 60 * 60 * 24 * 1000,
+    keys: ['secret'],
+    secret: 'secret',
+  })
 );
 
 app.use(cors());
@@ -29,14 +30,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(deserializeUser);
-app.use("/api", authRouter);
+app.use('/api', authRouter);
+app.use(supportRoute);
 
 mongoose.connect(process.env.DB_URI as string, () => {
-	const PORT = process.env.PORT || 3001;
+  const PORT = process.env.PORT || 3001;
 
-	logger.info("Connected to Database!");
+  logger.info('Connected to Database!');
 
-	app.listen(PORT, () => {
-		logger.info(`Server listening on http://localhost:${PORT}`);
-	});
+  app.listen(PORT, () => {
+    logger.info(`Server listening on http://localhost:${PORT}`);
+  });
 });
