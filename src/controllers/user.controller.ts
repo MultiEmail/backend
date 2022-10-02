@@ -30,10 +30,7 @@ export async function getAllUsersHandler(req: Request, res: Response) {
 	}
 }
 
-export async function deleteUserHandler(
-	req: Request<DeleteUserSchema["params"]>,
-	res: Response
-) {
+export async function deleteUserHandler(req: Request<DeleteUserSchema["params"]>, res: Response) {
 	const { id } = req.params;
 
 	try {
@@ -59,7 +56,7 @@ export async function deleteUserHandler(
 
 export async function patchMarkUserVerifiedHandler(
 	req: Request<PatchMarkUserVerifiedSchema["params"]>,
-	res: Response
+	res: Response,
 ) {
 	const { id } = req.params;
 
@@ -86,7 +83,7 @@ export async function patchMarkUserVerifiedHandler(
 
 export async function patchUserHandler(
 	req: Request<PatchUserSchema["params"], {}, PatchUserSchema["body"]>,
-	res: Response
+	res: Response,
 ) {
 	const { id } = req.params;
 	const { username } = req.body;
@@ -94,9 +91,7 @@ export async function patchUserHandler(
 	try {
 		// check if username is already taken
 
-		const existingUserWithSameUsername = await findUserByUsernameService(
-			username || ""
-		);
+		const existingUserWithSameUsername = await findUserByUsernameService(username || "");
 
 		if (existingUserWithSameUsername) {
 			return res.status(StatusCodes.CONFLICT).json({
@@ -105,8 +100,6 @@ export async function patchUserHandler(
 		}
 
 		const updatedUser = await updateUserByIdService(id, { username });
-
-		console.log(updatedUser);
 
 		if (!updatedUser) {
 			return res.status(StatusCodes.NOT_FOUND).json({

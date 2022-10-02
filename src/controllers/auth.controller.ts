@@ -7,13 +7,9 @@ import {
 	SignupSchema,
 	VerifyUserSchema,
 } from "../schemas/auth.schema";
-import {
-	signAccessTokenService,
-	signRefreshTokenService,
-} from "../services/auth.service";
+import { signAccessTokenService, signRefreshTokenService } from "../services/auth.service";
 import {
 	createUserService,
-	findUserByEitherEmailOrUsernameService,
 	findUserByEmailService,
 	findUserByIdService,
 } from "../services/user.service";
@@ -25,10 +21,7 @@ import { omit } from "lodash";
 import { userModalPrivateFields } from "../models/user.model";
 import { generateRandomOTP } from "../utils/otp.util";
 
-export async function signupHandler(
-	req: Request<{}, {}, SignupSchema["body"]>,
-	res: Response
-) {
+export async function signupHandler(req: Request<{}, {}, SignupSchema["body"]>, res: Response) {
 	const { password } = req.body;
 	const username = req.body.username.toLowerCase().trim();
 	const email = req.body.email.toLowerCase().trim();
@@ -39,12 +32,13 @@ export async function signupHandler(
 			email,
 			password,
 			role: "user",
+			verified: false,
 		});
 
 		sendEmail(
 			email,
 			"OTP for Multi Email",
-			`Welcome to Multi Email your OTP is ${createdUser.verificationCode}`
+			`Welcome to Multi Email your OTP is ${createdUser.verificationCode}`,
 		);
 
 		return res.status(StatusCodes.CREATED).json({
@@ -65,10 +59,7 @@ export async function signupHandler(
 	}
 }
 
-export async function verifyUserHandler(
-	req: Request<VerifyUserSchema["params"]>,
-	res: Response
-) {
+export async function verifyUserHandler(req: Request<VerifyUserSchema["params"]>, res: Response) {
 	const { email, verificationCode } = req.params;
 
 	try {
@@ -114,10 +105,7 @@ export async function verifyUserHandler(
 	}
 }
 
-export async function loginHandler(
-	req: Request<{}, {}, LoginSchema["body"]>,
-	res: Response
-) {
+export async function loginHandler(req: Request<{}, {}, LoginSchema["body"]>, res: Response) {
 	const { email, password } = req.body;
 	try {
 		const user = await findUserByEmailService(email);
@@ -167,7 +155,7 @@ export async function logoutHandler(req: Request, res: Response) {
 		// verify if refresh token is valid
 		const decoded = await verifyJWT<{ session: string }>(
 			refreshToken,
-			"REFRESH_TOKEN_PUBLIC_KEY"
+			"REFRESH_TOKEN_PUBLIC_KEY",
 		);
 
 		if (!decoded) {
@@ -210,10 +198,7 @@ export function getCurrentUserHandler(req: Request, res: Response) {
 		});
 	}
 
-	const removePrivateFieldsFromUser = omit(
-		user.toJSON(),
-		userModalPrivateFields
-	);
+	const removePrivateFieldsFromUser = omit(user.toJSON(), userModalPrivateFields);
 
 	return res.status(StatusCodes.OK).json({
 		message: "User is logged In",
@@ -223,7 +208,7 @@ export function getCurrentUserHandler(req: Request, res: Response) {
 
 export async function forgotPasswordHandler(
 	req: Request<{}, {}, ForgotPasswordSchema["body"]>,
-	res: Response
+	res: Response,
 ) {
 	const { email } = req.body;
 
@@ -249,7 +234,7 @@ export async function forgotPasswordHandler(
 		await sendEmail(
 			email,
 			"OTP to password reset for Multi Email",
-			`Your OTP to reset password is ${passwordResetCode}`
+			`Your OTP to reset password is ${passwordResetCode}`,
 		);
 
 		return res.status(StatusCodes.OK).json({
@@ -266,7 +251,7 @@ export async function forgotPasswordHandler(
 
 export async function resetPasswordHandler(
 	req: Request<ResetPasswordSchema["params"], {}, ResetPasswordSchema["body"]>,
-	res: Response
+	res: Response,
 ) {
 	const { email, passwordResetCode } = req.params;
 	const { password } = req.body;
@@ -280,10 +265,7 @@ export async function resetPasswordHandler(
 			});
 		}
 
-		if (
-			!user?.passwordResetCode ||
-			user?.passwordResetCode !== parseInt(passwordResetCode)
-		) {
+		if (!user?.passwordResetCode || user?.passwordResetCode !== parseInt(passwordResetCode)) {
 			return res.status(StatusCodes.FORBIDDEN).json({
 				error: "Invalid password reset code",
 			});
@@ -321,7 +303,7 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
 	try {
 		const decoded = await verifyJWT<{ session: string }>(
 			refreshToken,
-			"REFRESH_TOKEN_PUBLIC_KEY"
+			"REFRESH_TOKEN_PUBLIC_KEY",
 		);
 
 		if (!decoded) {
@@ -338,8 +320,7 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
 			});
 		}
 
-		const user =
-			session.user && (await findUserByIdService(session.user.toString()));
+		const user = session.user && (await findUserByIdService(session.user.toString()));
 
 		if (!user) {
 			return res.status(StatusCodes.NOT_FOUND).json({

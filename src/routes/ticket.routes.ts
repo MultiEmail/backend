@@ -5,12 +5,12 @@ import { getAllTicketsHandler } from "../controllers/ticket.controller";
 import checkAdminRole from "../middleware/checkAdminRole.middleware";
 import TicketModel from "../models/ticket.model";
 import { createTicket } from "../services/ticket.service";
-import { validateRequest } from "../middleware/validateRequest.middleware";
+import validateRequest from "../middleware/validateRequest.middleware";
 import { createTicketSchema } from "../schemas/ticket.schema";
 
 export const supportRoute: Router = Router();
 
-supportRoute.post("/ticket",validateRequest(createTicketSchema), async (req, res) => {
+supportRoute.post("/ticket", validateRequest(createTicketSchema), async (req, res) => {
 	const ticket = await createTicket(req.body);
 	return res.status(200).json({ message: "Successfully created ticket", ticket });
 });

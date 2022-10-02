@@ -30,10 +30,7 @@ export function findUserByUsernameService(username: string) {
  * @param {string} email email of the user
  * @param {string} username username of the user
  */
-export function findUserByEitherEmailOrUsernameService(
-	email: string,
-	username: string
-) {
+export function findUserByEitherEmailOrUsernameService(email: string, username: string) {
 	return UserModel.findOne({ $or: [{ email }, { username }] });
 }
 
@@ -52,15 +49,8 @@ export function findUserByEitherEmailOrUsernameService(
  */
 export function createUserService(
 	payload: DocumentDefinition<
-		Omit<
-			User,
-			| "uid"
-			| "verified"
-			| "verificationCode"
-			| "passwordResetCode"
-			| "comparePassword"
-		>
-	>
+		Omit<User, "uid" | "verificationCode" | "passwordResetCode" | "comparePassword">
+	>,
 ) {
 	return UserModel.create(payload);
 }
