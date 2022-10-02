@@ -1,15 +1,15 @@
-import { config } from 'dotenv';
-import express, { Application } from 'express';
-import passport from 'passport';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import logger from './utils/logger.util';
-import './utils/passport.util';
+import { config } from "dotenv";
+import express, { Application } from "express";
+import passport from "passport";
+import cors from "cors";
+import mongoose from "mongoose";
+import logger from "./utils/logger.util";
+import "./utils/passport.util";
 
-import deserializeUser from './middleware/deserializeUser.middleware';
-import authRouter from './routes/auth.routes';
-import cookieSession from 'cookie-session';
-import { supportRoute } from './routes/support/support.route';
+import deserializeUser from "./middleware/deserializeUser.middleware";
+import authRouter from "./routes/auth.routes";
+import cookieSession from "cookie-session";
+import userRouter from "./routes/user.routes";
 
 config();
 
@@ -30,8 +30,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(deserializeUser);
-app.use('/api', authRouter);
-app.use(supportRoute);
+app.use("/api", authRouter);
+app.use("/api", userRouter);
 
 mongoose.connect(process.env.DB_URI as string, () => {
   const PORT = process.env.PORT || 3001;
