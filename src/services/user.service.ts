@@ -1,4 +1,4 @@
-import { DocumentDefinition, FilterQuery } from "mongoose";
+import { DocumentDefinition, FilterQuery, UpdateQuery } from "mongoose";
 import UserModel, { User } from "../models/user.model";
 
 /**
@@ -71,4 +71,13 @@ export function findUsersService(query?: FilterQuery<User>) {
  */
 export function deleteUserByIdService(id: string) {
 	return UserModel.findByIdAndDelete(id);
+}
+
+/**
+ * Update user in the database with given id
+ * @param id this is id of user which will be updated
+ * @param payload fields which will be updated in the user
+ */
+export function updateUserByIdService(id: string, payload: UpdateQuery<User>) {
+	return UserModel.findByIdAndUpdate(id, payload);
 }
