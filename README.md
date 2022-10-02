@@ -1,22 +1,24 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
 
-- ExpressJs
-- Mongoose
-- Typegoose
-- TypeScript
-- Passport
+-   ExpressJs
+-   Mongoose
+-   Typegoose
+-   TypeScript
+-   Passport
 
 # Features
 
-- Admin dashboard
-- User settings and or user dashboard
-- send emails
-- recive emails
-- Connections through other parties ie discord, twitter, facebook etc..
+-   Admin dashboard
+-   User settings and or user dashboard
+-   send emails
+-   recive emails
+-   Connections through other parties ie discord, twitter, facebook etc..
 
 # Setup
 
@@ -38,36 +40,37 @@ git clone https://github.com/MultiEmail/MultiEmail-backend.git && cd MultiEmail-
 # Create admin user
 
 ```bash
+yarn build
 npm i -g .
 multi-email-admin -e <email> -u <username> -p <password>
 ```
 
 # Environment Variables
 
-- `DB_URI`
-- `GOOGLE_CLIENT_ID`
-- `GOOGLE_CLIENT_SECRET`
-- `GOOGLE_CALL_BACK_URL`
-- `NODE_ENV`
-- `EMAIL_ID`
-- `EMAIL_PASSWORD`
-- `ACCESS_TOKEN_PRIVATE_KEY`
-- `ACCESS_TOKEN_PUBLIC_KEY`
-- `REFRESH_TOKEN_PRIVATE_KEY`
-- `REFRESH_TOKEN_PUBLIC_KEY`
+-   `DB_URI`
+-   `GOOGLE_CLIENT_ID`
+-   `GOOGLE_CLIENT_SECRET`
+-   `GOOGLE_CALL_BACK_URL`
+-   `NODE_ENV`
+-   `EMAIL_ID`
+-   `EMAIL_PASSWORD`
+-   `ACCESS_TOKEN_PRIVATE_KEY`
+-   `ACCESS_TOKEN_PUBLIC_KEY`
+-   `REFRESH_TOKEN_PRIVATE_KEY`
+-   `REFRESH_TOKEN_PUBLIC_KEY`
 
 # Acknowledgements
 
 ## Credits to
 
-- [Anson](https://github.com/stuyy)
-- [Vuka951](https://github.com/Vuka951)
-- [Theis N. Jensen](https://github.com/mrcool1575)
+-   [Anson](https://github.com/stuyy)
+-   [Vuka951](https://github.com/Vuka951)
+-   [Theis N. Jensen](https://github.com/mrcool1575)
 
 # Wanna join the team?
 
-- [Discord server](https://discord.gg/8kTdfWmuQa)
-- [Postman team](https://www.postman.com/multiemail/workspace/muti-email-rest-api/overview)
+-   [Discord server](https://discord.gg/8kTdfWmuQa)
+-   [Postman team](https://www.postman.com/multiemail/workspace/muti-email-rest-api/overview)
 
 ## Contributors ✨
 
