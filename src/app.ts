@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import passport from "passport";
 import cors from "cors";
 import mongoose from "mongoose";
+import helmet from "helmet";
 import logger from "./utils/logger.util";
 import "./utils/passport.util";
 
@@ -24,6 +25,7 @@ app.use(
 );
 
 app.use(cors());
+app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());

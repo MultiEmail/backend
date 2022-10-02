@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
+/* eslint-disable node/shebang */
+/* eslint-disable node/no-sync */
+
 import yargs from "yargs";
 import mongoose from "mongoose";
 import "dotenv/config";
@@ -27,7 +31,7 @@ mongoose.connect(process.env.DB_URI as string, () => {
 
 			exit(0);
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.log(err);
 			if (err) console.log("❌ Admin user already exists");
 
