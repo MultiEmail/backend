@@ -7,7 +7,7 @@ export const signupSchema = z.object({
 				.string({ required_error: "Please enter your username" })
 				.min(3, "Name must be at least 3 characters")
 				.max(50, "Name can't be longer than 50 characters")
-				.regex(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~ ]/g),
+				.regex(/^[a-z\d0-9]+$/),
 			email: z
 				.string({ required_error: "Email is required" })
 				.email("Please enter a valid email"),
