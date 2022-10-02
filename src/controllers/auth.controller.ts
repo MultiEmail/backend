@@ -29,7 +29,9 @@ export async function signupHandler(
 	req: Request<{}, {}, SignupSchema["body"]>,
 	res: Response
 ) {
-	const { username, email, password } = req.body;
+	const { password } = req.body;
+	const username = req.body.username.toLowerCase().trim();
+	const email = req.body.email.toLowerCase().trim();
 
 	try {
 		const existingUser = await findUserByEitherEmailOrUsernameService(
