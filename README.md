@@ -42,6 +42,20 @@ npm i -g .
 multi-email-admin -e <email> -u <username> -p <password>
 ```
 
+# Environment Variables
+
+- `DB_URI`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `GOOGLE_CALL_BACK_URL`
+- `NODE_ENV`
+- `EMAIL_ID`
+- `EMAIL_PASSWORD`
+- `ACCESS_TOKEN_PRIVATE_KEY`
+- `ACCESS_TOKEN_PUBLIC_KEY`
+- `REFRESH_TOKEN_PRIVATE_KEY`
+- `REFRESH_TOKEN_PUBLIC_KEY`
+
 # Acknowledgements
 
 ## Credits to
