@@ -1,0 +1,166 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>multiemail-backend</title><meta name="description" content="Documentation for multiemail-backend"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">multiemail-backend</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<h2>multiemail-backend</h2></div>
+<div class="tsd-panel tsd-typography"><!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+<p><a href="#contributors-"><img src="https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square" alt="All Contributors"></a></p>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+
+<a href="#technologies-used" id="technologies-used" style="color: inherit; text-decoration: none;">
+  <h1>Technologies Used</h1>
+</a>
+<ul>
+<li>ExpressJs</li>
+<li>Mongoose</li>
+<li>Typegoose</li>
+<li>TypeScript</li>
+<li>Passport</li>
+</ul>
+
+<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+  <h1>Features</h1>
+</a>
+<ul>
+<li>Admin dashboard</li>
+<li>User settings and or user dashboard</li>
+<li>send emails</li>
+<li>recive emails</li>
+<li>Connections through other parties ie discord, twitter, facebook etc..</li>
+</ul>
+
+<a href="#setup" id="setup" style="color: inherit; text-decoration: none;">
+  <h1>Setup</h1>
+</a>
+
+<a href="#windows" id="windows" style="color: inherit; text-decoration: none;">
+  <h2>Windows</h2>
+</a>
+<pre><code><span class="hl-0">git</span><span class="hl-1"> </span><span class="hl-0">clone</span><span class="hl-1"> </span><span class="hl-2">https</span><span class="hl-1">:</span><span class="hl-3">//github.com/MultiEmail/MultiEmail-backend.git</span><br/><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-0">MultiEmail</span><span class="hl-1">-</span><span class="hl-0">backend</span><br/><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-0">install</span><br/><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-0">dev</span>
+</code></pre>
+
+<a href="#linux" id="linux" style="color: inherit; text-decoration: none;">
+  <h2>Linux</h2>
+</a>
+<pre><code><span class="hl-0">git</span><span class="hl-1"> </span><span class="hl-0">clone</span><span class="hl-1"> </span><span class="hl-2">https</span><span class="hl-1">:</span><span class="hl-3">//github.com/MultiEmail/MultiEmail-backend.git &amp;&amp; cd MultiEmail-backend &amp;&amp; yarn install &amp;&amp; yarn dev</span>
+</code></pre>
+
+<a href="#create-admin-user" id="create-admin-user" style="color: inherit; text-decoration: none;">
+  <h1>Create admin user</h1>
+</a>
+<pre><code class="language-bash"><span class="hl-1">yarn build</span><br/><span class="hl-1">npm i -g </span><span class="hl-4">.</span><br/><span class="hl-1">multi-email-admin -e &lt;email&gt; -u &lt;username&gt; -p &lt;password&gt;</span>
+</code></pre>
+
+<a href="#environment-variables" id="environment-variables" style="color: inherit; text-decoration: none;">
+  <h1>Environment Variables</h1>
+</a>
+<ul>
+<li><code>DB_URI</code></li>
+<li><code>GOOGLE_CLIENT_ID</code></li>
+<li><code>GOOGLE_CLIENT_SECRET</code></li>
+<li><code>GOOGLE_CALL_BACK_URL</code></li>
+<li><code>NODE_ENV</code></li>
+<li><code>EMAIL_ID</code></li>
+<li><code>EMAIL_PASSWORD</code></li>
+<li><code>ACCESS_TOKEN_PRIVATE_KEY</code></li>
+<li><code>ACCESS_TOKEN_PUBLIC_KEY</code></li>
+<li><code>REFRESH_TOKEN_PRIVATE_KEY</code></li>
+<li><code>REFRESH_TOKEN_PUBLIC_KEY</code></li>
+</ul>
+
+<a href="#acknowledgements" id="acknowledgements" style="color: inherit; text-decoration: none;">
+  <h1>Acknowledgements</h1>
+</a>
+
+<a href="#credits-to" id="credits-to" style="color: inherit; text-decoration: none;">
+  <h2>Credits to</h2>
+</a>
+<ul>
+<li><a href="https://github.com/stuyy">Anson</a></li>
+<li><a href="https://github.com/Vuka951">Vuka951</a></li>
+<li><a href="https://github.com/mrcool1575">Theis N. Jensen</a></li>
+</ul>
+
+<a href="#wanna-join-the-team" id="wanna-join-the-team" style="color: inherit; text-decoration: none;">
+  <h1>Wanna join the team?</h1>
+</a>
+<ul>
+<li><a href="https://discord.gg/8kTdfWmuQa">Discord server</a></li>
+<li><a href="https://www.postman.com/multiemail/workspace/muti-email-rest-api/overview">Postman team</a></li>
+</ul>
+
+<a href="#contributors-✨" id="contributors-✨" style="color: inherit; text-decoration: none;">
+  <h2>Contributors ✨</h2>
+</a>
+<p>Thanks goes to these wonderful people ❤:</p>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://shriproperty.com"><img src="https://avatars.githubusercontent.com/u/69336518?v=4?s=100" width="100px;" alt="Ayush Chugh"/><br /><sub><b>Ayush Chugh</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=aayushchugh" title="Code">💻</a> <a href="https://github.com/MultiEmail/MultiEmail-backend/pulls?q=is%3Apr+reviewed-by%3Aaayushchugh" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=aayushchugh" title="Documentation">📖</a> <a href="#maintenance-aayushchugh" title="Maintenance">🚧</a> <a href="#projectManagement-aayushchugh" title="Project Management">📆</a></td>
+      <td align="center"><a href="https://github.com/DaatUserName"><img src="https://avatars.githubusercontent.com/u/40370496?v=4?s=100" width="100px;" alt="Toby"/><br /><sub><b>Toby</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=DaatUserName" title="Code">💻</a> <a href="https://github.com/MultiEmail/MultiEmail-backend/pulls?q=is%3Apr+reviewed-by%3ADaatUserName" title="Reviewed Pull Requests">👀</a> <a href="#maintenance-DaatUserName" title="Maintenance">🚧</a></td>
+      <td align="center"><a href="https://github.com/shivamvishwakarm"><img src="https://avatars.githubusercontent.com/u/80755217?v=4?s=100" width="100px;" alt="shivam vishwakarma"/><br /><sub><b>shivam vishwakarma</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=shivamvishwakarm" title="Documentation">📖</a> <a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=shivamvishwakarm" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/tharun634"><img src="https://avatars.githubusercontent.com/u/53267275?v=4?s=100" width="100px;" alt="Tharun K"/><br /><sub><b>Tharun K</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=tharun634" title="Documentation">📖</a> <a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=tharun634" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/is-it-ayush"><img src="https://avatars.githubusercontent.com/u/36449128?v=4?s=100" width="100px;" alt="Ayush"/><br /><sub><b>Ayush</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=is-it-ayush" title="Code">💻</a> <a href="#mentoring-is-it-ayush" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/MultiEmail/MultiEmail-backend/pulls?q=is%3Apr+reviewed-by%3Ais-it-ayush" title="Reviewed Pull Requests">👀</a> <a href="#maintenance-is-it-ayush" title="Maintenance">🚧</a></td>
+      <td align="center"><a href="https://www.jamesmesser.xyz"><img src="https://avatars.githubusercontent.com/u/71551059?v=4?s=100" width="100px;" alt="James"/><br /><sub><b>James</b></sub></a><br /><a href="#financial-CodesWithJames" title="Financial">💵</a></td>
+      <td align="center"><a href="https://github.com/AndrewFirePvP7"><img src="https://avatars.githubusercontent.com/u/29314485?v=4?s=100" width="100px;" alt="AndrewDev"/><br /><sub><b>AndrewDev</b></sub></a><br /><a href="#ideas-AndrewFirePvP7" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
+    <tr>
+      <td align="center"><a href="https://arpitchugh.live/"><img src="https://avatars.githubusercontent.com/u/63435960?v=4?s=100" width="100px;" alt="Arpit Chugh"/><br /><sub><b>Arpit Chugh</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=Arpitchugh" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://github.com/drishit96"><img src="https://avatars.githubusercontent.com/u/13049630?v=4?s=100" width="100px;" alt="Drishit Mitra"/><br /><sub><b>Drishit Mitra</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=drishit96" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="center" size="13px" colspan="7">
+        <img src="https://raw.githubusercontent.com/all-contributors/all-contributors-cli/1b8533af435da9854653492b1327a23a4dbd0a10/assets/logo-small.svg">
+          <a href="https://all-contributors.js.org/docs/en/bot/usage">Add your contributions</a>
+        </img>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+<p>This project follows the <a href="https://github.com/all-contributors/all-contributors">all-contributors</a> specification. Contributions of any kind welcome!</p>
+</div></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current selected"><a href="modules.html">multiemail-<wbr/>backend</a>
+<ul></ul></li></ul></div></details></nav>
+<nav class="tsd-navigation secondary menu-sticky"></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="assets/main.js"></script></body></html>
