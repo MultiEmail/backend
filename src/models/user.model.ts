@@ -1,19 +1,8 @@
 import { genSalt, hash, compare } from "bcrypt";
-import {
-	pre,
-	prop,
-	index,
-	getModelForClass,
-	Severity,
-} from "@typegoose/typegoose";
+import { pre, prop, index, getModelForClass, Severity } from "@typegoose/typegoose";
 import { generateRandomOTP } from "../utils/otp.util";
 
-export const userModalPrivateFields = [
-	"password",
-	"__v",
-	"verificationCode",
-	"passwordResetCode",
-];
+export const userModalPrivateFields = ["password", "__v", "verificationCode", "passwordResetCode"];
 
 @index({ uid: 1, email: 1, username: 1 })
 @pre<User>("save", async function (next) {
