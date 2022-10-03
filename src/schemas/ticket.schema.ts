@@ -24,6 +24,17 @@ export const createTicketSchema = z.object({
 
 export type CreateTicketSchema = z.TypeOf<typeof createTicketSchema>;
 
+export const patchTicketStatusSchema = z.object({
+	body: z.object({
+		status: z.enum(["new", "in-progress", "solved"], { required_error: "Status is required" }),
+	}),
+	params: z.object({
+		id: z.string({ required_error: "Id is required" }),
+	}),
+});
+
+export type PatchTicketStatusSchema = z.TypeOf<typeof patchTicketStatusSchema>;
+
 export const deleteTicketSchema = z.object({
 	params: z.object({
 		id: z.string({ required_error: "Id is required" }),

@@ -11,7 +11,7 @@ import deserializeUser from "./middleware/deserializeUser.middleware";
 import authRouter from "./routes/auth.routes";
 import cookieSession from "cookie-session";
 import userRouter from "./routes/user.routes";
-import { ticketRouter } from "./routes/ticket.routes";
+import ticketRouter from "./routes/ticket.routes";
 
 config();
 

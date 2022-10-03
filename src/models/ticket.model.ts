@@ -14,7 +14,7 @@ export class Ticket {
 	message: string;
 
 	@prop({ default: false })
-	status: "new" | "in_progress" | "solved";
+	status: "new" | "in-progress" | "solved";
 }
 
 const TicketModel = getModelForClass(Ticket, {

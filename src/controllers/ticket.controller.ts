@@ -4,8 +4,13 @@ import {
 	createTicketService,
 	deleteTicketByIdService,
 	findTicketsService,
+	updateTicketByIdService,
 } from "../services/ticket.service";
-import { CreateTicketSchema, DeleteTicketSchema } from "../schemas/ticket.schema";
+import {
+	CreateTicketSchema,
+	DeleteTicketSchema,
+	PatchTicketStatusSchema,
+} from "../schemas/ticket.schema";
 
 export async function createTicketHandler(
 	req: Request<{}, {}, CreateTicketSchema["body"]>,
@@ -51,13 +56,39 @@ export async function getAllTicketsHandler(req: Request, res: Response) {
 	}
 }
 
+export async function patchTicketStatusHandler(
+	req: Request<PatchTicketStatusSchema["params"], {}, PatchTicketStatusSchema["body"]>,
+	res: Response,
+) {
+	const { status } = req.body;
+	const { id } = req.params;
+
+	try {
+		const updatedTicket = await updateTicketByIdService(id, { status });
+
+		if (!updatedTicket) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "Ticket not found",
+			});
+		}
+
+		return res.status(StatusCodes.OK).json({
+			message: "Successfully updated support ticket status",
+		});
+	} catch (err) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal server error",
+		});
+	}
+}
+
 export async function deleteTicketHandler(
 	req: Request<DeleteTicketSchema["params"]>,
 	res: Response,
 ) {
-	try {
-		const { id } = req.params;
+	const { id } = req.params;
 
+	try {
 		const deletedTicket = await deleteTicketByIdService(id);
 
 		if (!deletedTicket) {

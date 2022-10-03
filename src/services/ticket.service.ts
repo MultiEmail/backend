@@ -1,4 +1,4 @@
-import { FilterQuery, DocumentDefinition } from "mongoose";
+import { FilterQuery, DocumentDefinition, UpdateQuery } from "mongoose";
 import TicketModel, { Ticket } from "../models/ticket.model";
 
 /**
@@ -23,6 +23,17 @@ export function findTicketsByIdService(id: string) {
  */
 export function createTicketService(payload: DocumentDefinition<Ticket>) {
 	return TicketModel.create(payload);
+}
+
+/**
+ * It takes an id and a payload, and then it updates the ticket with the given id with the given
+ * payload
+ * @param {string} id - string - the id of the ticket to update
+ * @param payload - UpdateQuery<Ticket>
+ * @returns A promise that resolves to the updated ticket.
+ */
+export function updateTicketByIdService(id: string, payload: UpdateQuery<Ticket>) {
+	return TicketModel.findByIdAndUpdate(id, payload, { new: true });
 }
 
 /**

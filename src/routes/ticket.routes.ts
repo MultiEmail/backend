@@ -3,12 +3,17 @@ import {
 	createTicketHandler,
 	deleteTicketHandler,
 	getAllTicketsHandler,
+	patchTicketStatusHandler,
 } from "../controllers/ticket.controller";
 import requireAdminRole from "../middleware/requireAdminRole.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
-import { createTicketSchema, deleteTicketSchema } from "../schemas/ticket.schema";
+import {
+	createTicketSchema,
+	deleteTicketSchema,
+	patchTicketStatusSchema,
+} from "../schemas/ticket.schema";
 
-export const ticketRouter: Router = Router();
+const ticketRouter: Router = Router();
 
 ticketRouter
 	.route("/tickets")
@@ -17,4 +22,7 @@ ticketRouter
 
 ticketRouter
 	.route("/tickets/:id")
-	.delete(requireAdminRole, validateRequest(deleteTicketSchema), deleteTicketHandler);
+	.delete(requireAdminRole, validateRequest(deleteTicketSchema), deleteTicketHandler)
+	.patch(requireAdminRole, validateRequest(patchTicketStatusSchema), patchTicketStatusHandler);
+
+export default ticketRouter;
