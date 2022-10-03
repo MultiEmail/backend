@@ -59,6 +59,10 @@ multi-email-admin -e <email> -u <username> -p <password>
 -   `REFRESH_TOKEN_PRIVATE_KEY`
 -   `REFRESH_TOKEN_PUBLIC_KEY`
 
+# Docs
+
+[Github Pages](https://multiemail.github.io/MultiEmail-backend/)
+
 # Acknowledgements
 
 ## Credits to
