@@ -14,7 +14,6 @@
 		"multi-email-admin": "./build/bin/index.js"
 	},
 	"dependencies": {
-		"@commitlint/config-conventional": "^17.1.0",
 		"@prisma/client": "^4.3.1",
 		"@typegoose/typegoose": "^9.12.1",
 		"@types/lodash": "^4.14.186",
@@ -42,6 +41,7 @@
 		"zod": "^3.19.1"
 	},
 	"devDependencies": {
+                "@commitlint/config-conventional": "^17.1.0",
 		"@types/bcrypt": "5.0.0",
 		"@types/cookie-session": "2.0.44",
 		"@types/cors": "2.8.12",
