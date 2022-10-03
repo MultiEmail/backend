@@ -1,0 +1,11 @@
+{
+	"entryPoints": [
+		"src/*/**/*",
+		"src/controllers/**/*",
+		"src/models/**/*",
+		"src/routes/**/*",
+		"src/utils/**/*",
+		"src/app.ts"
+	],
+	"out": "docs"
+}
