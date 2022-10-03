@@ -65,15 +65,9 @@ multi-email-admin -e <email> -u <username> -p <password>
 
 # Acknowledgements
 
-## Credits to
-
--   [Anson](https://github.com/stuyy)
--   [Vuka951](https://github.com/Vuka951)
--   [Theis N. Jensen](https://github.com/mrcool1575)
-
 # Wanna join the team?
 
--   [Discord server](https://discord.gg/8kTdfWmuQa)
+-   [Discord server](https://discord.gg/gkvCYzRKEB)
 -   [Postman team](https://www.postman.com/multiemail/workspace/muti-email-rest-api/overview)
 
 ## Contributors ✨
