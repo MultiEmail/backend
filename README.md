@@ -1,7 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -91,6 +89,7 @@ Thanks goes to these wonderful people ❤:
     <tr>
       <td align="center"><a href="https://arpitchugh.live/"><img src="https://avatars.githubusercontent.com/u/63435960?v=4?s=100" width="100px;" alt="Arpit Chugh"/><br /><sub><b>Arpit Chugh</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=Arpitchugh" title="Documentation">📖</a></td>
       <td align="center"><a href="https://github.com/drishit96"><img src="https://avatars.githubusercontent.com/u/13049630?v=4?s=100" width="100px;" alt="Drishit Mitra"/><br /><sub><b>Drishit Mitra</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=drishit96" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/Areadrill"><img src="https://avatars.githubusercontent.com/u/9729792?v=4?s=100" width="100px;" alt="João Mota"/><br /><sub><b>João Mota</b></sub></a><br /><a href="https://github.com/MultiEmail/MultiEmail-backend/commits?author=Areadrill" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
