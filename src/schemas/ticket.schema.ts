@@ -23,3 +23,11 @@ export const createTicketSchema = z.object({
 });
 
 export type CreateTicketSchema = z.TypeOf<typeof createTicketSchema>;
+
+export const deleteTicketSchema = z.object({
+	params: z.object({
+		id: z.string({ required_error: "Id is required" }),
+	}),
+});
+
+export type DeleteTicketSchema = z.TypeOf<typeof deleteTicketSchema>;

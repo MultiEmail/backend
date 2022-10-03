@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { createTicketService, findTicketsService } from "../services/ticket.service";
-import { CreateTicketSchema } from "../schemas/ticket.schema";
+import {
+	createTicketService,
+	deleteTicketByIdService,
+	findTicketsService,
+} from "../services/ticket.service";
+import { CreateTicketSchema, DeleteTicketSchema } from "../schemas/ticket.schema";
 
 export async function createTicketHandler(
 	req: Request<{}, {}, CreateTicketSchema["body"]>,
@@ -35,9 +39,33 @@ export async function createTicketHandler(
 export async function getAllTicketsHandler(req: Request, res: Response) {
 	try {
 		const records = await findTicketsService();
-		res.status(StatusCodes.OK).json({
+
+		return res.status(StatusCodes.OK).json({
 			message: "Successfully fetched all support tickets",
 			records,
+		});
+	} catch (err) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal server error",
+		});
+	}
+}
+
+export async function deleteTicketHandler(
+	req: Request<DeleteTicketSchema["params"]>,
+	res: Response,
+) {
+	try {
+		const { id } = req.params;
+
+		const deletedTicket = await deleteTicketByIdService(id);
+
+		if (!deletedTicket) {
+			return res.status(StatusCodes.NOT_FOUND).json({ error: "Ticket not found" });
+		}
+
+		return res.status(StatusCodes.OK).json({
+			message: "Successfully deleted support ticket",
 		});
 	} catch (err) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
