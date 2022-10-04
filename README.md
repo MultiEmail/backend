@@ -1,5 +1,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -18,21 +20,109 @@
 -   recive emails
 -   Connections through other parties ie discord, twitter, facebook etc..
 
-# Setup
+# Run locally
 
-## Windows
+You can setup the application on your local system by 2 methods
+
+-   Docker
+-   Manually
+
+> :warning: If you are using unix operating system
+> than prefix all bash commands with `sudo`
+
+### Create new directory and clone the repository
+
+```bash
+mkdir multi-email
+cd multi-email
+git clone https://github.com/MultiEmail/backend.git
+cd backend
+```
+
+## Using Docker
+
+### Prerequisite
+
+-   [Docker](https://www.docker.com/) is installed on your local system
+-   `.env` file wih all required variables (check environment variables mentioned below)
+
+### Run Server
+
+```bash
+docker compose --env-file ./.env up --build
+```
+
+### Create admin user
+
+List current running docker containers
+
+```bash
+docker ps
+```
+
+Output
+
+```bash
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+d07f06c78445   backend-api    "docker-entrypoint.s…"   46 minutes ago   Up 46 minutes   0.0.0.0:3001->3001/tcp, :::3001->3001/tcp     Server
+91826c111b76   mongo:latest   "docker-entrypoint.s…"   52 minutes ago   Up 46 minutes   0.0.0.0:2717->27017/tcp, :::2717->27017/tcp   Database
 
 ```
-git clone https://github.com/MultiEmail/MultiEmail-backend.git
-cd MultiEmail-backend
+
+now copy the `CONTAINER ID` of image/container `backend-api` and replace `<container_id>` in the below mentioned commands and execute them
+
+```bash
+# build and install the command line tool in docker container
+docker exec <container_id> yarn build
+docker exec <container_id> npm i -g .
+```
+
+```bash
+# create new admin user in database in docker container
+docker exec <container_id> multi-email-admin -e <email> -u <username> -p <password>
+```
+
+### Extra's (Port forwarding for docker containers)
+
+| Container | PORT (host) | Port (container) |
+| --------- | ----------- | ---------------- |
+| Server    | 3001        | 3001             |
+| MongoDB   | 2717        | 27017            |
+
+if you want to access database inside docker container from host than use
+
+```bash
+mongosh --port 2717
+```
+
+or if you want to use [mongodb compass](https://www.mongodb.com/products/compass) than you can use
+this connection string
+
+```
+mongodb://mongo_db:27017/multiemail
+```
+
+## Manually
+
+### Prerequisite
+
+-   Latest [Node js](https://nodejs.org/en/) version
+-   [Yarn](https://yarnpkg.com/) installed
+-   [Mongodb](https://www.mongodb.com/) installed on local system
+-   `.env` file wih all required variables (check environment variables mentioned below)
+
+### Install all the required dependencies
+
+this project use [Yarn](https://yarnpkg.com/) as package manager
+
+```bash
 yarn install
+```
+
+### Run the server
+
+```bash
 yarn dev
-```
-
-## Linux
-
-```
-git clone https://github.com/MultiEmail/MultiEmail-backend.git && cd MultiEmail-backend && yarn install && yarn dev
 ```
 
 # Create admin user
@@ -45,19 +135,33 @@ multi-email-admin -e <email> -u <username> -p <password>
 
 # Environment Variables
 
--   `DB_URI`
--   `GOOGLE_CLIENT_ID`
--   `GOOGLE_CLIENT_SECRET`
--   `GOOGLE_CALL_BACK_URL`
--   `NODE_ENV`
--   `EMAIL_ID`
--   `EMAIL_PASSWORD`
--   `ACCESS_TOKEN_PRIVATE_KEY`
--   `ACCESS_TOKEN_PUBLIC_KEY`
--   `REFRESH_TOKEN_PRIVATE_KEY`
--   `REFRESH_TOKEN_PUBLIC_KEY`
+To run this project, you will need to add the following environment variables to your .env file
 
-# Docs
+| Name                      | Description                                                       | Example                                                                               |
+| ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| DB_URI                    | URI on which database is running                                  | mongodb://localhost:27017/multiemail                                                  |
+| GOOGLE_CLIENT_ID          | Client ID obtained while creating google oauth concent screen     | 758327950938-90jskrnp9b8d2e6ljpqrstd8fdl2k9fljkhchasnnrnj8.apps.googleusercontent.com |
+| GOOGLE_CLIENT_SECRET      | Client Secret obtained while creating google oauth concent screen | GOCSPX-NL52LzLNzF6YGJxlAoeLAnGK-a6                                                    |
+| NODE_ENV                  | What type of environment are you running this app in              | development                                                                           |
+| EMAIL_ID                  | Which ID will be used for sending email                           | no-reply@multiemail.com                                                               |
+| EMAIL_PASSWORD            | Password of your email id                                         | mystrongpassword                                                                      |
+| ACCESS_TOKEN_PRIVATE_KEY  | private RSA key which will be used to sign access token           | check .env.example file                                                               |
+| ACCESS_TOKEN_PUBLIC_KEY   | public RSA key which will be used to verify access token          | check .env.example file                                                               |
+| REFRESH_TOKEN_PRIVATE_KEY | private RSA key which will be used to sign refresh token          | check .env.example file                                                               |
+| REFRESH_TOKEN_PUBLIC_KEY  | public RSA key which will be used to verify refresh token         | check .env.example file                                                               |
+
+### NOTEs
+
+-   Your `DB_URI` must be `mongodb://mongo_db:27017/multiemail` if you are using docker
+-   If you use gmail account as `EMAIL_ID` than you must enable [2FA](https://myaccount.google.com/signinoptions/two-step-verification/enroll-welcome?pli=1) for your google account and generate [app password](https://support.google.com/accounts/answer/185833?hl=en) and use it as `EMAIL_PASS`
+
+### Resources for generating .env variables
+
+-   You can get google credentials by following this [guide](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid)
+-   You can use [crypto tools](https://cryptotools.net/rsagen) for generating RSA keys for access and refresh tokens
+-   RSA keys must be `1024`
+
+# Detailed docs
 
 [Github Pages](https://multiemail.github.io/MultiEmail-backend/)
 
@@ -66,11 +170,11 @@ multi-email-admin -e <email> -u <username> -p <password>
 -   [Discord server](https://discord.gg/gkvCYzRKEB)
 -   [Postman team](https://www.postman.com/multiemail/workspace/muti-email-rest-api/overview)
 
-##  Contributing
+## Contributing
 
-- Contributions make the open source community such an amazing place to learn, inspire, and create.
-- Any contributions you make are **truly appreciated**.
-- Check out our [contribution guidelines](/CONTRIBUTING.md) for more information.
+-   Contributions make the open source community such an amazing place to learn, inspire, and create.
+-   Any contributions you make are **truly appreciated**.
+-   Check out our [contribution guidelines](/CONTRIBUTING.md) for more information.
 
 <h2>
 License
@@ -80,7 +184,6 @@ License
 <p>
 This project is Licensed under the <a href="./LICENSE">MIT License</a>. Please go through the License atleast once before making your contribution. </p>
 <br>
-
 
 ## Contributors ✨
 

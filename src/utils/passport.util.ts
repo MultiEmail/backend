@@ -9,16 +9,11 @@ passport.use(
 		{
 			clientID: process.env.GOOGLE_CLIENT_ID as string,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-			callbackURL: process.env.GOOGLE_CALL_BACK_URL as string,
+			callbackURL: "http://localhost:3001/api/auth/oauth/google/redirect",
 			scope: ["profile", "email"],
 		},
 
-		async function (
-			accessToken: string,
-			refreshToken: string,
-			profile: any,
-			done: any
-		) {
+		async function (accessToken: string, refreshToken: string, profile: any, done: any) {
 			const user = await UserModel.findOne({ email: profile.emails[0].value });
 			if (user) {
 				logger.info(`Email ${user.email} already exists`);
@@ -29,13 +24,11 @@ passport.use(
 				username: profile.displayName,
 				googleId: profile.id,
 			}).then(() =>
-				logger.info(
-					`Inserted email ${profile.emails[0].value} into the database`
-				)
+				logger.info(`Inserted email ${profile.emails[0].value} into the database`),
 			);
 			return done(null, profile);
-		}
-	)
+		},
+	),
 );
 
 passport.serializeUser(function (user: any, done: any) {
