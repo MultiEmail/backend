@@ -24,7 +24,6 @@ app.use(
 		secret: "secret",
 	}),
 );
-
 app.use(cors());
 app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
