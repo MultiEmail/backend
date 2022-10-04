@@ -61,8 +61,6 @@ multi-email-admin -e <email> -u <username> -p <password>
 
 [Github Pages](https://multiemail.github.io/MultiEmail-backend/)
 
-# Acknowledgements
-
 # Wanna join the team?
 
 -   [Discord server](https://discord.gg/gkvCYzRKEB)
