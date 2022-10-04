@@ -12,6 +12,7 @@ import authRouter from "./routes/auth.routes";
 import cookieSession from "cookie-session";
 import userRouter from "./routes/user.routes";
 import ticketRouter from "./routes/ticket.routes";
+import rateLimiter from "./middleware/rateLimiter.middleware";
 
 config();
 
@@ -36,6 +37,7 @@ app.use(deserializeUser);
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", ticketRouter);
+app.use(rateLimiter);
 
 mongoose.connect(process.env.DB_URI as string, () => {
 	const PORT = process.env.PORT || 3001;
