@@ -79,3 +79,18 @@ export function deleteUserByIdService(id: string) {
 export function updateUserByIdService(id: string, payload: UpdateQuery<User>) {
 	return UserModel.findByIdAndUpdate(id, payload);
 }
+
+/**
+ * @author is-it-ayush
+ * @description Babel and CommonJS fix: Without This *.test.js wont recognise the typescript functions.
+ */
+module.exports = {
+	findUserByIdService,
+	findUserByEmailService,
+	findUserByUsernameService,
+	findUserByEitherEmailOrUsernameService,
+	createUserService,
+	findUsersService,
+	deleteUserByIdService,
+	updateUserByIdService,
+};

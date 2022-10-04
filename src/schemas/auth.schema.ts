@@ -66,7 +66,7 @@ export type ForgotPasswordSchema = z.TypeOf<typeof forgotPasswordSchema>;
 export const resetPasswordSchema = z.object({
 	params: z.object({
 		email: z
-			.string({ required_error: "email is required" })
+			.string({ required_error: "Email is required" })
 			.email("Please provide a valid email"),
 		passwordResetCode: z
 			.string({

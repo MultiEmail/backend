@@ -35,12 +35,18 @@ app.use(deserializeUser);
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 
-mongoose.connect(process.env.DB_URI as string, () => {
-	const PORT = process.env.PORT || 3001;
+logger.info("Current Environment: " + process.env.NODE_ENV);
 
-	logger.info("Connected to Database!");
-
-	app.listen(PORT, () => {
-		logger.info(`Server listening on http://localhost:${PORT}`);
+if (process.env.NODE_ENV?.trim()  !==  'test') {
+	mongoose.connect(process.env.DB_URI as string, () => {
+		const PORT = process.env.PORT || 3001;
+	
+		logger.info("Connected to Database!");
+	
+		app.listen(PORT, () => {
+			logger.info(`Server listening on http://localhost:${PORT}`);
+		});
 	});
-});
+}
+
+module.exports = app;
