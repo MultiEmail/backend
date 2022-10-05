@@ -101,6 +101,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Areadrill",
+      "name": "João Mota",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9729792?v=4",
+      "profile": "https://github.com/Areadrill",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "shashankbhatgs",
+      "name": "Shashank Bhat G S",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76593166?v=4",
+      "profile": "https://github.com/shashankbhatgs",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,

@@ -16,10 +16,29 @@ export const createTicketSchema = z.object({
 			.min(10, "Title must be minimum 10 characters")
 			.max(300, "Title can not be longer than 300 characters"),
 
-		description: z
+		message: z
 			.string({ required_error: "Description is required" })
 			.max(1000, "Description can not be longer than 1000 characters"),
 	}),
 });
 
-export type CreateTicketSchema = z.TypeOf<typeof createTicketSchema>
+export type CreateTicketSchema = z.TypeOf<typeof createTicketSchema>;
+
+export const patchTicketStatusSchema = z.object({
+	body: z.object({
+		status: z.enum(["new", "in-progress", "solved"], { required_error: "Status is required" }),
+	}),
+	params: z.object({
+		id: z.string({ required_error: "Id is required" }),
+	}),
+});
+
+export type PatchTicketStatusSchema = z.TypeOf<typeof patchTicketStatusSchema>;
+
+export const deleteTicketSchema = z.object({
+	params: z.object({
+		id: z.string({ required_error: "Id is required" }),
+	}),
+});
+
+export type DeleteTicketSchema = z.TypeOf<typeof deleteTicketSchema>;

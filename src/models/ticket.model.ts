@@ -2,20 +2,23 @@ import { getModelForClass, prop } from "@typegoose/typegoose";
 
 export class Ticket {
 	@prop({ required: true })
-	topic: string;
+	name: string;
 
 	@prop({ required: true })
-	description: string;
+	subject: string;
 
 	@prop({ required: true })
-	submittedBy: string;
+	email: string;
+
+	@prop({ required: true })
+	message: string;
 
 	@prop({ default: false })
-	solved: boolean;
+	status: "new" | "in-progress" | "solved";
 }
 
 const TicketModel = getModelForClass(Ticket, {
-  schemaOptions: { timestamps: true },
+	schemaOptions: { timestamps: true },
 });
 
 export default TicketModel;
