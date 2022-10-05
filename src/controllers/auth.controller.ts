@@ -45,14 +45,15 @@ export async function signupHandler(req: Request<{}, {}, SignupSchema["body"]>, 
 			message: "User created successfully",
 		});
 	} catch (err: any) {
-		logger.error(err);
-
+		
 		if (err.code === 11000) {
 			return res.status(StatusCodes.CONFLICT).json({
 				error: "User with same email or username already exists",
 			});
 		}
-
+		// @author is-it-ayush
+		// fix: Only log error's if they are unknown errors to prevent console spam.
+		logger.error(err);
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal server error",
 		});
@@ -124,6 +125,14 @@ export async function loginHandler(req: Request<{}, {}, LoginSchema["body"]>, re
 			});
 		}
 
+		// @author is-it-ayush
+		//fix: if user is not verified then don't allow him to login
+		if(!user.verified) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: "User is not verified",
+			});
+		}
+
 		// sign access and refresh token
 		const accessToken = await signAccessTokenService(user);
 		const refreshToken = await signRefreshTokenService(user._id);
@@ -192,7 +201,9 @@ export function getCurrentUserHandler(req: Request, res: Response) {
 	const { user } = res.locals;
 
 	if (!user) {
-		return res.status(StatusCodes.OK).json({
+		// @author is-it-ayush
+		//fix: if user is not found then return 401 status code
+		return res.status(StatusCodes.UNAUTHORIZED).json({
 			message: "User is not logged In",
 			user: null,
 		});
@@ -212,8 +223,9 @@ export async function forgotPasswordHandler(
 ) {
 	const { email } = req.body;
 
+
 	try {
-		const user = await findUserByEmailService(email);
+		const user = await findUserByEmailService(email.trim());
 
 		if (!user) {
 			return res.status(StatusCodes.NOT_FOUND).json({
@@ -230,12 +242,27 @@ export async function forgotPasswordHandler(
 		// generate password reset code and send that to users email
 		const passwordResetCode = generateRandomOTP();
 		user.passwordResetCode = passwordResetCode;
+
+		/**
+		 * @author is-it-ayush
+		 * fix: send email to user with password reset code before saving the user.
+		 * fix: wrapped the save method in a try catch block to handle errors.
+		 */
+		try {
+			await sendEmail(
+				email,
+				"OTP to password reset for Multi Email",
+				`Your OTP to reset password is ${passwordResetCode}`,
+			);
+		}
+		catch (err) {
+			logger.error(err);
+			return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+				error: "Internal server error",
+			});
+		}
+
 		await user.save();
-		await sendEmail(
-			email,
-			"OTP to password reset for Multi Email",
-			`Your OTP to reset password is ${passwordResetCode}`,
-		);
 
 		return res.status(StatusCodes.OK).json({
 			message: "Password reset code sent to your email",

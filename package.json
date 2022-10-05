@@ -8,7 +8,8 @@
 		"dev": "yarn && tsnd --exit-child --transpile-only src/app.ts",
 		"build": "yarn && tsc --build",
 		"docs": "typedoc",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"test": "set NODE_ENV=test && jest --forceExit"
 	},
 	"bin": {
 		"multi-email-admin": "./build/bin/index.js"
@@ -70,6 +71,8 @@
 		"eslint-plugin-pii": "1.0.2",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-sonarjs": "0.15.0",
+		"mongodb-memory-server": "^8.9.3",
+    "supertest": "^6.3.0",
 		"husky": "8.0.1",
 		"jest": "29.1.2",
 		"prettier": "2.7.1",
