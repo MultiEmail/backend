@@ -15,11 +15,27 @@ import {
 
 const ticketRouter: Router = Router();
 
+// NOTE: all routes defined with `ticketRouter` will be pre-fixed with `/api`
+
+/**
+ * This route will do following
+ * POST -> create new ticket
+ * GET -> get all tickets (protected for admin)
+ *
+ * @author aayushchugh
+ */
 ticketRouter
 	.route("/tickets")
 	.post(validateRequest(createTicketSchema), createTicketHandler)
 	.get(requireAdminRole, getAllTicketsHandler);
 
+/**
+ * This route will do following
+ * PATCH -> update ticket status (protected for admin)
+ * DELETE -> delete ticket (protected for admin)
+ *
+ * @author aayushchugh
+ */
 ticketRouter
 	.route("/tickets/:id")
 	.delete(requireAdminRole, validateRequest(deleteTicketSchema), deleteTicketHandler)

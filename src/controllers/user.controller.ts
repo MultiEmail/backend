@@ -13,7 +13,15 @@ import {
 } from "../services/user.service";
 import logger from "../utils/logger.util";
 
-export async function getAllUsersHandler(req: Request, res: Response) {
+/**
+ * This controller will get all users from database
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const getAllUsersHandler = async (req: Request, res: Response) => {
 	try {
 		const records = await findUsersService();
 
@@ -28,9 +36,20 @@ export async function getAllUsersHandler(req: Request, res: Response) {
 			error: "Internal Server Error",
 		});
 	}
-}
+};
 
-export async function deleteUserHandler(req: Request<DeleteUserSchema["params"]>, res: Response) {
+/**
+ * This controller will delete user from database
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const deleteUserHandler = async (
+	req: Request<DeleteUserSchema["params"]>,
+	res: Response,
+) => {
 	const { id } = req.params;
 
 	try {
@@ -52,12 +71,21 @@ export async function deleteUserHandler(req: Request<DeleteUserSchema["params"]>
 			error: "Internal Server Error",
 		});
 	}
-}
+};
 
-export async function patchMarkUserVerifiedHandler(
+/**
+ * This controller will mark user as verified.
+ * this can be used by admin to mark any user as verified
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const patchMarkUserVerifiedHandler = async (
 	req: Request<PatchMarkUserVerifiedSchema["params"]>,
 	res: Response,
-) {
+) => {
 	const { id } = req.params;
 
 	try {
@@ -79,12 +107,20 @@ export async function patchMarkUserVerifiedHandler(
 			error: "Internal Server Error",
 		});
 	}
-}
+};
 
-export async function patchUserHandler(
+/**
+ * This controller will update user's username
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const patchUserHandler = async (
 	req: Request<PatchUserSchema["params"], {}, PatchUserSchema["body"]>,
 	res: Response,
-) {
+) => {
 	const { id } = req.params;
 	const { username } = req.body;
 
@@ -117,4 +153,4 @@ export async function patchUserHandler(
 			error: "Internal Server Error",
 		});
 	}
-}
+};

@@ -7,6 +7,8 @@ import { createSessionService } from "./session.service";
 /**
  * Create a access token for given user
  * @param user this is user which will be signed into JWT token
+ *
+ * @author aayushchugh
  */
 export function signAccessTokenService(user: DocumentType<User>) {
 	const payload = omit(user.toJSON(), userModalPrivateFields);
@@ -16,6 +18,12 @@ export function signAccessTokenService(user: DocumentType<User>) {
 	});
 }
 
+/**
+ * This service will create a refreshToken and create new session in database
+ * @param userId id of user for which refreshToken will be generated
+ *
+ * @author aayushchugh
+ */
 export async function signRefreshTokenService(userId: string) {
 	const session = await createSessionService(userId);
 

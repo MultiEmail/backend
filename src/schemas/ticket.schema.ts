@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+/**
+ * This schema is used to validate `POST /ticket` request
+ *
+ * @constant
+ * @author aayushchugh
+ */
 export const createTicketSchema = z.object({
 	body: z.object({
 		name: z
@@ -22,8 +28,19 @@ export const createTicketSchema = z.object({
 	}),
 });
 
+/**
+ * This type is generated using createTicketSchema and can be used
+ * as express Request type generic
+ *
+ * @author aayushchugh
+ */
 export type CreateTicketSchema = z.TypeOf<typeof createTicketSchema>;
 
+/**
+ * This schema is used to validate `PATCH /tickets/:id` request
+ *
+ * @author aayushchugh
+ */
 export const patchTicketStatusSchema = z.object({
 	body: z.object({
 		status: z.enum(["new", "in-progress", "solved"], { required_error: "Status is required" }),
@@ -33,12 +50,29 @@ export const patchTicketStatusSchema = z.object({
 	}),
 });
 
+/**
+ * This type is generated using `patchTicketSchema` and can be used
+ * as express Request type generic
+ *
+ * @author aayushchugh
+ */
 export type PatchTicketStatusSchema = z.TypeOf<typeof patchTicketStatusSchema>;
 
+/**
+ * This schema is used to validate `DELETE /tickets/:id` request
+ *
+ * @author aayushchugh
+ */
 export const deleteTicketSchema = z.object({
 	params: z.object({
 		id: z.string({ required_error: "Id is required" }),
 	}),
 });
 
+/**
+ * This type is generated using `deleteTicketSchema` and can be used
+ * as express Request type generic
+ *
+ * @author aayushchugh
+ */
 export type DeleteTicketSchema = z.TypeOf<typeof deleteTicketSchema>;

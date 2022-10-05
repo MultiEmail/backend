@@ -4,6 +4,8 @@ import { User } from "../models/user.model";
 
 /**
  * This middleware will check if the current user has admin role
+ *
+ * @author aayushchugh
  */
 export default function requireAdminRole(_: Request, res: Response, next: NextFunction) {
 	try {
