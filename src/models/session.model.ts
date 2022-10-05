@@ -1,6 +1,7 @@
-import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { getModelForClass, prop, Ref, index } from "@typegoose/typegoose";
 import { User } from "./user.model";
 
+@index<Session>({ expireAt: 1 })
 export class Session {
 	@prop({ required: true, ref: () => User })
 	user: Ref<User>;
@@ -8,8 +9,8 @@ export class Session {
 	@prop({ required: true })
 	valid: boolean;
 
-	@prop({ default: Date.now(), index: { expires: "15d" } })
-	expireAt: number;
+	@prop({ default: Date.now(), expires: "15d" })
+	expireAt: Date;
 }
 
 const SessionModel = getModelForClass(Session, {
