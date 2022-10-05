@@ -12,10 +12,21 @@ import {
 	PatchTicketStatusSchema,
 } from "../schemas/ticket.schema";
 
-export async function createTicketHandler(
+/**
+ * This controller will create new support ticket in database.
+ * user can only submit 3 tickets.
+ * they will have to wait for previous tickets to resolve
+ * before submitting new one
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const createTicketHandler = async (
 	req: Request<{}, {}, CreateTicketSchema["body"]>,
 	res: Response,
-) {
+) => {
 	const { message, name, email, subject } = req.body;
 
 	try {
@@ -39,9 +50,17 @@ export async function createTicketHandler(
 			error: "Internal server error",
 		});
 	}
-}
+};
 
-export async function getAllTicketsHandler(req: Request, res: Response) {
+/**
+ * This controller will fetch all tickets from database
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const getAllTicketsHandler = async (req: Request, res: Response) => {
 	try {
 		const records = await findTicketsService();
 
@@ -54,12 +73,20 @@ export async function getAllTicketsHandler(req: Request, res: Response) {
 			error: "Internal server error",
 		});
 	}
-}
+};
 
-export async function patchTicketStatusHandler(
+/**
+ * This controller will update the status of the ticket
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const patchTicketStatusHandler = async (
 	req: Request<PatchTicketStatusSchema["params"], {}, PatchTicketStatusSchema["body"]>,
 	res: Response,
-) {
+) => {
 	const { status } = req.body;
 	const { id } = req.params;
 
@@ -80,12 +107,20 @@ export async function patchTicketStatusHandler(
 			error: "Internal server error",
 		});
 	}
-}
+};
 
-export async function deleteTicketHandler(
+/**
+ * This controller will delete ticket with id
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const deleteTicketHandler = async (
 	req: Request<DeleteTicketSchema["params"]>,
 	res: Response,
-) {
+) => {
 	const { id } = req.params;
 
 	try {
@@ -103,4 +138,4 @@ export async function deleteTicketHandler(
 			error: "Internal server error",
 		});
 	}
-}
+};

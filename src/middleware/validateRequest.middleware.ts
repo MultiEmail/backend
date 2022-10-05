@@ -5,6 +5,8 @@ import { AnyZodObject, ZodError } from "zod";
 /**
  * This middleware will validate the request body using zod schema
  * @param schema schema created using zod
+ *
+ * @author aayushchugh
  */
 function validateRequest(schema: AnyZodObject) {
 	return (req: Request, res: Response, next: NextFunction) => {

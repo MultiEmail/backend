@@ -21,7 +21,17 @@ import { omit } from "lodash";
 import { userModalPrivateFields } from "../models/user.model";
 import { generateRandomOTP } from "../utils/otp.util";
 
-export async function signupHandler(req: Request<{}, {}, SignupSchema["body"]>, res: Response) {
+/**
+ * This controller will create new account of user in database
+ * and send an email to the given email that will contain a verification code (OTP)
+ * which will be verified in `/api/auth/verify/:email/:verificationCode` route
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const signupHandler = async (req: Request<{}, {}, SignupSchema["body"]>, res: Response) => {
 	const { password } = req.body;
 	const username = req.body.username.toLowerCase().trim();
 	const email = req.body.email.toLowerCase().trim();
@@ -45,7 +55,6 @@ export async function signupHandler(req: Request<{}, {}, SignupSchema["body"]>, 
 			message: "User created successfully",
 		});
 	} catch (err: any) {
-		
 		if (err.code === 11000) {
 			return res.status(StatusCodes.CONFLICT).json({
 				error: "User with same email or username already exists",
@@ -58,9 +67,22 @@ export async function signupHandler(req: Request<{}, {}, SignupSchema["body"]>, 
 			error: "Internal server error",
 		});
 	}
-}
+};
 
-export async function verifyUserHandler(req: Request<VerifyUserSchema["params"]>, res: Response) {
+/**
+ * This controller will verify the user
+ * this is needed so that we can verify that email given by
+ * user is correct
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const verifyUserHandler = async (
+	req: Request<VerifyUserSchema["params"]>,
+	res: Response,
+) => {
 	const { email, verificationCode } = req.params;
 
 	try {
@@ -104,9 +126,18 @@ export async function verifyUserHandler(req: Request<VerifyUserSchema["params"]>
 			error: "Internal server error",
 		});
 	}
-}
+};
 
-export async function loginHandler(req: Request<{}, {}, LoginSchema["body"]>, res: Response) {
+/**
+ * This controller will be used to login the user
+ * and will create new session in database
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const loginHandler = async (req: Request<{}, {}, LoginSchema["body"]>, res: Response) => {
 	const { email, password } = req.body;
 	try {
 		const user = await findUserByEmailService(email);
@@ -127,7 +158,7 @@ export async function loginHandler(req: Request<{}, {}, LoginSchema["body"]>, re
 
 		// @author is-it-ayush
 		//fix: if user is not verified then don't allow him to login
-		if(!user.verified) {
+		if (!user.verified) {
 			return res.status(StatusCodes.UNAUTHORIZED).json({
 				error: "User is not verified",
 			});
@@ -149,9 +180,18 @@ export async function loginHandler(req: Request<{}, {}, LoginSchema["body"]>, re
 			error: "Internal server error",
 		});
 	}
-}
+};
 
-export async function logoutHandler(req: Request, res: Response) {
+/**
+ * This controller will logout the user by invalidating the
+ * current session
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const logoutHandler = async (req: Request, res: Response) => {
 	const refreshToken = req.headers["x-refresh"] as string;
 
 	if (!refreshToken) {
@@ -195,9 +235,18 @@ export async function logoutHandler(req: Request, res: Response) {
 			error: "Internal server error",
 		});
 	}
-}
+};
 
-export function getCurrentUserHandler(req: Request, res: Response) {
+/**
+ * This controller will get current user from
+ * access token
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const getCurrentUserHandler = (req: Request, res: Response) => {
 	const { user } = res.locals;
 
 	if (!user) {
@@ -215,14 +264,23 @@ export function getCurrentUserHandler(req: Request, res: Response) {
 		message: "User is logged In",
 		user: removePrivateFieldsFromUser,
 	});
-}
+};
 
-export async function forgotPasswordHandler(
+/**
+ * This controller will send a forgot password verification code
+ * to the given email which will be verified in `/api/auth/resetpassword/:email/:passwordResetCode`
+ * route
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const forgotPasswordHandler = async (
 	req: Request<{}, {}, ForgotPasswordSchema["body"]>,
 	res: Response,
-) {
+) => {
 	const { email } = req.body;
-
 
 	try {
 		const user = await findUserByEmailService(email.trim());
@@ -254,8 +312,7 @@ export async function forgotPasswordHandler(
 				"OTP to password reset for Multi Email",
 				`Your OTP to reset password is ${passwordResetCode}`,
 			);
-		}
-		catch (err) {
+		} catch (err) {
 			logger.error(err);
 			return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 				error: "Internal server error",
@@ -274,12 +331,20 @@ export async function forgotPasswordHandler(
 			error: "Internal server error",
 		});
 	}
-}
+};
 
-export async function resetPasswordHandler(
+/**
+ * This controller will update the password of user in database
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const resetPasswordHandler = async (
 	req: Request<ResetPasswordSchema["params"], {}, ResetPasswordSchema["body"]>,
 	res: Response,
-) {
+) => {
 	const { email, passwordResetCode } = req.params;
 	const { password } = req.body;
 
@@ -315,10 +380,18 @@ export async function resetPasswordHandler(
 			error: "Internal Server Error",
 		});
 	}
-}
+};
 
-/* --------------------------------- ANCHOR Refresh Access token --------------------------------- */
-export async function refreshAccessTokenHandler(req: Request, res: Response) {
+/**
+ * This controller will refresh the `access_token`
+ * use the `refresh_token` sent in header
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh
+ */
+export const refreshAccessTokenHandler = async (req: Request, res: Response) => {
 	const refreshToken = req.headers["x-refresh"] as string;
 
 	if (!refreshToken) {
@@ -367,4 +440,4 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
 			error: "Internal Server Error",
 		});
 	}
-}
+};
