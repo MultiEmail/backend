@@ -11,6 +11,7 @@
 <div class="tsd-page-title">
 <h2>multiemail-backend</h2></div>
 <div class="tsd-panel tsd-typography"><!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 <p><a href="#contributors-"><img src="https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square" alt="All Contributors"></a></p>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -37,47 +38,204 @@
 <li>Connections through other parties ie discord, twitter, facebook etc..</li>
 </ul>
 
-<a href="#setup" id="setup" style="color: inherit; text-decoration: none;">
-  <h1>Setup</h1>
+<a href="#run-locally" id="run-locally" style="color: inherit; text-decoration: none;">
+  <h1>Run locally</h1>
 </a>
+<p>You can setup the application on your local system by 2 methods</p>
+<ul>
+<li>Docker</li>
+<li>Manually</li>
+</ul>
+<blockquote>
+<p>:warning: If you are using unix operating system
+than prefix all bash commands with <code>sudo</code></p>
+</blockquote>
 
-<a href="#windows" id="windows" style="color: inherit; text-decoration: none;">
-  <h2>Windows</h2>
+<a href="#create-new-directory-and-clone-the-repository" id="create-new-directory-and-clone-the-repository" style="color: inherit; text-decoration: none;">
+  <h3>Create new directory and clone the repository</h3>
 </a>
-<pre><code><span class="hl-0">git</span><span class="hl-1"> </span><span class="hl-0">clone</span><span class="hl-1"> </span><span class="hl-2">https</span><span class="hl-1">:</span><span class="hl-3">//github.com/MultiEmail/MultiEmail-backend.git</span><br/><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-0">MultiEmail</span><span class="hl-1">-</span><span class="hl-0">backend</span><br/><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-0">install</span><br/><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-0">dev</span>
+<pre><code class="language-bash"><span class="hl-0">mkdir multi-email</span><br/><span class="hl-1">cd</span><span class="hl-0"> multi-email</span><br/><span class="hl-0">git clone https://github.com/MultiEmail/backend.git</span><br/><span class="hl-1">cd</span><span class="hl-0"> backend</span>
 </code></pre>
 
-<a href="#linux" id="linux" style="color: inherit; text-decoration: none;">
-  <h2>Linux</h2>
+<a href="#using-docker" id="using-docker" style="color: inherit; text-decoration: none;">
+  <h2>Using Docker</h2>
 </a>
-<pre><code><span class="hl-0">git</span><span class="hl-1"> </span><span class="hl-0">clone</span><span class="hl-1"> </span><span class="hl-2">https</span><span class="hl-1">:</span><span class="hl-3">//github.com/MultiEmail/MultiEmail-backend.git &amp;&amp; cd MultiEmail-backend &amp;&amp; yarn install &amp;&amp; yarn dev</span>
+
+<a href="#prerequisite" id="prerequisite" style="color: inherit; text-decoration: none;">
+  <h3>Prerequisite</h3>
+</a>
+<ul>
+<li><a href="https://www.docker.com/">Docker</a> is installed on your local system</li>
+<li><code>.env</code> file wih all required variables (check environment variables mentioned below)</li>
+</ul>
+
+<a href="#run-server" id="run-server" style="color: inherit; text-decoration: none;">
+  <h3>Run Server</h3>
+</a>
+<pre><code class="language-bash"><span class="hl-0">docker compose --env-file ./.env up --build</span>
 </code></pre>
 
 <a href="#create-admin-user" id="create-admin-user" style="color: inherit; text-decoration: none;">
+  <h3>Create admin user</h3>
+</a>
+<p>List current running docker containers</p>
+<pre><code class="language-bash"><span class="hl-0">docker ps</span>
+</code></pre>
+<p>Output</p>
+<pre><code class="language-bash"><span class="hl-0">CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                         NAMES</span><br/><span class="hl-0">d07f06c78445   backend-api    </span><span class="hl-2">&quot;docker-entrypoint.s…&quot;</span><span class="hl-0">   46 minutes ago   Up 46 minutes   0.0.0.0:3001-&gt;3001/tcp, :::3001-&gt;3001/tcp     Server</span><br/><span class="hl-0">91826c111b76   mongo:latest   </span><span class="hl-2">&quot;docker-entrypoint.s…&quot;</span><span class="hl-0">   52 minutes ago   Up 46 minutes   0.0.0.0:2717-&gt;27017/tcp, :::2717-&gt;27017/tcp   Database</span><br/>
+</code></pre>
+<p>now copy the <code>CONTAINER ID</code> of image/container <code>backend-api</code> and replace <code>&lt;container_id&gt;</code> in the below mentioned commands and execute them</p>
+<pre><code class="language-bash"><span class="hl-3"># build and install the command line tool in docker container</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;container_id&gt; yarn build</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;container_id&gt; npm i -g </span><span class="hl-1">.</span>
+</code></pre>
+<pre><code class="language-bash"><span class="hl-3"># create new admin user in database in docker container</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;container_id&gt; multi-email-admin -e &lt;email&gt; -u &lt;username&gt; -p &lt;password&gt;</span>
+</code></pre>
+
+<a href="#extra39s-port-forwarding-for-docker-containers" id="extra39s-port-forwarding-for-docker-containers" style="color: inherit; text-decoration: none;">
+  <h3>Extra&#39;s (Port forwarding for docker containers)</h3>
+</a>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>PORT (host)</th>
+<th>Port (container)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Server</td>
+<td>3001</td>
+<td>3001</td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td>2717</td>
+<td>27017</td>
+</tr>
+</tbody></table>
+<p>if you want to access database inside docker container from host than use</p>
+<pre><code class="language-bash"><span class="hl-0">mongosh --port 2717</span>
+</code></pre>
+<p>or if you want to use <a href="https://www.mongodb.com/products/compass">mongodb compass</a> than you can use
+this connection string</p>
+<pre><code><span class="hl-4">mongodb</span><span class="hl-0">:</span><span class="hl-3">//mongo_db:27017/multiemail</span>
+</code></pre>
+
+<a href="#manually" id="manually" style="color: inherit; text-decoration: none;">
+  <h2>Manually</h2>
+</a>
+
+<a href="#prerequisite-1" id="prerequisite-1" style="color: inherit; text-decoration: none;">
+  <h3>Prerequisite</h3>
+</a>
+<ul>
+<li>Latest <a href="https://nodejs.org/en/">Node js</a> version</li>
+<li><a href="https://yarnpkg.com/">Yarn</a> installed</li>
+<li><a href="https://www.mongodb.com/">Mongodb</a> installed on local system</li>
+<li><code>.env</code> file wih all required variables (check environment variables mentioned below)</li>
+</ul>
+
+<a href="#install-all-the-required-dependencies" id="install-all-the-required-dependencies" style="color: inherit; text-decoration: none;">
+  <h3>Install all the required dependencies</h3>
+</a>
+<p>this project use <a href="https://yarnpkg.com/">Yarn</a> as package manager</p>
+<pre><code class="language-bash"><span class="hl-0">yarn install</span>
+</code></pre>
+
+<a href="#run-the-server" id="run-the-server" style="color: inherit; text-decoration: none;">
+  <h3>Run the server</h3>
+</a>
+<pre><code class="language-bash"><span class="hl-0">yarn dev</span>
+</code></pre>
+
+<a href="#create-admin-user-1" id="create-admin-user-1" style="color: inherit; text-decoration: none;">
   <h1>Create admin user</h1>
 </a>
-<pre><code class="language-bash"><span class="hl-1">yarn build</span><br/><span class="hl-1">npm i -g </span><span class="hl-4">.</span><br/><span class="hl-1">multi-email-admin -e &lt;email&gt; -u &lt;username&gt; -p &lt;password&gt;</span>
+<pre><code class="language-bash"><span class="hl-0">yarn build</span><br/><span class="hl-0">npm i -g </span><span class="hl-1">.</span><br/><span class="hl-0">multi-email-admin -e &lt;email&gt; -u &lt;username&gt; -p &lt;password&gt;</span>
 </code></pre>
 
 <a href="#environment-variables" id="environment-variables" style="color: inherit; text-decoration: none;">
   <h1>Environment Variables</h1>
 </a>
+<p>To run this project, you will need to add the following environment variables to your .env file</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DB_URI</td>
+<td>URI on which database is running</td>
+<td>mongodb://localhost:27017/multiemail</td>
+</tr>
+<tr>
+<td>GOOGLE_CLIENT_ID</td>
+<td>Client ID obtained while creating google oauth concent screen</td>
+<td>758327950938-90jskrnp9b8d2e6ljpqrstd8fdl2k9fljkhchasnnrnj8.apps.googleusercontent.com</td>
+</tr>
+<tr>
+<td>GOOGLE_CLIENT_SECRET</td>
+<td>Client Secret obtained while creating google oauth concent screen</td>
+<td>GOCSPX-NL52LzLNzF6YGJxlAoeLAnGK-a6</td>
+</tr>
+<tr>
+<td>NODE_ENV</td>
+<td>What type of environment are you running this app in</td>
+<td>development</td>
+</tr>
+<tr>
+<td>EMAIL_ID</td>
+<td>Which ID will be used for sending email</td>
+<td><a href="mailto:no-reply@multiemail.com">no-reply@multiemail.com</a></td>
+</tr>
+<tr>
+<td>EMAIL_PASSWORD</td>
+<td>Password of your email id</td>
+<td>mystrongpassword</td>
+</tr>
+<tr>
+<td>ACCESS_TOKEN_PRIVATE_KEY</td>
+<td>private RSA key which will be used to sign access token</td>
+<td>check .env.example file</td>
+</tr>
+<tr>
+<td>ACCESS_TOKEN_PUBLIC_KEY</td>
+<td>public RSA key which will be used to verify access token</td>
+<td>check .env.example file</td>
+</tr>
+<tr>
+<td>REFRESH_TOKEN_PRIVATE_KEY</td>
+<td>private RSA key which will be used to sign refresh token</td>
+<td>check .env.example file</td>
+</tr>
+<tr>
+<td>REFRESH_TOKEN_PUBLIC_KEY</td>
+<td>public RSA key which will be used to verify refresh token</td>
+<td>check .env.example file</td>
+</tr>
+</tbody></table>
+
+<a href="#notes" id="notes" style="color: inherit; text-decoration: none;">
+  <h3>NOTEs</h3>
+</a>
 <ul>
-<li><code>DB_URI</code></li>
-<li><code>GOOGLE_CLIENT_ID</code></li>
-<li><code>GOOGLE_CLIENT_SECRET</code></li>
-<li><code>GOOGLE_CALL_BACK_URL</code></li>
-<li><code>NODE_ENV</code></li>
-<li><code>EMAIL_ID</code></li>
-<li><code>EMAIL_PASSWORD</code></li>
-<li><code>ACCESS_TOKEN_PRIVATE_KEY</code></li>
-<li><code>ACCESS_TOKEN_PUBLIC_KEY</code></li>
-<li><code>REFRESH_TOKEN_PRIVATE_KEY</code></li>
-<li><code>REFRESH_TOKEN_PUBLIC_KEY</code></li>
+<li>Your <code>DB_URI</code> must be <code>mongodb://mongo_db:27017/multiemail</code> if you are using docker</li>
+<li>If you use gmail account as <code>EMAIL_ID</code> than you must enable <a href="https://myaccount.google.com/signinoptions/two-step-verification/enroll-welcome?pli=1">2FA</a> for your google account and generate <a href="https://support.google.com/accounts/answer/185833?hl=en">app password</a> and use it as <code>EMAIL_PASS</code></li>
 </ul>
 
-<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
-  <h1>Docs</h1>
+<a href="#resources-for-generating-env-variables" id="resources-for-generating-env-variables" style="color: inherit; text-decoration: none;">
+  <h3>Resources for generating .env variables</h3>
+</a>
+<ul>
+<li>You can get google credentials by following this <a href="https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid">guide</a></li>
+<li>You can use <a href="https://cryptotools.net/rsagen">crypto tools</a> for generating RSA keys for access and refresh tokens</li>
+<li>RSA keys must be <code>1024</code></li>
+</ul>
+
+<a href="#detailed-docs" id="detailed-docs" style="color: inherit; text-decoration: none;">
+  <h1>Detailed docs</h1>
 </a>
 <p><a href="https://multiemail.github.io/MultiEmail-backend/">Github Pages</a></p>
 
@@ -105,7 +263,6 @@ License
 <p>
 This project is Licensed under the <a href="./LICENSE">MIT License</a>. Please go through the License atleast once before making your contribution. </p>
 <br>
-
 
 
 <a href="#contributors-✨" id="contributors-✨" style="color: inherit; text-decoration: none;">
@@ -180,6 +337,7 @@ This project is Licensed under the <a href="./LICENSE">MIT License</a>. Please g
 <li class="tsd-kind-module"><a href="modules/controllers_user_controller.html">controllers/user.controller</a></li>
 <li class="tsd-kind-module"><a href="modules/controllers_user_controller-1.html">controllers/user.controller</a></li>
 <li class="tsd-kind-module"><a href="modules/middleware_deserializeUser_middleware.html">middleware/deserialize<wbr/>User.middleware</a></li>
+<li class="tsd-kind-module"><a href="modules/middleware_rateLimiter_middleware.html">middleware/rate<wbr/>Limiter.middleware</a></li>
 <li class="tsd-kind-module"><a href="modules/middleware_requireAdminRole_middleware.html">middleware/require<wbr/>Admin<wbr/>Role.middleware</a></li>
 <li class="tsd-kind-module"><a href="modules/middleware_validateRequest_middleware.html">middleware/validate<wbr/>Request.middleware</a></li>
 <li class="tsd-kind-module"><a href="modules/models_session_model.html">models/session.model</a></li>
@@ -201,6 +359,7 @@ This project is Licensed under the <a href="./LICENSE">MIT License</a>. Please g
 <li class="tsd-kind-module"><a href="modules/services_session_service.html">services/session.service</a></li>
 <li class="tsd-kind-module"><a href="modules/services_ticket_service.html">services/ticket.service</a></li>
 <li class="tsd-kind-module"><a href="modules/services_user_service.html">services/user.service</a></li>
+<li class="tsd-kind-module"><a href="modules/tests_auth_test.html">tests/auth.test</a></li>
 <li class="tsd-kind-module"><a href="modules/types_enums.html">types/enums</a></li>
 <li class="tsd-kind-module"><a href="modules/types_interfaces.html">types/interfaces</a></li>
 <li class="tsd-kind-module"><a href="modules/types_types.html">types/types</a></li>
