@@ -15,7 +15,6 @@
 		"multi-email-admin": "./build/bin/index.js"
 	},
 	"dependencies": {
-		"@prisma/client": "^4.3.1",
 		"@typegoose/typegoose": "^9.12.1",
 		"@types/lodash": "^4.14.186",
 		"@types/nodemailer": "^6.4.6",
@@ -75,10 +74,11 @@
 		"eslint-plugin-sonarjs": "0.15.0",
 		"husky": "8.0.1",
 		"jest": "29.1.2",
-		"mongodb-memory-server": "^8.9.3",
+		"mongodb-memory-server": "8.9.3",
 		"prettier": "2.7.1",
 		"prettier-eslint": "15.0.1",
-		"supertest": "^6.3.0",
+		"supertest": "6.3.0",
+		"ts-jest": "^29.0.3",
 		"ts-node": "10.9.1",
 		"ts-node-dev": "2.0.0",
 		"typedoc": "0.23.15",
