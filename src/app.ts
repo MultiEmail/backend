@@ -13,6 +13,7 @@ import cookieSession from "cookie-session";
 import userRouter from "./routes/user.routes";
 import ticketRouter from "./routes/ticket.routes";
 import rateLimiter from "./middleware/rateLimiter.middleware";
+import adminRouter from "./routes/admin.routes";
 
 config();
 
@@ -36,6 +37,7 @@ app.use(deserializeUser);
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", ticketRouter);
+app.use("/api", adminRouter);
 app.use(rateLimiter);
 
 logger.info("Current Environment: " + process.env.NODE_ENV);
