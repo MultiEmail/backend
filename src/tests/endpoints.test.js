@@ -3,18 +3,15 @@ const supertest = require('supertest');
 const app = require('../app');
 const logger = require('../utils/logger.util');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const { findUserByEmailService } = require('../services/user.service');
+const { findUserByEmailService, createUserService } = require('../services/user.service');
 const { expect } = require('@jest/globals');
-const {
-	createUserService,
-	findUserByIdService
-} = require("../services/auth.service");
+
 
 
 describe("Endpoints Test", () => {
 
 	let user;
-	let createdUser;
+	let adminUser;
 	let mongod;
 
 	beforeAll(async () => {
@@ -36,7 +33,18 @@ describe("Endpoints Test", () => {
 
 		// Generate a random user
 		user = await createUser();
-		console.log(`Generated user: ${JSON.stringify(user)}`);
+		adminUser = await createUser();
+		console.log(`Generated Test User: ${JSON.stringify(user)}`);
+		console.log(`Generated Test Admin User: ${JSON.stringify(adminUser)}`);
+
+		// Creating a Admin User
+		createUserService({
+			role: "admin",
+			username: adminUser.username,
+			email: adminUser.email,
+			verified: true,
+			password: adminUser.password,
+		})
 	});
 
 	describe("/auth", () => {
@@ -445,9 +453,26 @@ describe("Endpoints Test", () => {
 	describe("/users", () => {
 
 		describe("GET /users", () => {
+
 			it("should return all users", async () => {
 
-				// Make sure I'm logged In.
+				// Login with Admin and save the access token and refresh token for future test use.
+				const adminLoginRes = await supertest(app)
+				.post("/api/auth/login")	
+				.set('Accept', 'application/json')
+				.send({
+					email: adminUser.email,
+					password: adminUser.password
+				});
+
+				expect(adminLoginRes.status).toEqual(200);
+				expect(adminLoginRes.body).toHaveProperty("message");
+				expect(adminLoginRes.body.message).toEqual("User logged in successfully");
+
+				adminUser.access_token = adminLoginRes.body.access_token;
+				adminUser.refresh_token = adminLoginRes.body.refresh_token;
+
+				// This is not related to this test but logging in here might be necessary for other tests.
 				const res = await supertest(app)
 					.post("/api/auth/login")
 					.set('Accept', 'application/json')
@@ -468,7 +493,7 @@ describe("Endpoints Test", () => {
 				const res1 = await supertest(app)
 					.get("/api/users")
 					.set('Accept', 'application/json')
-					.set('Authorization', `Bearer ${user.access_token}`)
+					.set('Authorization', `Bearer ${adminUser.access_token}`)
 					.send();
 				expect(res1.status).toEqual(200);
 				expect(res1.body).toHaveProperty("message");
@@ -484,12 +509,15 @@ describe("Endpoints Test", () => {
 		 * Current: /users 
 		 */
 		describe("DELETE /users/:id", () => {
+
 			it("should not delete if user is not found, i.e. invalid ID", async () => {
+
 				const res = await supertest(app)
 					.delete(`/api/users/${"6339cebe708e3a1198f1997b"}`)
 					.set('Accept', 'application/json')
-					// .set('Authorization', `Bearer ${user.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
+					.set('Authorization', `Bearer ${adminUser.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
 					.send();
+
 				expect(res.status).toEqual(404);
 				expect(res.body).toHaveProperty("error");
 				expect(res.body.error).toEqual("User not found");
@@ -521,7 +549,7 @@ describe("Endpoints Test", () => {
 				const res = await supertest(app)
 					.delete(`/api/users/${userId}`)
 					.set('Accept', 'application/json')
-					// .set('Authorization', `Bearer ${user.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
+					.set('Authorization', `Bearer ${adminUser.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
 					.send();
 				expect(res.status).toEqual(200);
 				expect(res.body).toHaveProperty("message");
