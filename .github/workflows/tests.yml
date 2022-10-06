@@ -1,0 +1,22 @@
+name: Tests
+on: [pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      DB_URI: ${{ secrets.DB_URI }}
+      EMAIL_ID: ${{ secrets.EMAIL_ID }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      ACCESS_TOKEN_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN_PRIVATE_KEY }}
+      ACCESS_TOKEN_PUBLIC_KEY: ${{ secrets.ACCESS_TOKEN_PUBLIC_KEY }}
+      REFRESH_TOKEN_PRIVATE_KEY: ${{ secrets.REFRESH_TOKEN_PRIVATE_KEY }}
+      REFRESH_TOKEN_PUBLIC_KEY: ${{ secrets.REFRESH_TOKEN_PUBLIC_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - run: yarn install
+      - run: yarn test
