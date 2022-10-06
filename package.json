@@ -57,7 +57,7 @@
 		"@typescript-eslint/eslint-plugin": "5.39.0",
 		"@typescript-eslint/parser": "5.39.0",
 		"add": "2.0.6",
-		"all-contributors-cli": "6.22.0",
+		"all-contributors-cli": "6.23.1",
 		"commitlint": "17.1.2",
 		"cz-conventional-changelog": "3.3.0",
 		"eslint": "8.24.0",
