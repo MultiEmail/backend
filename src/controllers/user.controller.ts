@@ -23,18 +23,6 @@ export const patchUserHandler = async (
 ) => {
 	const { id } = req.params;
 	const { username } = req.body;
-	const currentUser = res.locals.user;
-
-	
-	/**
-	 * fix: This will prevent user's from updating other user's username.
-	 * 	@author is-it-ayush
-	 */
-	if (currentUser?._id !== id) {
-		return res.status(StatusCodes.FORBIDDEN).json({
-			error: "Insufficient rights",
-		});
-	}
 
 	try {
 		// check if username is already taken
