@@ -49,6 +49,12 @@ cd backend
 ### Run Server
 
 ```bash
+docker compose --env-file ./.env up
+```
+
+### To rebuild the image
+
+```bash
 docker compose --env-file ./.env up --build
 ```
 
