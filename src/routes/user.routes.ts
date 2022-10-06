@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
 	patchUserHandler,
 } from "../controllers/user.controller";
+import requireSameUser from "../middleware/requireSameUser.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	patchUserSchema,
@@ -20,6 +21,6 @@ const userRouter = Router();
 
 userRouter
 	.route("/users/:id")
-	.patch(validateRequest(patchUserSchema), patchUserHandler)
+	.patch(validateRequest(patchUserSchema), requireSameUser , patchUserHandler)
 
 export default userRouter;
