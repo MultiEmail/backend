@@ -1,5 +1,5 @@
 {
-  "projectName": "MultiEmail-backend",
+  "projectName": "backend",
   "projectOwner": "MultiEmail",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -118,6 +118,15 @@
       "profile": "https://github.com/shashankbhatgs",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "alberturria",
+      "name": "Alberto Herrera Vargas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32776999?v=4",
+      "profile": "https://github.com/alberturria",
+      "contributions": [
+        "code"
       ]
     }
   ],
