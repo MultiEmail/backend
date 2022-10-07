@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { StatusCodes } from "http-status-codes";
 import { findUserByIdService } from "../services/user.service";
 import { verifyJWT } from "../utils/jwt.util";
 
@@ -15,7 +16,11 @@ import { verifyJWT } from "../utils/jwt.util";
 const deserializeUser = async (req: Request, res: Response, next: NextFunction) => {
 	const accessToken = (req.headers.authorization || "").replace(/^Bearer\s/, "");
 
-	if (!accessToken) return next();
+	if (!accessToken) {
+		return res.status(StatusCodes.UNAUTHORIZED).json({
+			error: "User is not logged in",
+		});
+	}
 
 	const decoded = await verifyJWT<{ _id: string }>(accessToken, "ACCESS_TOKEN_PUBLIC_KEY");
 
@@ -24,6 +29,11 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
 		res.locals.user = user;
 	} else {
 		res.locals.user = null;
+
+		return res.status(StatusCodes.FORBIDDEN).json({
+			// WARNING: Do not change this message because it will be used by frontend for condition
+			error: "User is not logged in or access_token is expired",
+		});
 	}
 
 	return next();
