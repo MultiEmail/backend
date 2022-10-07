@@ -26,11 +26,12 @@ const transporter = createTransport({
  * @param {string} subject Subject of email
  * @param {string} text content of email
  * @return sent message info
+ * @author aayushchugh
  */
 export function sendEmail(
 	to: string,
 	subject: string,
-	text: string
+	text: string,
 ): Promise<SentMessageInfo> | undefined {
 	if (process.env.NODE_ENV === "test") return;
 

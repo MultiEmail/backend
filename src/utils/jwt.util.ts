@@ -9,11 +9,12 @@ config();
  * @param payload what should be signed into JWT
  * @param keyName which key should be used for signing token
  * @param options additional options for JWT library
+ * @author aayushchugh, is-it-ayush
  */
 export async function signJWT(
 	payload: object,
 	keyName: "ACCESS_TOKEN_PRIVATE_KEY" | "REFRESH_TOKEN_PRIVATE_KEY",
-	options?: jwt.SignOptions
+	options?: jwt.SignOptions,
 ): Promise<string> {
 	const privateKey = process.env[keyName] as string;
 	const token = (await jwt.sign(payload, privateKey, {
@@ -28,10 +29,11 @@ export async function signJWT(
  * Verify and decode JWT token
  * @param token encoded token which will be verified/decoded
  * @param keyName key which will be used to decode token (should be same as private key)
+ * @author aayushchugh, is-it-ayush
  */
 export async function verifyJWT<T>(
 	token: string,
-	keyName: "ACCESS_TOKEN_PUBLIC_KEY" | "REFRESH_TOKEN_PUBLIC_KEY"
+	keyName: "ACCESS_TOKEN_PUBLIC_KEY" | "REFRESH_TOKEN_PUBLIC_KEY",
 ): Promise<T | null> {
 	const publicKey = process.env[keyName] as string;
 	let decoded: T;

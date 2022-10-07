@@ -8,12 +8,12 @@ Please include a summary of the change and which issue is fixed. Please also inc
 
 <!-- pull request can be still created if all tasks are not completed  -->
 
-- [ ] This pull request follow our contribution guidelines
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation (postman and swagger)
-- [ ] I have written tests for the code
-- [ ] I have updated .env.example file for new .env variables
+-   [ ] This pull request follow our contribution guidelines
+-   [ ] I have performed a self-review of my own code
+-   [ ] I have commented my code, particularly in hard-to-understand areas
+-   [ ] I have made corresponding changes to the documentation (postman and wiki)
+-   [ ] I have written tests for the code
+-   [ ] I have updated .env.example file for new .env variables
 
 <!-- -------------------------- Optional section --------------------------- -->
 
