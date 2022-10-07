@@ -1,4 +1,12 @@
 {
 	"cSpell.words": ["markverified"],
-	"editor.tabSize": 4
+	"docwriter.style": "Auto-detect",
+	"editor.tabSize": 4,
+	"editor.comments.insertSpace": true,
+	"editor.autoIndent": "full",
+	"prettier.tabWidth": 4,
+	"prettier.arrowParens": "always",
+	"prettier.bracketSpacing": true,
+	"editor.insertSpaces": false,
+	"prettier.useTabs": true
 }
