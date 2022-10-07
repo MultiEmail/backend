@@ -167,7 +167,8 @@ To run this project, you will need to add the following environment variables to
 
 # Detailed docs
 
-[Github Pages](https://multiemail.github.io/MultiEmail-backend/)
+- [Github Pages](https://multiemail.github.io/backend/)
+- [Wiki](https://github.com/MultiEmail/backend/wiki)
 
 # Wanna join the team?
 
