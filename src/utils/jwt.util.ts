@@ -1,6 +1,5 @@
 import { config } from "dotenv";
-import jwt from "jsonwebtoken";
-import logger from "./logger.util";
+import { sign, SignOptions, verify } from "jsonwebtoken";
 
 config();
 
@@ -14,10 +13,10 @@ config();
 export async function signJWT(
 	payload: object,
 	keyName: "ACCESS_TOKEN_PRIVATE_KEY" | "REFRESH_TOKEN_PRIVATE_KEY",
-	options?: jwt.SignOptions,
+	options?: SignOptions,
 ): Promise<string> {
 	const privateKey = process.env[keyName] as string;
-	const token = (await jwt.sign(payload, privateKey, {
+	const token = (await sign(payload, privateKey, {
 		...(options && options),
 		algorithm: "RS256",
 	})) as string;
@@ -38,7 +37,7 @@ export async function verifyJWT<T>(
 	const publicKey = process.env[keyName] as string;
 	let decoded: T;
 	try {
-		decoded = (await jwt.verify(token, publicKey, {
+		decoded = (await verify(token, publicKey, {
 			algorithms: ["RS256"],
 		})) as T;
 
