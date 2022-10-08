@@ -149,6 +149,7 @@ To run this project, you will need to add the following environment variables to
 | NODE_ENV                  | What type of environment are you running this app in              | development                                                                           |
 | EMAIL_ID                  | Which ID will be used for sending email                           | no-reply@multiemail.com                                                               |
 | EMAIL_PASSWORD            | Password of your email id                                         | mystrongpassword                                                                      |
+| EMAIL_SMTP                | Email SMTP host                                                   | smtp.server.com                                                                       |
 | ACCESS_TOKEN_PRIVATE_KEY  | private RSA key which will be used to sign access token           | check .env.example file                                                               |
 | ACCESS_TOKEN_PUBLIC_KEY   | public RSA key which will be used to verify access token          | check .env.example file                                                               |
 | REFRESH_TOKEN_PRIVATE_KEY | private RSA key which will be used to sign refresh token          | check .env.example file                                                               |

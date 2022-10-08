@@ -5,9 +5,10 @@ config();
 
 const user = process.env.EMAIL_ID as string;
 const pass = process.env.EMAIL_PASSWORD as string;
+const smtp = process.env.EMAIL_SMTP as string;
 
 const transporter = createTransport({
-	host: "smtppro.zoho.in",
+	host: smtp,
 	port: 587,
 	secure: false,
 	requireTLS: true,
