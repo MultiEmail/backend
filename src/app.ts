@@ -7,7 +7,6 @@ import helmet from "helmet";
 import logger from "./utils/logger.util";
 import "./utils/passport.util";
 
-import deserializeUser from "./middleware/deserializeUser.middleware";
 import authRouter from "./routes/auth.routes";
 import cookieSession from "cookie-session";
 import userRouter from "./routes/user.routes";
