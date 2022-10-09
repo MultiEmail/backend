@@ -16,11 +16,14 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/69336518?v=4",
       "profile": "https://shriproperty.com",
       "contributions": [
+        "bug",
+        "ideas",
+        "mentoring",
+        "security",
         "code",
-        "review",
-        "doc",
         "maintenance",
-        "projectManagement"
+        "projectManagement",
+        "review"
       ]
     },
     {
@@ -51,7 +54,8 @@
       "profile": "https://github.com/tharun634",
       "contributions": [
         "doc",
-        "code"
+        "code",
+        "infra"
       ]
     },
     {
@@ -60,11 +64,14 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/36449128?v=4",
       "profile": "https://github.com/is-it-ayush",
       "contributions": [
-        "code",
+        "bug",
+        "security",
+        "ideas",
         "mentoring",
-        "review",
+        "code",
         "maintenance",
-        "test"
+        "projectManagement",
+        "review"
       ]
     },
     {
@@ -73,7 +80,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/71551059?v=4",
       "profile": "https://www.jamesmesser.xyz",
       "contributions": [
-        "financial"
+        "financial",
+        "ideas",
+        "business"
       ]
     },
     {
@@ -137,6 +146,17 @@
       "profile": "https://vadimdez.github.io",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "NullableDev",
+      "name": "Toby",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40370496?v=4",
+      "profile": "https://github.com/NullableDev",
+      "contributions": [
+        "bug",
+        "security",
+        "ideas"
       ]
     }
   ],
