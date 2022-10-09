@@ -60,7 +60,7 @@
 		"all-contributors-cli": "6.23.1",
 		"commitlint": "17.1.2",
 		"cz-conventional-changelog": "3.3.0",
-		"eslint": "8.24.0",
+		"eslint": "8.25.0",
 		"eslint-config-google": "0.14.0",
 		"eslint-config-prettier": "8.5.0",
 		"eslint-import-resolver-typescript": "3.5.1",
