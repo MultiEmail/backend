@@ -20,7 +20,11 @@
         "review",
         "doc",
         "maintenance",
-        "projectManagement"
+        "projectManagement",
+        "bug",
+        "ideas",
+        "mentoring",
+        "security"
       ]
     },
     {
