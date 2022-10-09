@@ -1,12 +1,9 @@
 import { Router } from "express";
-import {
-	patchUserHandler,
-} from "../controllers/user.controller";
+import { deserializeUser } from "passport";
+import { patchUserHandler } from "../controllers/user.controller";
 import requireSameUser from "../middleware/requireSameUser.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
-import {
-	patchUserSchema,
-} from "../schemas/user.schema";
+import { patchUserSchema } from "../schemas/user.schema";
 
 const userRouter = Router();
 
@@ -18,9 +15,8 @@ const userRouter = Router();
  *
  * @author aayushchugh
  */
-
 userRouter
 	.route("/users/:id")
-	.patch(validateRequest(patchUserSchema), requireSameUser , patchUserHandler)
+	.patch(validateRequest(patchUserSchema), deserializeUser, requireSameUser, patchUserHandler);
 
 export default userRouter;

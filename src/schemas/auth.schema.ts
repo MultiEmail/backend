@@ -49,9 +49,6 @@ export const verifyUserSchema = z.object({
 		verificationCode: z.string({
 			required_error: "Verification code is required",
 		}),
-		email: z
-			.string({ required_error: "Email is required" })
-			.email("Please enter a valid email"),
 	}),
 });
 

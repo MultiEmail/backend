@@ -33,7 +33,6 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(deserializeUser);
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", ticketRouter);

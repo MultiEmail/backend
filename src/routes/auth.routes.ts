@@ -11,6 +11,7 @@ import {
 	signupHandler,
 	verifyUserHandler,
 } from "../controllers/auth.controller";
+import deserializeUser from "../middleware/deserializeUser.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	forgotPasswordSchema,
@@ -41,8 +42,9 @@ authRouter.post("/auth/signup", validateRequest(signupSchema), signupHandler);
  * @author aayushchugh
  */
 authRouter.get(
-	"/auth/verify/:email/:verificationCode",
+	"/auth/verify/:verificationCode",
 	validateRequest(verifyUserSchema),
+	deserializeUser,
 	verifyUserHandler,
 );
 
@@ -67,7 +69,7 @@ authRouter.get("/auth/logout", logoutHandler);
  *
  * @author aayushchugh
  */
-authRouter.get("/auth/me", getCurrentUserHandler);
+authRouter.get("/auth/me", deserializeUser, getCurrentUserHandler);
 
 /**
  * This route will send a passwordResetCode to provided email
