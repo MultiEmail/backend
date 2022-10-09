@@ -25,14 +25,14 @@ const transporter = createTransport({
  * Send Email using nodemailer
  * @param {string} to Email id to send email
  * @param {string} subject Subject of email
- * @param {string} text content of email
+ * @param {string} html content of email
  * @return sent message info
  * @author aayushchugh
  */
 export function sendEmail(
 	to: string,
 	subject: string,
-	text: string,
+	html: string,
 ): Promise<SentMessageInfo> | undefined {
 	if (process.env.NODE_ENV === "test") return;
 
@@ -43,7 +43,7 @@ export function sendEmail(
 		},
 		to,
 		subject,
-		text,
+		html,
 	};
 
 	return transporter.sendMail(mailOptions);

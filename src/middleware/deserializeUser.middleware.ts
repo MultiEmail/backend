@@ -4,9 +4,8 @@ import { findUserByIdService } from "../services/user.service";
 import { verifyJWT } from "../utils/jwt.util";
 
 /**
- * This function will be called before every route
- * and will deserialize the user from the cookie token
- * and attach it to the req.locals
+ * This function will decode user from `authorization` header and add
+ * it to `res.locals` as `res.locals.user`
  *
  * @param req request
  * @param res response

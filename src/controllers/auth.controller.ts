@@ -45,10 +45,20 @@ export const signupHandler = async (req: Request<{}, {}, SignupSchema["body"]>, 
 			verified: false,
 		});
 
+		const token = await signAccessTokenService(createdUser);
+
 		sendEmail(
 			email,
 			"OTP for Multi Email",
-			`Welcome to Multi Email your OTP is ${createdUser.verificationCode}`,
+			`<h2>Welcome to Multi Email</h2>
+			<h4>please visit this URL and enter your OTP</h4>
+			<p>
+			OTP: ${createdUser.verificationCode}
+			</p>
+			<p>
+			<a href="${process.env.FRONTEND_URL}/verify?v=${createdUser.verificationCode}&t=${token}">Verify My Account</a>
+			</p>
+			`,
 		);
 
 		return res.status(StatusCodes.CREATED).json({
@@ -83,11 +93,12 @@ export const verifyUserHandler = async (
 	req: Request<VerifyUserSchema["params"]>,
 	res: Response,
 ) => {
-	const { email, verificationCode } = req.params;
+	const { verificationCode } = req.params;
 
 	try {
 		// QUESTION: should we use username to find the user or email?
-		const user = await findUserByEmailService(email);
+
+		const { user } = res.locals;
 
 		if (!user) {
 			return res.status(StatusCodes.NOT_FOUND).json({
