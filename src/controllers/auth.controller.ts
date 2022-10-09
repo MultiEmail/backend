@@ -56,7 +56,7 @@ export const signupHandler = async (req: Request<{}, {}, SignupSchema["body"]>, 
 			OTP: ${createdUser.verificationCode}
 			</p>
 			<p>
-			URL: <a href="${process.env.FRONTEND_URL}/verify?v=${createdUser.verificationCode}&t=${token}">Verify My Account</a>
+			<a href="${process.env.FRONTEND_URL}/verify?v=${createdUser.verificationCode}&t=${token}">Verify My Account</a>
 			</p>
 			`,
 		);
