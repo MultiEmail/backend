@@ -68,7 +68,10 @@
         "mentoring",
         "review",
         "maintenance",
-        "test"
+        "test",
+        "bug",
+        "security",
+        "ideas"
       ]
     },
     {
