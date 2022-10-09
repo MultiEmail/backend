@@ -16,11 +16,6 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/69336518?v=4",
       "profile": "https://shriproperty.com",
       "contributions": [
-        "code",
-        "review",
-        "doc",
-        "maintenance",
-        "projectManagement",
         "bug",
         "ideas",
         "mentoring",
@@ -145,15 +140,6 @@
       "profile": "https://vadimdez.github.io",
       "contributions": [
         "code"
-      ]
-    },
-    {
-      "login": "toby",
-      "name": "Toby Padilla",
-      "avatar_url": "https://avatars.githubusercontent.com/u/83556?v=4",
-      "profile": "https://charm.sh/",
-      "contributions": [
-        "bug"
       ]
     }
   ],

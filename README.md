@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -168,8 +168,8 @@ To run this project, you will need to add the following environment variables to
 
 # Detailed docs
 
-- [Github Pages](https://multiemail.github.io/backend/)
-- [Wiki](https://github.com/MultiEmail/backend/wiki)
+-   [Github Pages](https://multiemail.github.io/backend/)
+-   [Wiki](https://github.com/MultiEmail/backend/wiki)
 
 # Wanna join the team?
 
@@ -201,7 +201,7 @@ Thanks goes to these wonderful people ❤:
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://shriproperty.com"><img src="https://avatars.githubusercontent.com/u/69336518?v=4?s=100" width="100px;" alt="Ayush Chugh"/><br /><sub><b>Ayush Chugh</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=aayushchugh" title="Code">💻</a> <a href="https://github.com/MultiEmail/backend/pulls?q=is%3Apr+reviewed-by%3Aaayushchugh" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/MultiEmail/backend/commits?author=aayushchugh" title="Documentation">📖</a> <a href="#maintenance-aayushchugh" title="Maintenance">🚧</a> <a href="#projectManagement-aayushchugh" title="Project Management">📆</a> <a href="https://github.com/MultiEmail/backend/issues?q=author%3Aaayushchugh" title="Bug reports">🐛</a> <a href="#ideas-aayushchugh" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-aayushchugh" title="Mentoring">🧑‍🏫</a> <a href="#security-aayushchugh" title="Security">🛡️</a></td>
+      <td align="center"><a href="https://shriproperty.com"><img src="https://avatars.githubusercontent.com/u/69336518?v=4?s=100" width="100px;" alt="Ayush Chugh"/><br /><sub><b>Ayush Chugh</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/issues?q=author%3Aaayushchugh" title="Bug reports">🐛</a> <a href="#ideas-aayushchugh" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-aayushchugh" title="Mentoring">🧑‍🏫</a> <a href="#security-aayushchugh" title="Security">🛡️</a></td>
       <td align="center"><a href="https://github.com/DaatUserName"><img src="https://avatars.githubusercontent.com/u/40370496?v=4?s=100" width="100px;" alt="Toby"/><br /><sub><b>Toby</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=DaatUserName" title="Code">💻</a> <a href="https://github.com/MultiEmail/backend/pulls?q=is%3Apr+reviewed-by%3ADaatUserName" title="Reviewed Pull Requests">👀</a> <a href="#maintenance-DaatUserName" title="Maintenance">🚧</a></td>
       <td align="center"><a href="https://github.com/shivamvishwakarm"><img src="https://avatars.githubusercontent.com/u/80755217?v=4?s=100" width="100px;" alt="shivam vishwakarma"/><br /><sub><b>shivam vishwakarma</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=shivamvishwakarm" title="Documentation">📖</a> <a href="https://github.com/MultiEmail/backend/commits?author=shivamvishwakarm" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/tharun634"><img src="https://avatars.githubusercontent.com/u/53267275?v=4?s=100" width="100px;" alt="Tharun K"/><br /><sub><b>Tharun K</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=tharun634" title="Documentation">📖</a> <a href="https://github.com/MultiEmail/backend/commits?author=tharun634" title="Code">💻</a></td>
@@ -216,7 +216,6 @@ Thanks goes to these wonderful people ❤:
       <td align="center"><a href="https://github.com/shashankbhatgs"><img src="https://avatars.githubusercontent.com/u/76593166?v=4?s=100" width="100px;" alt="Shashank Bhat G S"/><br /><sub><b>Shashank Bhat G S</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=shashankbhatgs" title="Documentation">📖</a></td>
       <td align="center"><a href="https://github.com/alberturria"><img src="https://avatars.githubusercontent.com/u/32776999?v=4?s=100" width="100px;" alt="Alberto Herrera Vargas"/><br /><sub><b>Alberto Herrera Vargas</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=alberturria" title="Code">💻</a></td>
       <td align="center"><a href="https://vadimdez.github.io"><img src="https://avatars.githubusercontent.com/u/3748453?v=4?s=100" width="100px;" alt="Vadym Yatsyuk"/><br /><sub><b>Vadym Yatsyuk</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=VadimDez" title="Code">💻</a></td>
-      <td align="center"><a href="https://charm.sh/"><img src="https://avatars.githubusercontent.com/u/83556?v=4?s=100" width="100px;" alt="Toby Padilla"/><br /><sub><b>Toby Padilla</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/issues?q=author%3Atoby" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
   <tfoot>
