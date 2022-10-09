@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -216,6 +216,7 @@ Thanks goes to these wonderful people ❤:
       <td align="center"><a href="https://github.com/shashankbhatgs"><img src="https://avatars.githubusercontent.com/u/76593166?v=4?s=100" width="100px;" alt="Shashank Bhat G S"/><br /><sub><b>Shashank Bhat G S</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=shashankbhatgs" title="Documentation">📖</a></td>
       <td align="center"><a href="https://github.com/alberturria"><img src="https://avatars.githubusercontent.com/u/32776999?v=4?s=100" width="100px;" alt="Alberto Herrera Vargas"/><br /><sub><b>Alberto Herrera Vargas</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=alberturria" title="Code">💻</a></td>
       <td align="center"><a href="https://vadimdez.github.io"><img src="https://avatars.githubusercontent.com/u/3748453?v=4?s=100" width="100px;" alt="Vadym Yatsyuk"/><br /><sub><b>Vadym Yatsyuk</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=VadimDez" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/NullableDev"><img src="https://avatars.githubusercontent.com/u/40370496?v=4?s=100" width="100px;" alt="Toby"/><br /><sub><b>Toby</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/issues?q=author%3ANullableDev" title="Bug reports">🐛</a> <a href="#security-NullableDev" title="Security">🛡️</a></td>
     </tr>
   </tbody>
   <tfoot>

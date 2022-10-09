@@ -136,6 +136,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "NullableDev",
+      "name": "Toby",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40370496?v=4",
+      "profile": "https://github.com/NullableDev",
+      "contributions": [
+        "bug",
+        "security"
+      ]
     }
   ],
   "contributorsPerLine": 7,
