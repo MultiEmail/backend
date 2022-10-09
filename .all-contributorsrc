@@ -65,7 +65,11 @@
       "contributions": [
         "bug",
         "security",
-        "ideas"
+        "ideas",
+        "mentoring",
+        "code",
+        "maintenance",
+        "projectManagement"
       ]
     },
     {
