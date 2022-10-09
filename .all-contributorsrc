@@ -146,6 +146,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "toby",
+      "name": "Toby Padilla",
+      "avatar_url": "https://avatars.githubusercontent.com/u/83556?v=4",
+      "profile": "https://charm.sh/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
