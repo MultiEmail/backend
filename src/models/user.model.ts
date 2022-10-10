@@ -38,6 +38,12 @@ export class User {
 	@prop()
 	public passwordResetCode: number | null;
 
+	@prop({ required: true })
+	public acceptedTermsAndConditions: boolean;
+
+	@prop({ required: true, default: false })
+	public receiveMarketingEmails: boolean;
+
 	// TODO: add more fields for email services
 
 	/**
