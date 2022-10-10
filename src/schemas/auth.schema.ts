@@ -68,8 +68,8 @@ export type VerifyUserSchema = z.TypeOf<typeof verifyUserSchema>;
  */
 export const loginSchema = z.object({
 	body: z.object({
-		email: z.string({ required_error: "Email is required" }).email("Invalid credentials"),
-
+		email: z.string().email("Please enter a valid email").optional(),
+		username: z.string().optional(),
 		password: z
 			.string({ required_error: "Password is required" })
 			.min(6, "Invalid credentials"),

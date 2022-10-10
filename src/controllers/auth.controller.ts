@@ -10,6 +10,7 @@ import {
 import { signAccessTokenService, signRefreshTokenService } from "../services/auth.service";
 import {
 	createUserService,
+	findUserByEitherEmailOrUsernameService,
 	findUserByEmailService,
 	findUserByIdService,
 } from "../services/user.service";
@@ -149,9 +150,15 @@ export const verifyUserHandler = async (
  * @author aayushchugh
  */
 export const loginHandler = async (req: Request<{}, {}, LoginSchema["body"]>, res: Response) => {
-	const { email, password } = req.body;
+	const { email, password, username } = req.body;
 	try {
-		const user = await findUserByEmailService(email);
+		if (!email && !username) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: "You must provide a valid email or username",
+			});
+		}
+
+		const user = await findUserByEitherEmailOrUsernameService(email, username);
 
 		if (!user) {
 			return res.status(StatusCodes.NOT_FOUND).json({
