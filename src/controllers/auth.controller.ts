@@ -33,7 +33,7 @@ import { generateRandomOTP } from "../utils/otp.util";
  * @author aayushchugh
  */
 export const signupHandler = async (req: Request<{}, {}, SignupSchema["body"]>, res: Response) => {
-	const { password } = req.body;
+	const { password, receiveMarketingEmails, acceptedTermsAndConditions } = req.body;
 	const username = req.body.username.toLowerCase().trim();
 	const email = req.body.email.toLowerCase().trim();
 
@@ -44,6 +44,8 @@ export const signupHandler = async (req: Request<{}, {}, SignupSchema["body"]>, 
 			password,
 			role: "user",
 			verified: false,
+			receiveMarketingEmails,
+			acceptedTermsAndConditions,
 		});
 
 		const token = await signAccessTokenService(createdUser);

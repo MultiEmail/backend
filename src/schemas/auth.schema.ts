@@ -17,6 +17,17 @@ export const signupSchema = z.object({
 			email: z
 				.string({ required_error: "Email is required" })
 				.email("Please enter a valid email"),
+			receiveMarketingEmails: z.boolean({
+				required_error: "receive marketing emails can be either true of false",
+			}),
+			acceptedTermsAndConditions: z
+				.boolean({
+					required_error: "Please agree to terms and conditions",
+				})
+				.refine((value) => value === true, {
+					path: ["custom"],
+					message: "Please agree to terms and conditions",
+				}),
 			password: z
 				.string({ required_error: "Password is required" })
 				.min(6, "Password must be at least 6 characters"),
