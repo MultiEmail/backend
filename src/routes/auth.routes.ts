@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import passport from "passport";
 import {
 	forgotPasswordHandler,
 	getCurrentUserHandler,
@@ -107,40 +106,16 @@ authRouter.get("/auth/refresh", refreshAccessTokenHandler);
 /**
  * This route will authenticate the user using google
  *
- * @author NullableDev
+ * @author NullableDev, aayushchugh
  */
-authRouter.get(
-	"/auth/oauth/google",
-	passport.authenticate("google", {
-		scope: ["profile", "email"],
-	}),
-);
+authRouter.get("/auth/oauth/google");
 
 /**
  * This route will redirect to /fail and /success route
  * from google concent screen
  *
- * @author NullableDev
+ * @author NullableDev, aayushchugh
  */
-authRouter.get(
-	"/auth/oauth/google/redirect",
-	passport.authenticate("google", {
-		failureRedirect: "/api/auth/google/fail",
-		successRedirect: "/api/auth/google/success",
-	}),
-);
-
-/**
- * this route will run if login with google is successful
- *
- * @author NullableDev
- */
-authRouter.get("/auth/oauth/google/success", (req, res) => {
-	const user = req.user as any;
-
-	return res.status(StatusCodes.OK).json({
-		message: `Login successful welcome ${user.displayName}`,
-	});
-});
+authRouter.get("/auth/oauth/google/redirect");
 
 export default authRouter;

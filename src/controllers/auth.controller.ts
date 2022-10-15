@@ -160,7 +160,16 @@ export const loginHandler = async (req: Request<{}, {}, LoginSchema["body"]>, re
 			});
 		}
 
-		const user = await findUserByEitherEmailOrUsernameService(email, username);
+		if (email && username) {
+			return res.status(StatusCodes.BAD_REQUEST).json({
+				error: "You can only provide one thing either email or username",
+			});
+		}
+
+		const user = await findUserByEitherEmailOrUsernameService(
+			email as string,
+			username as string,
+		);
 
 		if (!user) {
 			return res.status(StatusCodes.NOT_FOUND).json({
@@ -460,4 +469,15 @@ export const refreshAccessTokenHandler = async (req: Request, res: Response) => 
 			error: "Internal Server Error",
 		});
 	}
+};
+
+export const redirectToGoogleConcentScreenHandler = (req: Request, res: Response) => {
+	const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+	const options = {
+		redirect_uri: process.env.GOOGLE_REDIRECT_URL,
+		client_id: process.env.GOOGLE_CLIENT_ID,
+	};
+	const qs = new URLSearchParams(options);
+
+	return res.redirect(`${rootUrl}?${qs.toString()}`);
 };

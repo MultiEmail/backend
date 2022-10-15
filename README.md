@@ -149,6 +149,7 @@ To run this project, you will need to add the following environment variables to
 | FRONTEND_URL              | URI on which frontend is running                                  | http://localhost:3000                                                                 |
 | GOOGLE_CLIENT_ID          | Client ID obtained while creating google oauth concent screen     | 758327950938-90jskrnp9b8d2e6ljpqrstd8fdl2k9fljkhchasnnrnj8.apps.googleusercontent.com |
 | GOOGLE_CLIENT_SECRET      | Client Secret obtained while creating google oauth concent screen | GOCSPX-NL52LzLNzF6YGJxlAoeLAnGK-a6                                                    |
+| GOOGLE_REDIRECT_URL       | URL on which user will be redirected after google oauth           | http://localhost:3001/api/auth/oauth/google/redirect                                  |
 | NODE_ENV                  | What type of environment are you running this app in              | development                                                                           |
 | EMAIL_ID                  | Which ID will be used for sending email                           | no-reply@multiemail.com                                                               |
 | EMAIL_PASSWORD            | Password of your email id                                         | mystrongpassword                                                                      |
