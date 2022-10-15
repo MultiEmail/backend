@@ -3,8 +3,10 @@ import { StatusCodes } from "http-status-codes";
 import {
 	forgotPasswordHandler,
 	getCurrentUserHandler,
+	googleOauthHandler,
 	loginHandler,
 	logoutHandler,
+	redirectToGoogleConcentScreenHandler,
 	refreshAccessTokenHandler,
 	resetPasswordHandler,
 	signupHandler,
@@ -15,6 +17,7 @@ import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	forgotPasswordSchema,
 	loginSchema,
+	redirectToGoogleConcentScreenHandlerSchema,
 	resetPasswordSchema,
 	signupSchema,
 	verifyUserSchema,
@@ -104,11 +107,15 @@ authRouter.patch(
 authRouter.get("/auth/refresh", refreshAccessTokenHandler);
 
 /**
- * This route will authenticate the user using google
+ * This route will redirect user to google concent screen
  *
  * @author NullableDev, aayushchugh
  */
-authRouter.get("/auth/oauth/google");
+authRouter.get(
+	"/auth/oauth/google",
+	validateRequest(redirectToGoogleConcentScreenHandlerSchema),
+	redirectToGoogleConcentScreenHandler,
+);
 
 /**
  * This route will redirect to /fail and /success route
@@ -116,6 +123,6 @@ authRouter.get("/auth/oauth/google");
  *
  * @author NullableDev, aayushchugh
  */
-authRouter.get("/auth/oauth/google/redirect");
+authRouter.get("/auth/oauth/google/redirect", googleOauthHandler);
 
 export default authRouter;

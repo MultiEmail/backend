@@ -16,8 +16,10 @@
 	},
 	"dependencies": {
 		"@typegoose/typegoose": "^9.12.1",
+		"@types/axios": "^0.14.0",
 		"@types/lodash": "^4.14.186",
 		"@types/nodemailer": "^6.4.6",
+		"axios": "^1.1.2",
 		"bcrypt": "^5.0.1",
 		"body-parser": "^1.20.0",
 		"cors": "^2.8.5",
@@ -34,6 +36,7 @@
 		"pino": "^8.6.0",
 		"pino-pretty": "^9.1.0",
 		"prisma": "^4.3.1",
+		"qs": "^6.11.0",
 		"ts-jest": "^29.0.3",
 		"yargs": "^17.6.0",
 		"zod": "^3.19.1"

@@ -158,3 +158,19 @@ export const resetPasswordSchema = z.object({
  * @author aayushchugh
  */
 export type ResetPasswordSchema = z.TypeOf<typeof resetPasswordSchema>;
+
+/**
+ * This schema is to validate /auth/oauth/google route
+ *
+ * @constant
+ * @author aayushchugh
+ */
+export const redirectToGoogleConcentScreenHandlerSchema = z.object({
+	query: z.object({
+		id: z.string({ required_error: "Id is required" }),
+	}),
+});
+
+export type RedirectToGoogleConcentScreenHandlerSchema = z.TypeOf<
+	typeof redirectToGoogleConcentScreenHandlerSchema
+>;

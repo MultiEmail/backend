@@ -59,7 +59,14 @@ export function findUserByEitherEmailOrUsernameService(email: string, username: 
  */
 export function createUserService(
 	payload: DocumentDefinition<
-		Omit<User, "uid" | "verificationCode" | "passwordResetCode" | "comparePassword">
+		Omit<
+			User,
+			| "uid"
+			| "verificationCode"
+			| "passwordResetCode"
+			| "comparePassword"
+			| "connected_services"
+		>
 	>,
 ) {
 	return UserModel.create(payload);

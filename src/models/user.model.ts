@@ -4,6 +4,18 @@ import { generateRandomOTP } from "../utils/otp.util";
 
 export const userModalPrivateFields = ["password", "__v", "verificationCode", "passwordResetCode"];
 
+class ConnectedServices {
+	@prop()
+	// TODO: make service union type when more services are added
+	service: "google";
+
+	@prop()
+	refresh_token: string;
+
+	@prop()
+	access_token: string;
+}
+
 @index({ uid: 1, email: 1, username: 1 })
 @pre<User>("save", async function (next) {
 	// hash password before user is created or updated
@@ -44,7 +56,8 @@ export class User {
 	@prop({ required: true, default: false })
 	public receiveMarketingEmails: boolean;
 
-	// TODO: add more fields for email services
+	@prop()
+	public connected_services: [ConnectedServices];
 
 	/**
 	 * Check if the password is correct or not
