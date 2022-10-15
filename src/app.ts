@@ -1,14 +1,11 @@
 import { config } from "dotenv";
 import express, { Application } from "express";
-import passport from "passport";
 import cors from "cors";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import logger from "./utils/logger.util";
-import "./utils/passport.util";
 
 import authRouter from "./routes/auth.routes";
-import cookieSession from "cookie-session";
 import userRouter from "./routes/user.routes";
 import ticketRouter from "./routes/ticket.routes";
 import rateLimiter from "./middleware/rateLimiter.middleware";
@@ -18,19 +15,10 @@ config();
 
 const app: Application = express();
 
-app.use(
-	cookieSession({
-		maxAge: 60 * 60 * 24 * 1000,
-		keys: ["secret"],
-		secret: "secret",
-	}),
-);
 app.use(cors());
 app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use("/api", authRouter);
 app.use("/api", userRouter);

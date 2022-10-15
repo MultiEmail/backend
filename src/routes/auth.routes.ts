@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import passport from "passport";
 import {
 	forgotPasswordHandler,
 	getCurrentUserHandler,
+	googleOauthHandler,
 	loginHandler,
 	logoutHandler,
+	redirectToGoogleConcentScreenHandler,
 	refreshAccessTokenHandler,
 	resetPasswordHandler,
 	signupHandler,
@@ -16,6 +17,7 @@ import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	forgotPasswordSchema,
 	loginSchema,
+	redirectToGoogleConcentScreenHandlerSchema,
 	resetPasswordSchema,
 	signupSchema,
 	verifyUserSchema,
@@ -105,42 +107,22 @@ authRouter.patch(
 authRouter.get("/auth/refresh", refreshAccessTokenHandler);
 
 /**
- * This route will authenticate the user using google
+ * This route will redirect user to google concent screen
  *
- * @author NullableDev
+ * @author NullableDev, aayushchugh
  */
 authRouter.get(
 	"/auth/oauth/google",
-	passport.authenticate("google", {
-		scope: ["profile", "email"],
-	}),
+	validateRequest(redirectToGoogleConcentScreenHandlerSchema),
+	redirectToGoogleConcentScreenHandler,
 );
 
 /**
  * This route will redirect to /fail and /success route
  * from google concent screen
  *
- * @author NullableDev
+ * @author NullableDev, aayushchugh
  */
-authRouter.get(
-	"/auth/oauth/google/redirect",
-	passport.authenticate("google", {
-		failureRedirect: "/api/auth/google/fail",
-		successRedirect: "/api/auth/google/success",
-	}),
-);
-
-/**
- * this route will run if login with google is successful
- *
- * @author NullableDev
- */
-authRouter.get("/auth/oauth/google/success", (req, res) => {
-	const user = req.user as any;
-
-	return res.status(StatusCodes.OK).json({
-		message: `Login successful welcome ${user.displayName}`,
-	});
-});
+authRouter.get("/auth/oauth/google/redirect", googleOauthHandler);
 
 export default authRouter;

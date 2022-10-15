@@ -3,11 +3,16 @@ import { StatusCodes } from "http-status-codes";
 import {
 	ForgotPasswordSchema,
 	LoginSchema,
+	RedirectToGoogleConcentScreenHandlerSchema,
 	ResetPasswordSchema,
 	SignupSchema,
 	VerifyUserSchema,
 } from "../schemas/auth.schema";
-import { signAccessTokenService, signRefreshTokenService } from "../services/auth.service";
+import {
+	getGoogleOAuthTokensService,
+	signAccessTokenService,
+	signRefreshTokenService,
+} from "../services/auth.service";
 import {
 	createUserService,
 	findUserByEitherEmailOrUsernameService,
@@ -19,6 +24,7 @@ import { sendEmail } from "../utils/email.util";
 import { verifyJWT } from "../utils/jwt.util";
 import logger from "../utils/logger.util";
 import { omit } from "lodash";
+import { URLSearchParams } from "url";
 import { userModalPrivateFields } from "../models/user.model";
 import { generateRandomOTP } from "../utils/otp.util";
 
@@ -160,7 +166,16 @@ export const loginHandler = async (req: Request<{}, {}, LoginSchema["body"]>, re
 			});
 		}
 
-		const user = await findUserByEitherEmailOrUsernameService(email, username);
+		if (email && username) {
+			return res.status(StatusCodes.BAD_REQUEST).json({
+				error: "You can only provide one thing either email or username",
+			});
+		}
+
+		const user = await findUserByEitherEmailOrUsernameService(
+			email as string,
+			username as string,
+		);
 
 		if (!user) {
 			return res.status(StatusCodes.NOT_FOUND).json({
@@ -460,5 +475,71 @@ export const refreshAccessTokenHandler = async (req: Request, res: Response) => 
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal Server Error",
 		});
+	}
+};
+
+/**
+ * This controller will redirect user to google concent screen
+ * @param req express request
+ * @param res express response
+ *
+ * @author aayushchugh
+ */
+export const redirectToGoogleConcentScreenHandler = (
+	req: Request<{}, {}, {}, RedirectToGoogleConcentScreenHandlerSchema["query"]>,
+	res: Response,
+) => {
+	const { id } = req.query;
+	const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+	const redirectUrl = process.env.GOOGLE_REDIRECT_URL as string;
+	const clientId = process.env.GOOGLE_CLIENT_ID as string;
+
+	const options = {
+		redirect_uri: redirectUrl,
+		client_id: clientId,
+		access_type: "offline",
+		response_type: "code",
+		prompt: "consent",
+		scope: [
+			"https://www.googleapis.com/auth/userinfo.profile",
+			"https://www.googleapis.com/auth/userinfo.email",
+		].join(" "),
+		state: id,
+	};
+	const qs = new URLSearchParams(options);
+
+	return res.status(StatusCodes.TEMPORARY_REDIRECT).redirect(`${rootUrl}?${qs.toString()}`);
+};
+
+export const googleOauthHandler = async (req: Request, res: Response) => {
+	const FRONTEND_URL = process.env.FRONTEND_URL as string;
+	try {
+		const code = req.query.code as string;
+		const id = req.query.state as string;
+		const tokens = await getGoogleOAuthTokensService(code);
+
+		const foundUser = await findUserByIdService(id);
+
+		if (!foundUser) {
+			// TODO: redirect to connect accounts path on frontend
+			return res.status(StatusCodes.NOT_FOUND).redirect(FRONTEND_URL);
+		}
+
+		if (tokens.refresh_token) {
+			foundUser.connected_services.push({
+				service: "google",
+				refresh_token: tokens.refresh_token,
+				access_token: tokens.access_token,
+			});
+
+			await foundUser.save();
+		}
+
+		// TODO: redirect to success page on frontend
+		res.status(StatusCodes.PERMANENT_REDIRECT).redirect(FRONTEND_URL);
+	} catch (err) {
+		logger.error(err);
+		// TODO: redirect should be to frontend connect account page
+		return res.redirect(FRONTEND_URL);
 	}
 };

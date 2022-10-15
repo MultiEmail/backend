@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { deserializeUser } from "passport";
 import { patchUserHandler } from "../controllers/user.controller";
+import deserializeUser from "../middleware/deserializeUser.middleware";
 import requireSameUser from "../middleware/requireSameUser.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
 import { patchUserSchema } from "../schemas/user.schema";
