@@ -201,6 +201,7 @@ export const loginHandler = async (req: Request<{}, {}, LoginSchema["body"]>, re
 			message: "User logged in successfully",
 			access_token: accessToken,
 			refresh_token: refreshToken,
+			role: user.role,
 		});
 	} catch (err) {
 		logger.error(err);
