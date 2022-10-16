@@ -27,6 +27,7 @@ import { omit } from "lodash";
 import { URLSearchParams } from "url";
 import { userModalPrivateFields } from "../models/user.model";
 import { generateRandomOTP } from "../utils/otp.util";
+import { decode } from "jsonwebtoken";
 
 /**
  * This controller will create new account of user in database
@@ -503,6 +504,10 @@ export const redirectToGoogleConcentScreenHandler = (
 		scope: [
 			"https://www.googleapis.com/auth/userinfo.profile",
 			"https://www.googleapis.com/auth/userinfo.email",
+			"https://mail.google.com/",
+			"https://www.googleapis.com/auth/gmail.modify",
+			"https://www.googleapis.com/auth/gmail.readonly",
+			"https://www.googleapis.com/auth/gmail.metadata",
 		].join(" "),
 		state: id,
 	};
@@ -511,12 +516,38 @@ export const redirectToGoogleConcentScreenHandler = (
 	return res.status(StatusCodes.TEMPORARY_REDIRECT).redirect(`${rootUrl}?${qs.toString()}`);
 };
 
+/**
+ * This controller will add new service for user
+ * @param req express request
+ * @param res express response
+ *
+ * @author aayushchugh
+ */
 export const googleOauthHandler = async (req: Request, res: Response) => {
+	interface IGoogleUser {
+		iss: string;
+		azp: string;
+		aud: string;
+		sub: string;
+		email: string;
+		email_verified: boolean;
+		at_hash: string;
+		name: string;
+		picture: string;
+		given_name: string;
+		family_name: string;
+		locale: string;
+		iat: number;
+		exp: number;
+	}
+
 	const FRONTEND_URL = process.env.FRONTEND_URL as string;
+
 	try {
 		const code = req.query.code as string;
 		const id = req.query.state as string;
 		const tokens = await getGoogleOAuthTokensService(code);
+		const googleUser = decode(tokens.id_token) as IGoogleUser;
 
 		const foundUser = await findUserByIdService(id);
 
@@ -525,11 +556,14 @@ export const googleOauthHandler = async (req: Request, res: Response) => {
 			return res.status(StatusCodes.NOT_FOUND).redirect(FRONTEND_URL);
 		}
 
+		// TODO: if account is already added than redirect to frontend
+
 		if (tokens.refresh_token) {
 			foundUser.connected_services.push({
 				service: "google",
 				refresh_token: tokens.refresh_token,
 				access_token: tokens.access_token,
+				email: googleUser.email,
 			});
 
 			await foundUser.save();
