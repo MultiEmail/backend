@@ -14,7 +14,7 @@
 <li><a href="utils_otp_util-1.html">utils/otp.util</a></li></ul>
 <h1>Module utils/otp.util</h1></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/MultiEmail/backend/blob/3d0f41a/src/utils/otp.util.ts#L4">src/utils/otp.util.ts:4</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/MultiEmail/backend/blob/ac8157c/src/utils/otp.util.ts#L4">src/utils/otp.util.ts:4</a></li></ul></aside>
 <section class="tsd-panel-group">
 <section class="tsd-panel tsd-typography"></section></section>
 <section class="tsd-panel-group tsd-index-group">
@@ -56,6 +56,10 @@
 <li class="tsd-kind-module"><a href="controllers_admin_controller-1.html">controllers/admin.controller</a></li>
 <li class="tsd-kind-module"><a href="controllers_auth_controller.html">controllers/auth.controller</a></li>
 <li class="tsd-kind-module"><a href="controllers_auth_controller-1.html">controllers/auth.controller</a></li>
+<li class="tsd-kind-module"><a href="controllers_mail_controller.html">controllers/mail.controller</a></li>
+<li class="tsd-kind-module"><a href="controllers_mail_controller-1.html">controllers/mail.controller</a></li>
+<li class="tsd-kind-module"><a href="controllers_marketingEmail_controller.html">controllers/marketing<wbr/>Email.controller</a></li>
+<li class="tsd-kind-module"><a href="controllers_marketingEmail_controller-1.html">controllers/marketing<wbr/>Email.controller</a></li>
 <li class="tsd-kind-module"><a href="controllers_ticket_controller.html">controllers/ticket.controller</a></li>
 <li class="tsd-kind-module"><a href="controllers_ticket_controller-1.html">controllers/ticket.controller</a></li>
 <li class="tsd-kind-module"><a href="controllers_user_controller.html">controllers/user.controller</a></li>
@@ -65,6 +69,8 @@
 <li class="tsd-kind-module"><a href="middleware_requireAdminRole_middleware.html">middleware/require<wbr/>Admin<wbr/>Role.middleware</a></li>
 <li class="tsd-kind-module"><a href="middleware_requireSameUser_middleware.html">middleware/require<wbr/>Same<wbr/>User.middleware</a></li>
 <li class="tsd-kind-module"><a href="middleware_validateRequest_middleware.html">middleware/validate<wbr/>Request.middleware</a></li>
+<li class="tsd-kind-module"><a href="models_marketingEmail_model.html">models/marketing<wbr/>Email.model</a></li>
+<li class="tsd-kind-module"><a href="models_marketingEmail_model-1.html">models/marketing<wbr/>Email.model</a></li>
 <li class="tsd-kind-module"><a href="models_session_model.html">models/session.model</a></li>
 <li class="tsd-kind-module"><a href="models_session_model-1.html">models/session.model</a></li>
 <li class="tsd-kind-module"><a href="models_ticket_model.html">models/ticket.model</a></li>
@@ -75,15 +81,22 @@
 <li class="tsd-kind-module"><a href="routes_admin_routes-1.html">routes/admin.routes</a></li>
 <li class="tsd-kind-module"><a href="routes_auth_routes.html">routes/auth.routes</a></li>
 <li class="tsd-kind-module"><a href="routes_auth_routes-1.html">routes/auth.routes</a></li>
+<li class="tsd-kind-module"><a href="routes_mail_routes.html">routes/mail.routes</a></li>
+<li class="tsd-kind-module"><a href="routes_mail_routes-1.html">routes/mail.routes</a></li>
+<li class="tsd-kind-module"><a href="routes_marketingEmail_routes.html">routes/marketing<wbr/>Email.routes</a></li>
+<li class="tsd-kind-module"><a href="routes_marketingEmail_routes-1.html">routes/marketing<wbr/>Email.routes</a></li>
 <li class="tsd-kind-module"><a href="routes_ticket_routes.html">routes/ticket.routes</a></li>
 <li class="tsd-kind-module"><a href="routes_ticket_routes-1.html">routes/ticket.routes</a></li>
 <li class="tsd-kind-module"><a href="routes_user_routes.html">routes/user.routes</a></li>
 <li class="tsd-kind-module"><a href="routes_user_routes-1.html">routes/user.routes</a></li>
 <li class="tsd-kind-module"><a href="schemas_admin_schema.html">schemas/admin.schema</a></li>
 <li class="tsd-kind-module"><a href="schemas_auth_schema.html">schemas/auth.schema</a></li>
+<li class="tsd-kind-module"><a href="schemas_mail_schema.html">schemas/mail.schema</a></li>
+<li class="tsd-kind-module"><a href="schemas_marketingEmail_schema.html">schemas/marketing<wbr/>Email.schema</a></li>
 <li class="tsd-kind-module"><a href="schemas_ticket_schema.html">schemas/ticket.schema</a></li>
 <li class="tsd-kind-module"><a href="schemas_user_schema.html">schemas/user.schema</a></li>
 <li class="tsd-kind-module"><a href="services_auth_service.html">services/auth.service</a></li>
+<li class="tsd-kind-module"><a href="services_marketingEmail_service.html">services/marketing<wbr/>Email.service</a></li>
 <li class="tsd-kind-module"><a href="services_session_service.html">services/session.service</a></li>
 <li class="tsd-kind-module"><a href="services_ticket_service.html">services/ticket.service</a></li>
 <li class="tsd-kind-module"><a href="services_user_service.html">services/user.service</a></li>
@@ -98,9 +111,7 @@
 <li class="tsd-kind-module"><a href="utils_logger_util.html">utils/logger.util</a></li>
 <li class="tsd-kind-module"><a href="utils_logger_util-1.html">utils/logger.util</a></li>
 <li class="selected tsd-kind-module"><a href="utils_otp_util.html">utils/otp.util</a></li>
-<li class="current selected tsd-kind-module"><a href="utils_otp_util-1.html">utils/otp.util</a></li>
-<li class="tsd-kind-module"><a href="utils_passport_util.html">utils/passport.util</a></li>
-<li class="tsd-kind-module"><a href="utils_passport_util-1.html">utils/passport.util</a></li></ul></li></ul></div></details></nav>
+<li class="current selected tsd-kind-module"><a href="utils_otp_util-1.html">utils/otp.util</a></li></ul></li></ul></div></details></nav>
 <nav class="tsd-navigation secondary menu-sticky">
 <ul>
 <li class="tsd-kind-reference tsd-parent-kind-module"><a href="utils_otp_util-1.html#generateRandomOTP" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8388608-path"></use><use href="#icon-8388608-text"></use></svg>generate<wbr/>RandomOTP</a></li></ul></nav></div></div>
