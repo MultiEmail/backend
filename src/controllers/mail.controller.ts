@@ -43,7 +43,8 @@ export const getEmailsFromGmailHandler = async (
 
 		return res.status(StatusCodes.OK).json({
 			message: "Emails fetched successfully",
-			records: response.data,
+			records: response.data.messages,
+			size: response.data.resultSizeEstimate,
 		});
 	} catch (err) {
 		logger.error(err);
