@@ -4,7 +4,7 @@ import { generateRandomOTP } from "../utils/otp.util";
 
 export const userModalPrivateFields = ["password", "__v", "verificationCode", "passwordResetCode"];
 
-class ConnectedServices {
+export class ConnectedServices {
 	@prop()
 	// TODO: make service union type when more services are added
 	service: "google";
@@ -14,6 +14,9 @@ class ConnectedServices {
 
 	@prop()
 	access_token: string;
+
+	@prop()
+	email: string;
 }
 
 @index({ uid: 1, email: 1, username: 1 })
