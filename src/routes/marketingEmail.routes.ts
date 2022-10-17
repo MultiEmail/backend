@@ -1,7 +1,13 @@
 import { Router } from "express";
-import { createMarketingEmailHandler } from "../controllers/marketingEmail.controller";
+import {
+	createMarketingEmailHandler,
+	sendMarketingEmailHandler,
+} from "../controllers/marketingEmail.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
-import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
+import {
+	createMarketingEmailSchema,
+	sendMarketingEmailSchema,
+} from "../schemas/marketingEmail.schema";
 
 const marketingEmailRouter: Router = Router();
 
@@ -16,5 +22,15 @@ const marketingEmailRouter: Router = Router();
 marketingEmailRouter
 	.route("/marketing")
 	.post(validateRequest(createMarketingEmailSchema), createMarketingEmailHandler);
+
+/**
+ * This route will do following
+ * POST -> send new marketing email
+ *
+ * @author tharun634
+ */
+marketingEmailRouter
+	.route("/marketing-email")
+	.post(validateRequest(sendMarketingEmailSchema), sendMarketingEmailHandler);
 
 export default marketingEmailRouter;
