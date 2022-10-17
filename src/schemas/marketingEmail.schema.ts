@@ -3,7 +3,6 @@ import { z } from "zod";
 /**
  * This schema is used to validate `POST /marketing` request
  *
- * @constant
  * @author tharun634
  */
 export const createMarketingEmailSchema = z.object({
@@ -24,7 +23,6 @@ export type CreateMarketingEmailSchema = z.TypeOf<typeof createMarketingEmailSch
 /**
  * This schema is used to validate `POST /marketing-email` request
  *
- * @constant
  * @author tharun634
  */
 export const sendMarketingEmailSchema = z.object({
@@ -37,8 +35,8 @@ export const sendMarketingEmailSchema = z.object({
 /**
  * This type is generated using sendMarketingEmailSchema and can be used
  * as express Request type generic
- * @author tharun634
  *
+ * @author tharun634
  */
 
 export type SendMarketingEmailSchema = z.TypeOf<typeof sendMarketingEmailSchema>;
