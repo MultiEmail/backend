@@ -9,6 +9,10 @@ export const getEmailsFromGmailSchema = z.object({
 	params: z.object({
 		email: z.string({ required_error: "Email is required" }),
 	}),
+	query: z.object({
+		maxResults: z.string().optional(),
+		pageToken: z.string().optional(),
+	}),
 });
 
 /**
