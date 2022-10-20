@@ -12,6 +12,8 @@ export const getEmailsFromGmailSchema = z.object({
 	query: z.object({
 		maxResults: z.string().optional(),
 		pageToken: z.string().optional(),
+		q: z.string().optional(),
+		includeSpamTrash: z.string().optional(),
 	}),
 });
 
