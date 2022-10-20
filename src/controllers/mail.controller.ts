@@ -19,7 +19,7 @@ export const getEmailsFromGmailHandler = async (
 ) => {
 	try {
 		const { email } = req.params;
-		const { maxResults, pageToken } = req.query;
+		const { maxResults, pageToken, q, includeSpamTrash } = req.query;
 		const user = res.locals.user as User;
 
 		// get email accessToken
@@ -36,6 +36,8 @@ export const getEmailsFromGmailHandler = async (
 		const fetchEmailsQueryURL = new URLSearchParams({
 			maxResults: maxResults || "100",
 			pageToken: pageToken || "",
+			q: q || "",
+			includeSpamTrash: includeSpamTrash || "false",
 		});
 
 		const response = await axios.get(
