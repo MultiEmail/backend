@@ -1,10 +1,9 @@
 import { Router } from "express";
+import { deleteUserHandler, getAllUsersHandler } from "../controllers/admin.controller";
 import {
-	deleteUserHandler,
-	getAllUsersHandler,
+	patchMarkUserAdminHandler,
 	patchMarkUserVerifiedHandler,
-} from "../controllers/admin.controller";
-import { patchMarkUserAdminHandler } from "../controllers/user.controller";
+} from "../controllers/user.controller";
 import deserializeUser from "../middleware/deserializeUser.middleware";
 import requireAdminRole from "../middleware/requireAdminRole.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
