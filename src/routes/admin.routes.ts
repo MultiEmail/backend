@@ -5,7 +5,6 @@ import {
 	deleteUserHandler,
 } from "../controllers/admin.controller";
 import { createMarketingEmailHandler } from "../controllers/marketingEmail.controller";
-import requireAdminRole from "../middleware/requireAdminRole.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
 import { deleteUserSchema, patchMarkUserVerifiedSchema } from "../schemas/admin.schema";
 import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
