@@ -683,16 +683,148 @@ describe("Endpoints Test", () => {
 					.send({
 						username: "newUsername"
 					});
-				console.log(res.body)
 				expect(res.status).toEqual(200);
 				expect(res.body).toHaveProperty("message");
 				expect(res.body.message).toEqual("User updated successfully");
+
+				// Internal Service Call to fetch the updfated user.
+				userDocument = await findUserByEmailService(newUser.email);
+			});
+		});
+	});
+
+	describe("/admin", () => {
+		describe("PATCH /admin/users/markadmin/:id", () => {
+
+			it("should not mark admin if user is not found, i.e. invalid ID", async () => {
+				const res = await supertest(app)
+					.patch(`/api/admin/users/markadmin/${"6339cebe708e3a1198f1997b"}`)
+					.set('Accept', 'application/json')
+					.set('Authorization', `Bearer ${adminUser.access_token}`);
+				expect(res.status).toEqual(404);
+				expect(res.body).toHaveProperty("error");
+				expect(res.body.error).toEqual("User not found");
+			});
+
+			it("should not mark user as admin if the request is made by non-admin", async () => {
+				// Generate a random user.
+				const newUser = await createUser();
+
+				// Signup a new user to update later.
+				const signupRes = await supertest(app)
+					.post("/api/auth/signup")
+					.set("Accept", "application/json")
+					.send({
+						...newUser,
+						cpassword: newUser.password,
+					});
+
+				expect(signupRes.statusCode).toEqual(201);
+				expect(signupRes.body).toHaveProperty("message");
+				expect(signupRes.body.message).toEqual("User created successfully");
+
+				// Internal Service Call to fetch ID of the user.
+				let userDocument = await findUserByEmailService(newUser.email);
+				const userId = userDocument._id;
+
+				const verifyRes = await supertest(app)
+					.patch(`/api/admin/users/markverified/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${adminUser.access_token}`)
+					.send();
+				expect(verifyRes.status).toEqual(200);
+				expect(verifyRes.body).toHaveProperty("message");
+				expect(verifyRes.body.message).toEqual("User verified successfully");
+
+				const loginRes = await supertest(app)
+					.post("/api/auth/login")
+					.set("Accept", "application/json")
+					.send({
+						email: newUser.email,
+						password: newUser.password,
+					});
+
+				expect(loginRes.statusCode).toEqual(200);
+				expect(loginRes.body).toHaveProperty("access_token");
+				expect(loginRes.body).toHaveProperty("refresh_token");
+
+				newUser.access_token = loginRes.body.access_token;
+				newUser.refresh_token = loginRes.body.refresh_token;
+
+				// Proceed with the test.
+				const res = await supertest(app)
+					.patch(`/api/admin/users/markadmin/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${newUser.access_token}`);
+
+				expect(res.status).toEqual(403);
+				expect(res.body).toHaveProperty("error");
+				expect(res.body.error).toEqual("Insufficient rights");
+
+				// Internal Service Call to fetch the updated user.
+				userDocument = await findUserByEmailService(newUser.email);
+			});
+
+			it("should mark the user as admin if the user is found", async () => {
+				// Generate a random user.
+				const newUser = await createUser();
+
+				// Signup a new user to update later.
+				const signupRes = await supertest(app)
+					.post("/api/auth/signup")
+					.set("Accept", "application/json")
+					.send({
+						...newUser,
+						cpassword: newUser.password,
+					});
+
+				expect(signupRes.statusCode).toEqual(201);
+				expect(signupRes.body).toHaveProperty("message");
+				expect(signupRes.body.message).toEqual("User created successfully");
+
+				// Internal Service Call to fetch ID of the user.
+				let userDocument = await findUserByEmailService(newUser.email);
+				const userId = userDocument._id;
+
+				const verifyRes = await supertest(app)
+					.patch(`/api/admin/users/markverified/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${adminUser.access_token}`)
+					.send();
+				expect(verifyRes.status).toEqual(200);
+				expect(verifyRes.body).toHaveProperty("message");
+				expect(verifyRes.body.message).toEqual("User verified successfully");
+
+				const loginRes = await supertest(app)
+					.post("/api/auth/login")
+					.set("Accept", "application/json")
+					.send({
+						email: newUser.email,
+						password: newUser.password,
+					});
+
+				expect(loginRes.statusCode).toEqual(200);
+				expect(loginRes.body).toHaveProperty("access_token");
+				expect(loginRes.body).toHaveProperty("refresh_token");
+
+				newUser.access_token = loginRes.body.access_token;
+				newUser.refresh_token = loginRes.body.refresh_token;
+
+				// Proceed with the test.
+				const res = await supertest(app)
+					.patch(`/api/admin/users/markadmin/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${adminUser.access_token}`);
+
+				expect(res.status).toEqual(200);
+				expect(res.body).toHaveProperty("message");
+				expect(res.body.message).toEqual("User marked as admin successfully");
 
 				// Internal Service Call to fetch the updated user.
 				userDocument = await findUserByEmailService(newUser.email);
 			});
 		});
-	})
+	});
 
 
 	afterAll(async () => {

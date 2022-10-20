@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { PatchMarkUserAdminSchema } from "../schemas/admin.schema";
 
-import { PatchMarkUserAdminSchema, PatchUserSchema } from "../schemas/user.schema";
+import { PatchUserSchema } from "../schemas/user.schema";
 import { findUserByUsernameService, updateUserByIdService } from "../services/user.service";
 import logger from "../utils/logger.util";
 
