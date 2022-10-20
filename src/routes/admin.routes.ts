@@ -4,6 +4,7 @@ import {
 	patchMarkUserVerifiedHandler,
 	deleteUserHandler,
 } from "../controllers/admin.controller";
+import deserializeUser from "../middleware/deserializeUser.middleware";
 import requireAdminRole from "../middleware/requireAdminRole.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
 import {
@@ -21,7 +22,7 @@ const adminRouter: Router = Router();
  * 
  * @author aayushchugh, is-it-ayush
  */
- adminRouter.get("/admin/users", requireAdminRole, getAllUsersHandler);
+ adminRouter.get("/admin/users", deserializeUser, requireAdminRole, getAllUsersHandler);
  
  
 /** 
@@ -30,7 +31,7 @@ const adminRouter: Router = Router();
  * 
  * @author aayushchugh, is-it-ayush
 */
- adminRouter.patch("/admin/users/markverified/:id", requireAdminRole, validateRequest(patchMarkUserVerifiedSchema), patchMarkUserVerifiedHandler);
+ adminRouter.patch("/admin/users/markverified/:id", deserializeUser, requireAdminRole, validateRequest(patchMarkUserVerifiedSchema), patchMarkUserVerifiedHandler);
 
 /**
  * This route will delete a user
@@ -38,6 +39,6 @@ const adminRouter: Router = Router();
  * 
  * @author aayushchugh, is-it-ayush
  */
- adminRouter.route("/admin/users/:id").delete(requireAdminRole, validateRequest(deleteUserSchema), deleteUserHandler);
+ adminRouter.route("/admin/users/:id").delete(deserializeUser, requireAdminRole, validateRequest(deleteUserSchema), deleteUserHandler);
 
  export default adminRouter;

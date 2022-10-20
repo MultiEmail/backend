@@ -9,7 +9,8 @@
 		"build": "yarn && tsc --build",
 		"docs": "typedoc",
 		"prepare": "husky install",
-		"test": "set NODE_ENV=test && jest --forceExit"
+		"test": "set NODE_ENV=test && jest --forceExit && set NODE_ENV=",
+		"test:ci": "NODE_ENV=test jest --forceExit"
 	},
 	"bin": {
 		"multi-email-admin": "./build/bin/index.js"
