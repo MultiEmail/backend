@@ -34,7 +34,7 @@ export function sendEmail(
 	subject: string,
 	html: string,
 ): Promise<SentMessageInfo> | undefined {
-	if (process.env.NODE_ENV === "test") return;
+	if (process.env.NODE_ENV?.trim() === "test") return;
 
 	const mailOptions: SendMailOptions = {
 		from: {
