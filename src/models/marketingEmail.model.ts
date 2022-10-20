@@ -3,10 +3,10 @@ import { User } from "./user.model";
 
 export class MarketingEmail {
 	@prop({ required: true })
-	subject: string;
+	public subject: string;
 
 	@prop({ required: true, ref: () => User })
-	users: Ref<User>[];
+	public users: Ref<User>[];
 }
 
 const MarketingEmailModel = getModelForClass(MarketingEmail, {
