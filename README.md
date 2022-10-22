@@ -16,8 +16,8 @@
 
 -   Admin dashboard
 -   User settings and or user dashboard
--   send emails
--   recive emails
+-   Send emails
+-   Receive emails
 -   Connections through other parties ie discord, twitter, facebook etc..
 
 # Run locally
