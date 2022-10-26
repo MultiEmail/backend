@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema,DeleteUserSchema } from "../schemas/admin.schema";
+import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema, DeleteUserSchema } from "../schemas/admin.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
-import { findUserByUsernameService, updateUserByIdService,deleteUserByIdService,findUsersService } from "../services/user.service";
+import { findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService } from "../services/user.service";
 import logger from "../utils/logger.util";
 
 
