@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-	deleteUserHandler,
-	getAllUsersHandler,
-	patchMarkUserVerifiedHandler,
-} from "../controllers/admin.controller";
-import {
 	createMarketingEmailHandler,
 	getAllMarketingEmailsHandler,
 } from "../controllers/marketingEmail.controller";
-import { patchMarkUserAdminHandler } from "../controllers/user.controller";
+import {
+	deleteUserHandler,
+	getAllUsersHandler,
+	patchMarkUserAdminHandler,
+	patchMarkUserVerifiedHandler,
+} from "../controllers/user.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	deleteUserSchema,
