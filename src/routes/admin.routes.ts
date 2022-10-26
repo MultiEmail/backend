@@ -4,12 +4,18 @@ import {
 	getAllUsersHandler,
 	patchMarkUserVerifiedHandler,
 } from "../controllers/admin.controller";
-import { createMarketingEmailHandler } from "../controllers/marketingEmail.controller";
-import validateRequest from "../middleware/validateRequest.middleware";
-import { deleteUserSchema, patchMarkUserVerifiedSchema } from "../schemas/admin.schema";
-import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
-import { patchMarkUserAdminSchema } from "../schemas/admin.schema";
+import {
+	createMarketingEmailHandler,
+	getAllMarketingEmailsHandler,
+} from "../controllers/marketingEmail.controller";
 import { patchMarkUserAdminHandler } from "../controllers/user.controller";
+import validateRequest from "../middleware/validateRequest.middleware";
+import {
+	deleteUserSchema,
+	patchMarkUserAdminSchema,
+	patchMarkUserVerifiedSchema,
+} from "../schemas/admin.schema";
+import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
 
 const adminRouter: Router = Router();
 
@@ -50,6 +56,7 @@ adminRouter.route("/admin/users/:id").delete(validateRequest(deleteUserSchema), 
  */
 adminRouter
 	.route("/admin/marketing-emails")
+	.get(getAllMarketingEmailsHandler)
 	.post(validateRequest(createMarketingEmailSchema), createMarketingEmailHandler);
 
 /**
