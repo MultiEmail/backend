@@ -1,16 +1,12 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { DeleteUserSchema, PatchMarkUserVerifiedSchema } from "../schemas/admin.schema";
 import {
-	DeleteUserSchema,
-	PatchMarkUserVerifiedSchema,
-} from "../schemas/admin.schema";
-import { 
 	deleteUserByIdService,
 	findUsersService,
 	updateUserByIdService,
 } from "../services/user.service";
 import logger from "../utils/logger.util";
-
 
 /**
  * This controller will get all users from database
@@ -20,7 +16,7 @@ import logger from "../utils/logger.util";
  *
  * @author aayushchugh, is-itayush
  */
- export const getAllUsersHandler = async (req: Request, res: Response) => {
+export const getAllUsersHandler = async (req: Request, res: Response) => {
 	try {
 		const records = await findUsersService();
 

@@ -47,7 +47,10 @@ export const createMarketingEmailHandler = async (
 
 			users.forEach(async (user) => await sendEmail(user.email, subject, html));
 
-			await createMarketingEmailService({ subject, users: users.map((user) => user._id) });
+			await createMarketingEmailService({
+				subject,
+				users: users.map((user) => user._id),
+			});
 
 			return res.status(StatusCodes.OK).json({
 				message: "Email sent successfully",
@@ -63,11 +66,16 @@ export const createMarketingEmailHandler = async (
 				specificUsers.map((userId) => findUserByIdService(userId)),
 			);
 
-			users.forEach(async (user) => user && (await sendEmail(user.email, subject, html)));
+			users.forEach(
+				async (user) =>
+					user &&
+					user.receiveMarketingEmails &&
+					(await sendEmail(user.email, subject, html)),
+			);
 
 			await createMarketingEmailService({
 				subject,
-				users: users.map((user) => user && user._id),
+				users: users.map((user) => user && user.receiveMarketingEmails && user._id),
 			});
 
 			return res.status(StatusCodes.OK).json({
