@@ -1,15 +1,10 @@
 import { Router } from "express";
-import {
-	deleteUserHandler,
-	getAllUsersHandler,
-	patchMarkUserVerifiedHandler,
-} from "../controllers/admin.controller";
 import { createMarketingEmailHandler } from "../controllers/marketingEmail.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
 import { deleteUserSchema, patchMarkUserVerifiedSchema } from "../schemas/admin.schema";
 import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
 import { patchMarkUserAdminSchema } from "../schemas/admin.schema";
-import { patchMarkUserAdminHandler } from "../controllers/user.controller";
+import { patchMarkUserAdminHandler, deleteUserHandler, getAllUsersHandler, patchMarkUserVerifiedHandler } from "../controllers/user.controller";
 
 const adminRouter: Router = Router();
 
