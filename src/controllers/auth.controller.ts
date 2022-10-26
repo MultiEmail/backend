@@ -556,7 +556,10 @@ export const googleOauthHandler = async (req: Request, res: Response) => {
 			return res.status(StatusCodes.NOT_FOUND).redirect(FRONTEND_URL);
 		}
 
-		// TODO: if account is already added than redirect to frontend
+		// if account is already added than redirect to frontend
+		if (foundUser.connected_services.filter((s) => s.email === foundUser.email).length) {
+			return res.status(StatusCodes.CONFLICT).redirect(FRONTEND_URL);
+		}
 
 		if (tokens.refresh_token) {
 			foundUser.connected_services.push({

@@ -1,13 +1,15 @@
 import { Router } from "express";
 import {
+	deleteUserHandler,
 	getAllUsersHandler,
 	patchMarkUserVerifiedHandler,
-	deleteUserHandler,
 } from "../controllers/admin.controller";
 import { createMarketingEmailHandler } from "../controllers/marketingEmail.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
 import { deleteUserSchema, patchMarkUserVerifiedSchema } from "../schemas/admin.schema";
 import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
+import { patchMarkUserAdminSchema } from "../schemas/admin.schema";
+import { patchMarkUserAdminHandler } from "../controllers/user.controller";
 
 const adminRouter: Router = Router();
 
@@ -49,5 +51,15 @@ adminRouter.route("/admin/users/:id").delete(validateRequest(deleteUserSchema), 
 adminRouter
 	.route("/admin/marketing-emails")
 	.post(validateRequest(createMarketingEmailSchema), createMarketingEmailHandler);
+
+/**
+ * This route does following things
+ * PATCH -> mark user as admin
+ *
+ * @author tharun634
+ */
+adminRouter
+	.route("/admin/users/markadmin/:id")
+	.patch(validateRequest(patchMarkUserAdminSchema), patchMarkUserAdminHandler);
 
 export default adminRouter;

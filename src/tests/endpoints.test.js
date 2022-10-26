@@ -44,6 +44,8 @@ describe("Endpoints Test", () => {
 			email: adminUser.email,
 			verified: true,
 			password: adminUser.password,
+			acceptedTermsAndConditions: true,
+			receiveMarketingEmails: true
 		})
 	});
 
@@ -83,20 +85,46 @@ describe("Endpoints Test", () => {
 			});
 	
 			it("should create a new user", async () => {
-	
 				const res = await supertest(app)
 					.post("/api/auth/signup")
-					.set('Accept', 'application/json')
+					.set("Accept", "application/json")
 					.send({
 						...user,
-						cpassword: user.password
-					})
-					
-					expect(res.statusCode).toEqual(201);
-					expect(res.body).toHaveProperty("message")
-					expect(res.body.message).toEqual("User created successfully");
+						cpassword: user.password,
+					});
+
+				expect(res.statusCode).toEqual(201);
+				expect(res.body).toHaveProperty("message");
+				expect(res.body.message).toEqual("User created successfully");
 			});
-	
+
+			it("should verify user", async () => {
+				// Login with Admin and save the access token and refresh token for future test use.
+				const adminLoginRes = await supertest(app)
+					.post("/api/auth/login")
+					.set("Accept", "application/json")
+					.send({
+						email: adminUser.email,
+						password: adminUser.password,
+					});
+
+				expect(adminLoginRes.status).toEqual(200);
+				expect(adminLoginRes.body).toHaveProperty("message");
+				expect(adminLoginRes.body.message).toEqual("User logged in successfully");
+
+				adminUser.access_token = adminLoginRes.body.access_token;
+				adminUser.refresh_token = adminLoginRes.body.refresh_token;
+
+				// Internal Service Call to fetch ID of the user.
+				const userDocument = await findUserByEmailService(user.email);
+				const userId = userDocument._id;
+
+				await supertest(app)
+					.patch("/api/admin/users/markverified/" + userId)
+					.set("Accept", "application/json")
+					.set("Authorization", "Bearer " + adminUser.access_token);
+			});
+
 			it("should not create a new user if email or username already exists", async () => {
 				const res = await supertest(app)
 					.post("/api/auth/signup")
@@ -110,45 +138,7 @@ describe("Endpoints Test", () => {
 				expect(res.body.error).toEqual("User with same email or username already exists");
 			});
 		});
-	
-		describe("GET /auth/verify/:email/:verificationCode", () => {
-	
-			it("should not verify a user if email is invalid", async () => {
-				const res = await supertest(app)
-					.get(`/api/auth/verify/email/1234`);
-				expect(res.status).toEqual(422);
-				expect(res.body).toHaveProperty("error")
-				expect(res.body.error).toEqual("Please enter a valid email");
-			});
-	
-			it("should not verify a user if verification code is invalid", async () => {
-				const res = await supertest(app)
-					.get(`/api/auth/verify/${user.email}/1234`);
-				expect(res.status).toEqual(401);
-				expect(res.body).toHaveProperty("error")
-				expect(res.body.error).toEqual("Invalid verification code");
-			});
-	
-			it("should not verify a user if not found", async () => {
-				let newRandomUser = await createUser();
-				const res = await supertest(app)
-					.get(`/api/auth/verify/${newRandomUser.email}/1234`);
-				expect(res.status).toEqual(404);
-				expect(res.body).toHaveProperty("error")
-				expect(res.body.error).toEqual("User not found");
-			});
-	
-			it("should verify a user", async () => {
-				// Internal Call: findUserByEmailService (Fetching the vefication code)
-				let userDocument = await findUserByEmailService(user.email);
-				const res = await supertest(app)
-					.get(`/api/auth/verify/${user.email}/${userDocument.verificationCode}`);
-				expect(res.status).toEqual(200);
-				expect(res.body).toHaveProperty("message")
-				expect(res.body.message).toEqual("User verified successfully");
-			});
-		});
-	
+
 		describe("POST /auth/login", () => {
 	
 			it("should not login if the user is not found", async () => {
@@ -237,10 +227,8 @@ describe("Endpoints Test", () => {
 					.get("/api/auth/me")
 					.set('Accept', 'application/json');
 				expect(res.status).toEqual(401);
-				expect(res.body).toHaveProperty("message");
-				expect(res.body).toHaveProperty("user");
-				expect(res.body.message).toEqual("User is not logged In");
-				expect(res.body.user).toEqual(null);
+				expect(res.body).toHaveProperty("error");
+				expect(res.body.error).toEqual("User is not logged in");
 			});
 	
 			it("should get the user details if user is logged in", async () => {
@@ -384,10 +372,10 @@ describe("Endpoints Test", () => {
 			it("should send the reset password link if the email is valid", async () => {
 				const res = await supertest(app)
 					.post("/api/auth/forgotpassword")
-					.set('Accept', 'application/json')
+					.set("Accept", "application/json")
 					.send({
-						email: user.email
-				});
+						email: user.email,
+					});
 				
 				expect(res.status).toEqual(200);
 				expect(res.body).toHaveProperty("message");
@@ -455,52 +443,17 @@ describe("Endpoints Test", () => {
 		describe("GET /users", () => {
 
 			it("should return all users", async () => {
-
-				// Login with Admin and save the access token and refresh token for future test use.
-				const adminLoginRes = await supertest(app)
-				.post("/api/auth/login")	
-				.set('Accept', 'application/json')
-				.send({
-					email: adminUser.email,
-					password: adminUser.password
-				});
-
-				expect(adminLoginRes.status).toEqual(200);
-				expect(adminLoginRes.body).toHaveProperty("message");
-				expect(adminLoginRes.body.message).toEqual("User logged in successfully");
-
-				adminUser.access_token = adminLoginRes.body.access_token;
-				adminUser.refresh_token = adminLoginRes.body.refresh_token;
-
-				// This is not related to this test but logging in here might be necessary for other tests.
 				const res = await supertest(app)
-					.post("/api/auth/login")
-					.set('Accept', 'application/json')
-					.send({
-						email: user.email,
-						password: user.password
-					});
-	
-				// Save the access token and refresh token for future test use.
-				user.access_token = res.body.access_token;
-				user.refresh_token = res.body.refresh_token;
-	
-				expect(res.status).toEqual(200);
-				expect(res.body).toHaveProperty("message");
-				expect(res.body.message).toEqual("User logged in successfully");
-
-				// Proceed With Test
-				const res1 = await supertest(app)
-					.get("/api/users")
+					.get("/api/admin/users")
 					.set('Accept', 'application/json')
 					.set('Authorization', `Bearer ${adminUser.access_token}`)
 					.send();
-				expect(res1.status).toEqual(200);
-				expect(res1.body).toHaveProperty("message");
-				expect(res1.body.message).toEqual("Users fetched successfully");
-				expect(res1.body).toHaveProperty("records");
+				expect(res.status).toEqual(200);
+				expect(res.body).toHaveProperty("message");
+				expect(res.body.message).toEqual("Users fetched successfully");
+				expect(res.body).toHaveProperty("records");
 				// Since we have created a user in the beforeAll hook, we dont expect the length to be 0. Hence ensuring.
-				expect(res1.body.records.length).not.toEqual(0);
+				expect(res.body.records.length).not.toEqual(0);
 			});
 		});
 
@@ -513,9 +466,9 @@ describe("Endpoints Test", () => {
 			it("should not delete if user is not found, i.e. invalid ID", async () => {
 
 				const res = await supertest(app)
-					.delete(`/api/users/${"6339cebe708e3a1198f1997b"}`)
+					.delete(`/api/admin/users/${"6339cebe708e3a1198f1997b"}`)
 					.set('Accept', 'application/json')
-					.set('Authorization', `Bearer ${adminUser.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
+					.set('Authorization', `Bearer ${adminUser.access_token}`)
 					.send();
 
 				expect(res.status).toEqual(404);
@@ -547,7 +500,7 @@ describe("Endpoints Test", () => {
 
 				// Proceed with the test.
 				const res = await supertest(app)
-					.delete(`/api/users/${userId}`)
+					.delete(`/api/admin/users/${userId}`)
 					.set('Accept', 'application/json')
 					.set('Authorization', `Bearer ${adminUser.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
 					.send();
@@ -560,9 +513,9 @@ describe("Endpoints Test", () => {
 		describe("PATCH /users/markverified/:id", () => {
 			it("should not mark verified if user is not found, i.e. invalid ID", async () => {
 				const res = await supertest(app)
-					.patch(`/api/users/markverified/${"6339cebe708e3a1198f1997b"}`)
+					.patch(`/api/admin/users/markverified/${"6339cebe708e3a1198f1997b"}`)
 					.set('Accept', 'application/json')
-					// .set('Authorization', `Bearer ${user.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
+					.set('Authorization', `Bearer ${adminUser.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
 					.send();
 				expect(res.status).toEqual(404);
 				expect(res.body).toHaveProperty("error");
@@ -593,9 +546,9 @@ describe("Endpoints Test", () => {
 
 				// Proceed with the test.
 				const res = await supertest(app)
-					.patch(`/api/users/markverified/${userId}`)
+					.patch(`/api/admin/users/markverified/${userId}`)
 					.set('Accept', 'application/json')
-					// .set('Authorization', `Bearer ${user.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
+					.set('Authorization', `Bearer ${adminUser.access_token}`)
 					.send();
 				expect(res.status).toEqual(200);
 				expect(res.body).toHaveProperty("message");
@@ -608,7 +561,7 @@ describe("Endpoints Test", () => {
 				const res = await supertest(app)
 					.patch(`/api/users/${"6339cebe708e3a1198f1997b"}`)
 					.set('Accept', 'application/json')
-					// .set('Authorization', `Bearer ${user.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role i.e. our global test 'user' must be admin.
+					.set('Authorization', `Bearer ${adminUser.access_token}`)
 					.send({
 						role: "admin"
 					});
@@ -617,7 +570,7 @@ describe("Endpoints Test", () => {
 				expect(res.body.error).toEqual("User not found");
 			});
 
-			it("shouldn not update if the username is already taken", async () => {
+			it("should not update if the username is already taken", async () => {
 				
 				// Generate a random user.
 				const newUser = await createUser();
@@ -639,11 +592,35 @@ describe("Endpoints Test", () => {
 				const userDocument = await findUserByEmailService(newUser.email);
 				const userId = userDocument._id;
 
+				const verifyRes = await supertest(app)
+					.patch(`/api/admin/users/markverified/${userId}`)
+					.set('Accept', 'application/json')
+					.set('Authorization', `Bearer ${adminUser.access_token}`)
+					.send();
+				expect(verifyRes.status).toEqual(200);
+				expect(verifyRes.body).toHaveProperty("message");
+				expect(verifyRes.body.message).toEqual("User verified successfully");
+
+				const loginRes = await supertest(app)
+				.post("/api/auth/login")
+				.set('Accept', 'application/json')
+				.send({
+					email: newUser.email,
+					password: newUser.password
+				});
+
+				expect(loginRes.statusCode).toEqual(200);
+				expect(loginRes.body).toHaveProperty("access_token");
+				expect(loginRes.body).toHaveProperty("refresh_token");
+
+				newUser.access_token = loginRes.body.access_token;
+				newUser.refresh_token = loginRes.body.refresh_token;
+
 				// Proceed with the test.
 				const res = await supertest(app)
 					.patch(`/api/users/${userId}`)
 					.set('Accept', 'application/json')
-					// .set('Authorization', `Bearer ${user.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role i.e. our global test 'user' must be admin.
+					.set('Authorization', `Bearer ${newUser.access_token}`)
 					.send({
 						username: user.username
 					});
@@ -651,7 +628,7 @@ describe("Endpoints Test", () => {
 				expect(res.body).toHaveProperty("error");
 				expect(res.body.error).toEqual("Username is already taken");
 			});
-
+			
 			it("should update the user if the user is found", async () => {
 
 				// Generate a random user.
@@ -674,11 +651,35 @@ describe("Endpoints Test", () => {
 				let userDocument = await findUserByEmailService(newUser.email);
 				const userId = userDocument._id;
 
+				const verifyRes = await supertest(app)
+					.patch(`/api/admin/users/markverified/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${adminUser.access_token}`)
+					.send();
+				expect(verifyRes.status).toEqual(200);
+				expect(verifyRes.body).toHaveProperty("message");
+				expect(verifyRes.body.message).toEqual("User verified successfully");
+
+				const loginRes = await supertest(app)
+					.post("/api/auth/login")
+					.set("Accept", "application/json")
+					.send({
+						email: newUser.email,
+						password: newUser.password,
+					});
+
+				expect(loginRes.statusCode).toEqual(200);
+				expect(loginRes.body).toHaveProperty("access_token");
+				expect(loginRes.body).toHaveProperty("refresh_token");
+
+				newUser.access_token = loginRes.body.access_token;
+				newUser.refresh_token = loginRes.body.refresh_token;
+
 				// Proceed with the test.
 				const res = await supertest(app)
 					.patch(`/api/users/${userId}`)
 					.set('Accept', 'application/json')
-					// .set('Authorization', `Bearer ${user.access_token}`)    // Uncomment this line to test with JWT in a future. Ensure the JWT has admin role.
+					.set('Authorization', `Bearer ${newUser.access_token}`)
 					.send({
 						username: "newUsername"
 					});
@@ -686,11 +687,144 @@ describe("Endpoints Test", () => {
 				expect(res.body).toHaveProperty("message");
 				expect(res.body.message).toEqual("User updated successfully");
 
+				// Internal Service Call to fetch the updfated user.
+				userDocument = await findUserByEmailService(newUser.email);
+			});
+		});
+	});
+
+	describe("/admin", () => {
+		describe("PATCH /admin/users/markadmin/:id", () => {
+
+			it("should not mark admin if user is not found, i.e. invalid ID", async () => {
+				const res = await supertest(app)
+					.patch(`/api/admin/users/markadmin/${"6339cebe708e3a1198f1997b"}`)
+					.set('Accept', 'application/json')
+					.set('Authorization', `Bearer ${adminUser.access_token}`);
+				expect(res.status).toEqual(404);
+				expect(res.body).toHaveProperty("error");
+				expect(res.body.error).toEqual("User not found");
+			});
+
+			it("should not mark user as admin if the request is made by non-admin", async () => {
+				// Generate a random user.
+				const newUser = await createUser();
+
+				// Signup a new user to update later.
+				const signupRes = await supertest(app)
+					.post("/api/auth/signup")
+					.set("Accept", "application/json")
+					.send({
+						...newUser,
+						cpassword: newUser.password,
+					});
+
+				expect(signupRes.statusCode).toEqual(201);
+				expect(signupRes.body).toHaveProperty("message");
+				expect(signupRes.body.message).toEqual("User created successfully");
+
+				// Internal Service Call to fetch ID of the user.
+				let userDocument = await findUserByEmailService(newUser.email);
+				const userId = userDocument._id;
+
+				const verifyRes = await supertest(app)
+					.patch(`/api/admin/users/markverified/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${adminUser.access_token}`)
+					.send();
+				expect(verifyRes.status).toEqual(200);
+				expect(verifyRes.body).toHaveProperty("message");
+				expect(verifyRes.body.message).toEqual("User verified successfully");
+
+				const loginRes = await supertest(app)
+					.post("/api/auth/login")
+					.set("Accept", "application/json")
+					.send({
+						email: newUser.email,
+						password: newUser.password,
+					});
+
+				expect(loginRes.statusCode).toEqual(200);
+				expect(loginRes.body).toHaveProperty("access_token");
+				expect(loginRes.body).toHaveProperty("refresh_token");
+
+				newUser.access_token = loginRes.body.access_token;
+				newUser.refresh_token = loginRes.body.refresh_token;
+
+				// Proceed with the test.
+				const res = await supertest(app)
+					.patch(`/api/admin/users/markadmin/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${newUser.access_token}`);
+
+				expect(res.status).toEqual(403);
+				expect(res.body).toHaveProperty("error");
+				expect(res.body.error).toEqual("Insufficient rights");
+
+				// Internal Service Call to fetch the updated user.
+				userDocument = await findUserByEmailService(newUser.email);
+			});
+
+			it("should mark the user as admin if the user is found", async () => {
+				// Generate a random user.
+				const newUser = await createUser();
+
+				// Signup a new user to update later.
+				const signupRes = await supertest(app)
+					.post("/api/auth/signup")
+					.set("Accept", "application/json")
+					.send({
+						...newUser,
+						cpassword: newUser.password,
+					});
+
+				expect(signupRes.statusCode).toEqual(201);
+				expect(signupRes.body).toHaveProperty("message");
+				expect(signupRes.body.message).toEqual("User created successfully");
+
+				// Internal Service Call to fetch ID of the user.
+				let userDocument = await findUserByEmailService(newUser.email);
+				const userId = userDocument._id;
+
+				const verifyRes = await supertest(app)
+					.patch(`/api/admin/users/markverified/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${adminUser.access_token}`)
+					.send();
+				expect(verifyRes.status).toEqual(200);
+				expect(verifyRes.body).toHaveProperty("message");
+				expect(verifyRes.body.message).toEqual("User verified successfully");
+
+				const loginRes = await supertest(app)
+					.post("/api/auth/login")
+					.set("Accept", "application/json")
+					.send({
+						email: newUser.email,
+						password: newUser.password,
+					});
+
+				expect(loginRes.statusCode).toEqual(200);
+				expect(loginRes.body).toHaveProperty("access_token");
+				expect(loginRes.body).toHaveProperty("refresh_token");
+
+				newUser.access_token = loginRes.body.access_token;
+				newUser.refresh_token = loginRes.body.refresh_token;
+
+				// Proceed with the test.
+				const res = await supertest(app)
+					.patch(`/api/admin/users/markadmin/${userId}`)
+					.set("Accept", "application/json")
+					.set("Authorization", `Bearer ${adminUser.access_token}`);
+
+				expect(res.status).toEqual(200);
+				expect(res.body).toHaveProperty("message");
+				expect(res.body.message).toEqual("User marked as admin successfully");
+
 				// Internal Service Call to fetch the updated user.
 				userDocument = await findUserByEmailService(newUser.email);
 			});
 		});
-	})
+	});
 
 
 	afterAll(async () => {
@@ -718,6 +852,12 @@ async function createUser() {
 	const username = Math.random().toString(36).substring(4);
 
 	// Update the user object with the generated email, password and username
-	let user = { email: email, password: password, username: username };
+	let user = {
+		email: email,
+		password: password,
+		username: username,
+		acceptedTermsAndConditions: true,
+		receiveMarketingEmails: true
+	};
 	return user;
 }
