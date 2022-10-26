@@ -1,17 +1,15 @@
 import { Router } from "express";
-import { deleteUserHandler, getAllUsersHandler } from "../controllers/admin.controller";
 import {
-	patchMarkUserAdminHandler,
+	deleteUserHandler,
+	getAllUsersHandler,
 	patchMarkUserVerifiedHandler,
-} from "../controllers/user.controller";
-import deserializeUser from "../middleware/deserializeUser.middleware";
-import requireAdminRole from "../middleware/requireAdminRole.middleware";
+} from "../controllers/admin.controller";
+import { createMarketingEmailHandler } from "../controllers/marketingEmail.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
-import {
-	deleteUserSchema,
-	patchMarkUserAdminSchema,
-	patchMarkUserVerifiedSchema,
-} from "../schemas/admin.schema";
+import { deleteUserSchema, patchMarkUserVerifiedSchema } from "../schemas/admin.schema";
+import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
+import { patchMarkUserAdminSchema } from "../schemas/admin.schema";
+import { patchMarkUserAdminHandler } from "../controllers/user.controller";
 
 const adminRouter: Router = Router();
 
@@ -23,7 +21,7 @@ const adminRouter: Router = Router();
  *
  * @author aayushchugh, is-it-ayush
  */
-adminRouter.get("/admin/users", deserializeUser, requireAdminRole, getAllUsersHandler);
+adminRouter.get("/admin/users", getAllUsersHandler);
 
 /**
  * This route will mark user as verified.
@@ -33,8 +31,6 @@ adminRouter.get("/admin/users", deserializeUser, requireAdminRole, getAllUsersHa
  */
 adminRouter.patch(
 	"/admin/users/markverified/:id",
-	deserializeUser,
-	requireAdminRole,
 	validateRequest(patchMarkUserVerifiedSchema),
 	patchMarkUserVerifiedHandler,
 );
@@ -45,14 +41,16 @@ adminRouter.patch(
  *
  * @author aayushchugh, is-it-ayush
  */
+adminRouter.route("/admin/users/:id").delete(validateRequest(deleteUserSchema), deleteUserHandler);
+
+/**
+ * This route will send marketing emails
+ *
+ * @author aayushchugh, tharun634
+ */
 adminRouter
-	.route("/admin/users/:id")
-	.delete(
-		deserializeUser,
-		requireAdminRole,
-		validateRequest(deleteUserSchema),
-		deleteUserHandler,
-	);
+	.route("/admin/marketing-emails")
+	.post(validateRequest(createMarketingEmailSchema), createMarketingEmailHandler);
 
 /**
  * This route does following things
@@ -62,11 +60,6 @@ adminRouter
  */
 adminRouter
 	.route("/admin/users/markadmin/:id")
-	.patch(
-		validateRequest(patchMarkUserAdminSchema),
-		deserializeUser,
-		requireAdminRole,
-		patchMarkUserAdminHandler,
-	);
+	.patch(validateRequest(patchMarkUserAdminSchema), patchMarkUserAdminHandler);
 
 export default adminRouter;
