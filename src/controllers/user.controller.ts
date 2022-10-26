@@ -1,10 +1,74 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema } from "../schemas/admin.schema";
+import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema,DeleteUserSchema } from "../schemas/admin.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
-import { findUserByUsernameService, updateUserByIdService } from "../services/user.service";
+import { findUserByUsernameService, updateUserByIdService,deleteUserByIdService,findUsersService } from "../services/user.service";
 import logger from "../utils/logger.util";
+
+
+
+/**
+ * This controller will get all users from database
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh, is-itayush
+ */
+export const getAllUsersHandler = async (req: Request, res: Response) => {
+	try {
+		const records = await findUsersService();
+
+		return res.status(StatusCodes.OK).json({
+			message: "Users fetched successfully",
+			records,
+		});
+	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+};
+
+/**
+ * This controller will delete user from database
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author aayushchugh, is-it-ayush
+ */
+export const deleteUserHandler = async (
+	req: Request<DeleteUserSchema["params"]>,
+	res: Response,
+) => {
+	const { id } = req.params;
+
+	try {
+		const deletedUser = await deleteUserByIdService(id);
+
+		if (!deletedUser) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		return res.status(StatusCodes.OK).json({
+			message: "User deleted successfully",
+		});
+	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+};
+
+
 
 /**
  * This controller will update user's username
@@ -14,6 +78,8 @@ import logger from "../utils/logger.util";
  *
  * @author aayushchugh
  */
+
+
 export const patchUserHandler = async (
 	req: Request<PatchUserSchema["params"], {}, PatchUserSchema["body"]>,
 	res: Response,
