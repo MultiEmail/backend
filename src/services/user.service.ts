@@ -103,6 +103,10 @@ export function updateUserByIdService(id: string, payload: UpdateQuery<User>) {
 	return UserModel.findByIdAndUpdate(id, payload);
 }
 
+export function unbscribeUserByIdService(id: string) {
+	return UserModel.findByIdAndUpdate(id, {receiveMarketingEmails : false},{new:true});
+}
+
 /**
  * @author is-it-ayush
  * @description Babel and CommonJS fix: Without This *.test.js wont recognise the typescript functions.
@@ -118,4 +122,5 @@ module.exports = {
 	findUsersService,
 	deleteUserByIdService,
 	updateUserByIdService,
+	unbscribeUserByIdService,
 };

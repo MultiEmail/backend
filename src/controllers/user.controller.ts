@@ -206,3 +206,30 @@ export const patchMarkUserAdminHandler = async (
 		});
 	}
 };
+
+export const updateUnsubcribeUser = async (
+	req: Request<DeleteUserSchema["params"]>,
+	res: Response,
+) => {
+	const { id } = req.params;
+
+	try {
+		const updateUser = await unbscribeUserByIdService(id);
+
+		if (!updateUser) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		return res.status(StatusCodes.OK).json({
+			message: "User updated successfully",
+		});
+	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+};
