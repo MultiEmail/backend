@@ -191,7 +191,7 @@ export const patchMarkUserAdminHandler = async (
 };
 
 export const updateUnsubcribeUser = async (
-	req: Request<DeleteUserSchema["params"]>,
+	req: Request<PatchUserSchema["params"], {}, PatchUserSchema["body"]>,
 	res: Response,
 ) => {
 	const { id } = req.params;
