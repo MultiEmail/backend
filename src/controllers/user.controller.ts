@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema, DeleteUserSchema } from "../schemas/admin.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
-import { findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService } from "../services/user.service";
+import { findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService, unbscribeUserByIdService } from "../services/user.service";
 import logger from "../utils/logger.util";
 
 
@@ -180,6 +180,33 @@ export const patchMarkUserAdminHandler = async (
 
 		return res.status(StatusCodes.OK).json({
 			message: "User marked as admin successfully",
+		});
+	} catch (err) {
+		logger.error(err);
+
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+};
+
+export const updateUnsubcribeUser = async (
+	req: Request<DeleteUserSchema["params"]>,
+	res: Response,
+) => {
+	const { id } = req.params;
+
+	try {
+		const updateUser = await unbscribeUserByIdService(id);
+
+		if (!updateUser) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		return res.status(StatusCodes.OK).json({
+			message: "User updated successfully",
 		});
 	} catch (err) {
 		logger.error(err);

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { patchUserHandler } from "../controllers/user.controller";
+import { patchUserHandler, updateUnsubcribeUser } from "../controllers/user.controller";
 import deserializeUser from "../middleware/deserializeUser.middleware";
 import requireSameUser from "../middleware/requireSameUser.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
@@ -18,5 +18,7 @@ const userRouter = Router();
 userRouter
 	.route("/users/:id")
 	.patch(validateRequest(patchUserSchema), deserializeUser, requireSameUser, patchUserHandler);
+
+userRouter.get("/users/marketing-emails/unsubscribe/:id", updateUnsubcribeUser);
 
 export default userRouter;
