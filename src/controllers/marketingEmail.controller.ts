@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { CreateMarketingEmailSchema } from "../schemas/marketingEmail.schema";
-import { createMarketingEmailService } from "../services/marketingEmail.service";
-import { findUsersService, findUserByIdService } from "../services/user.service";
+import {
+	createMarketingEmailService,
+	findMarketingEmailsService,
+} from "../services/marketingEmail.service";
+import { findUserByIdService, findUsersService } from "../services/user.service";
 import { sendEmail } from "../utils/email.util";
 
 /**
@@ -82,6 +85,29 @@ export const createMarketingEmailHandler = async (
 				message: "Email sent successfully",
 			});
 		}
+	} catch (err) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal server error",
+		});
+	}
+};
+
+/**
+ * This controller will fetch all marketing emails from database
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author tharun634
+ */
+export const getAllMarketingEmailsHandler = async (req: Request, res: Response) => {
+	try {
+		const records = await findMarketingEmailsService();
+
+		return res.status(StatusCodes.OK).json({
+			message: "Successfully fetched all marketing emails",
+			records,
+		});
 	} catch (err) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal server error",

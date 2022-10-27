@@ -1,10 +1,21 @@
 import { Router } from "express";
-import { createMarketingEmailHandler } from "../controllers/marketingEmail.controller";
+import {
+	createMarketingEmailHandler,
+	getAllMarketingEmailsHandler,
+} from "../controllers/marketingEmail.controller";
+import {
+	deleteUserHandler,
+	getAllUsersHandler,
+	patchMarkUserAdminHandler,
+	patchMarkUserVerifiedHandler,
+} from "../controllers/user.controller";
 import validateRequest from "../middleware/validateRequest.middleware";
-import { deleteUserSchema, patchMarkUserVerifiedSchema } from "../schemas/admin.schema";
+import {
+	deleteUserSchema,
+	patchMarkUserAdminSchema,
+	patchMarkUserVerifiedSchema,
+} from "../schemas/admin.schema";
 import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
-import { patchMarkUserAdminSchema } from "../schemas/admin.schema";
-import { patchMarkUserAdminHandler, deleteUserHandler, getAllUsersHandler, patchMarkUserVerifiedHandler } from "../controllers/user.controller";
 
 const adminRouter: Router = Router();
 
@@ -45,6 +56,7 @@ adminRouter.route("/admin/users/:id").delete(validateRequest(deleteUserSchema), 
  */
 adminRouter
 	.route("/admin/marketing-emails")
+	.get(getAllMarketingEmailsHandler)
 	.post(validateRequest(createMarketingEmailSchema), createMarketingEmailHandler);
 
 /**
