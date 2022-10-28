@@ -40,7 +40,7 @@ export const createMarketingEmailHandler = async (
 		 * Send email to all the users those have selected the checkbox
 		 */
 		if (allUsers) {
-			const users = await findUsersService({ receiveMarketingEmails: true });
+			const users = await findUsersService({ receive_marketing_emails: true });
 
 			if (!users) {
 				return res.status(StatusCodes.NOT_FOUND).json({
@@ -72,13 +72,13 @@ export const createMarketingEmailHandler = async (
 			users.forEach(
 				async (user) =>
 					user &&
-					user.receiveMarketingEmails &&
+					user.receive_marketing_emails &&
 					(await sendEmail(user.email, subject, html)),
 			);
 
 			await createMarketingEmailService({
 				subject,
-				users: users.map((user) => user && user.receiveMarketingEmails && user._id),
+				users: users.map((user) => user && user.receive_marketing_emails && user._id),
 			});
 
 			return res.status(StatusCodes.OK).json({

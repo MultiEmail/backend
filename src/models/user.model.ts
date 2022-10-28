@@ -2,7 +2,13 @@ import { genSalt, hash, compare } from "bcrypt";
 import { pre, prop, index, getModelForClass, Severity } from "@typegoose/typegoose";
 import { generateRandomOTP } from "../utils/otp.util";
 
-export const userModalPrivateFields = ["password", "__v", "verificationCode", "passwordResetCode"];
+export const userModalPrivateFields = [
+	"password",
+	"__v",
+	"verification_code",
+	"password_reset_code",
+	"connected_services",
+];
 
 export class ConnectedServices {
 	@prop()
@@ -48,16 +54,16 @@ export class User {
 	public verified: boolean;
 
 	@prop({ required: true, default: () => generateRandomOTP() })
-	public verificationCode: number;
+	public verification_code: number;
 
 	@prop()
-	public passwordResetCode: number | null;
+	public password_reset_code: number | null;
 
 	@prop({ required: true })
-	public acceptedTermsAndConditions: boolean;
+	public accepted_terms_and_conditions: boolean;
 
 	@prop({ required: true, default: false })
-	public receiveMarketingEmails: boolean;
+	public receive_marketing_emails: boolean;
 
 	@prop()
 	public connected_services: [ConnectedServices];

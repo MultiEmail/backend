@@ -25,8 +25,8 @@ mongoose.connect(process.env.DB_URI as string, () => {
 		email,
 		verified: true,
 		password,
-		acceptedTermsAndConditions: true,
-		receiveMarketingEmails: true,
+		accepted_terms_and_conditions: true,
+		receive_marketing_emails: true,
 	})
 		.then(() => {
 			console.log("✔ Admin created successfully");

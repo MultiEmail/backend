@@ -62,8 +62,8 @@ export function createUserService(
 		Omit<
 			User,
 			| "uid"
-			| "verificationCode"
-			| "passwordResetCode"
+			| "verification_code"
+			| "password_reset_code"
 			| "comparePassword"
 			| "connected_services"
 		>

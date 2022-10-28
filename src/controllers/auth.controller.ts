@@ -51,8 +51,8 @@ export const signupHandler = async (req: Request<{}, {}, SignupSchema["body"]>, 
 			password,
 			role: "user",
 			verified: false,
-			receiveMarketingEmails,
-			acceptedTermsAndConditions,
+			receive_marketing_emails: receiveMarketingEmails,
+			accepted_terms_and_conditions: acceptedTermsAndConditions,
 		});
 
 		const token = await signAccessTokenService(createdUser);
@@ -63,10 +63,10 @@ export const signupHandler = async (req: Request<{}, {}, SignupSchema["body"]>, 
 			`<h2>Welcome to Multi Email</h2>
 			<h4>please visit this URL and enter your OTP</h4>
 			<p>
-			OTP: ${createdUser.verificationCode}
+			OTP: ${createdUser.verification_code}
 			</p>
 			<p>
-			<a href="${process.env.FRONTEND_URL}/verify?v=${createdUser.verificationCode}&t=${token}">Verify My Account</a>
+			<a href="${process.env.FRONTEND_URL}/verify?v=${createdUser.verification_code}&t=${token}">Verify My Account</a>
 			</p>
 			`,
 		);
@@ -336,7 +336,7 @@ export const forgotPasswordHandler = async (
 
 		// generate password reset code and send that to users email
 		const passwordResetCode = generateRandomOTP();
-		user.passwordResetCode = passwordResetCode;
+		user.password_reset_code = passwordResetCode;
 
 		/**
 		 * @author is-it-ayush
@@ -394,13 +394,16 @@ export const resetPasswordHandler = async (
 			});
 		}
 
-		if (!user?.passwordResetCode || user?.passwordResetCode !== parseInt(passwordResetCode)) {
+		if (
+			!user?.password_reset_code ||
+			user?.password_reset_code !== parseInt(passwordResetCode)
+		) {
 			return res.status(StatusCodes.FORBIDDEN).json({
 				error: "Invalid password reset code",
 			});
 		}
 
-		user.passwordResetCode = null;
+		user.password_reset_code = null;
 
 		// NOTE: password will be hashed in user model
 		user.password = password;
