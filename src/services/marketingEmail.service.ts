@@ -1,8 +1,5 @@
-import { DocumentDefinition } from "mongoose";
+import { DocumentDefinition, FilterQuery } from "mongoose";
 import MarketingEmailModel, { MarketingEmail } from "../models/marketingEmail.model";
-import { User } from "../models/user.model";
-import { sendEmail } from "../utils/email.util";
-import { findUsersService } from "./user.service";
 
 /**
  * Create marketing email in database
@@ -15,16 +12,11 @@ export function createMarketingEmailService(payload: DocumentDefinition<Marketin
 }
 
 /**
- * Send marketing emails to users who have opted in to receive marketing emails.
- * @param {string} html - string - The HTML content of the email
- * @param {string} subject - The subject of the email
+ * Find marketing emails from database with given query
+ * @param {FilterQuery<MarketingEmail>} query filter which will be used to find marketing emails from database
  *
  * @author tharun634
  */
-export function sendMarketingEmailService(html: string, subject: string) {
-	const query = findUsersService({ receiveMarketingEmails: true });
-	query.select("email");
-	return query.exec().then((users: User[]) => {
-		users.map(async (user) => await sendEmail(user.email, subject, html));
-	});
+export function findMarketingEmailsService(query?: FilterQuery<MarketingEmail>) {
+	return MarketingEmailModel.find(query || {});
 }

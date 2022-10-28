@@ -11,7 +11,8 @@ import ticketRouter from "./routes/ticket.routes";
 import rateLimiter from "./middleware/rateLimiter.middleware";
 import adminRouter from "./routes/admin.routes";
 import mailRouter from "./routes/mail.routes";
-import marketingEmailRouter from "./routes/marketingEmail.routes";
+import deserializeUser from "./middleware/deserializeUser.middleware";
+import requireAdminRole from "./middleware/requireAdminRole.middleware";
 
 config();
 
@@ -26,9 +27,8 @@ app.use(express.json());
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", ticketRouter);
-app.use("/api", adminRouter);
 app.use("/api", mailRouter);
-app.use("/api", marketingEmailRouter);
+app.use("/api", deserializeUser, requireAdminRole, adminRouter);
 
 logger.info("Current Environment: " + process.env.NODE_ENV);
 
