@@ -1,12 +1,20 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema, DeleteUserSchema } from "../schemas/admin.schema";
+import {
+	DeleteUserSchema,
+	GetAllUsersSchema,
+	PatchMarkUserAdminSchema,
+	PatchMarkUserVerifiedSchema,
+} from "../schemas/admin.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
-import { findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService } from "../services/user.service";
+import {
+	deleteUserByIdService,
+	findUserByUsernameService,
+	findUsersService,
+	updateUserByIdService,
+} from "../services/user.service";
 import logger from "../utils/logger.util";
-
-
 
 /**
  * This controller will get all users from database
@@ -14,11 +22,22 @@ import logger from "../utils/logger.util";
  * @param req request
  * @param res response
  *
- * @author aayushchugh, is-itayush
+ * @author aayushchugh, is-itayush, tharun634
  */
-export const getAllUsersHandler = async (req: Request, res: Response) => {
+export const getAllUsersHandler = async (
+	req: Request<{}, {}, {}, GetAllUsersSchema["query"]>,
+	res: Response,
+) => {
 	try {
-		const records = await findUsersService();
+		let { page, size } = req.query;
+
+		if (!page) page = "1";
+		if (!size) size = "10";
+
+		const limit = +size;
+		const skip = (+page - 1) * limit;
+
+		const records = await findUsersService().limit(limit).skip(skip);
 
 		return res.status(StatusCodes.OK).json({
 			message: "Users fetched successfully",
@@ -68,8 +87,6 @@ export const deleteUserHandler = async (
 	}
 };
 
-
-
 /**
  * This controller will update user's username
  *
@@ -78,7 +95,6 @@ export const deleteUserHandler = async (
  *
  * @author aayushchugh
  */
-
 
 export const patchUserHandler = async (
 	req: Request<PatchUserSchema["params"], {}, PatchUserSchema["body"]>,

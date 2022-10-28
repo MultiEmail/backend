@@ -12,6 +12,7 @@ import {
 import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	deleteUserSchema,
+	getAllUsersSchema,
 	patchMarkUserAdminSchema,
 	patchMarkUserVerifiedSchema,
 } from "../schemas/admin.schema";
@@ -27,7 +28,7 @@ const adminRouter: Router = Router();
  *
  * @author aayushchugh, is-it-ayush
  */
-adminRouter.get("/admin/users", getAllUsersHandler);
+adminRouter.get("/admin/users", validateRequest(getAllUsersSchema), getAllUsersHandler);
 
 /**
  * This route will mark user as verified.
