@@ -176,6 +176,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "shikhar13012001",
+      "name": "Shikhar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75368010?v=4",
+      "profile": "https://portfolio-shikhar13012001.vercel.app/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -223,6 +223,7 @@ Thanks goes to these wonderful people ❤:
     <tr>
       <td align="center"><a href="https://yash-jain-portfolio.netlify.app/"><img src="https://avatars.githubusercontent.com/u/60182679?v=4?s=100" width="100px;" alt="yash jain"/><br /><sub><b>yash jain</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=YashJain2409" title="Code">💻</a></td>
       <td align="center"><a href="http://bonganibg.github.io"><img src="https://avatars.githubusercontent.com/u/88882571?v=4?s=100" width="100px;" alt="Bongani Gumbo"/><br /><sub><b>Bongani Gumbo</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=bonganibg" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://portfolio-shikhar13012001.vercel.app/"><img src="https://avatars.githubusercontent.com/u/75368010?v=4?s=100" width="100px;" alt="Shikhar"/><br /><sub><b>Shikhar</b></sub></a><br /><a href="https://github.com/MultiEmail/backend/commits?author=shikhar13012001" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
