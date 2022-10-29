@@ -165,12 +165,12 @@ export type ResetPasswordSchema = z.TypeOf<typeof resetPasswordSchema>;
  * @constant
  * @author aayushchugh
  */
-export const redirectToGoogleConcentScreenHandlerSchema = z.object({
+export const redirectToGoogleConsentScreenHandlerSchema = z.object({
 	query: z.object({
 		id: z.string({ required_error: "Id is required" }),
 	}),
 });
 
-export type RedirectToGoogleConcentScreenHandlerSchema = z.TypeOf<
-	typeof redirectToGoogleConcentScreenHandlerSchema
+export type RedirectToGoogleConsentScreenHandlerSchema = z.TypeOf<
+	typeof redirectToGoogleConsentScreenHandlerSchema
 >;

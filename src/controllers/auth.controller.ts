@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import {
 	ForgotPasswordSchema,
 	LoginSchema,
-	RedirectToGoogleConcentScreenHandlerSchema,
+	RedirectToGoogleConsentScreenHandlerSchema,
 	ResetPasswordSchema,
 	SignupSchema,
 	VerifyUserSchema,
@@ -483,14 +483,14 @@ export const refreshAccessTokenHandler = async (req: Request, res: Response) => 
 };
 
 /**
- * This controller will redirect user to google concent screen
+ * This controller will redirect user to google consent screen
  * @param req express request
  * @param res express response
  *
  * @author aayushchugh
  */
-export const redirectToGoogleConcentScreenHandler = (
-	req: Request<{}, {}, {}, RedirectToGoogleConcentScreenHandlerSchema["query"]>,
+export const redirectToGoogleConsentScreenHandler = (
+	req: Request<{}, {}, {}, RedirectToGoogleConsentScreenHandlerSchema["query"]>,
 	res: Response,
 ) => {
 	const { id } = req.query;
@@ -510,7 +510,6 @@ export const redirectToGoogleConcentScreenHandler = (
 			"https://mail.google.com/",
 			"https://www.googleapis.com/auth/gmail.modify",
 			"https://www.googleapis.com/auth/gmail.readonly",
-			"https://www.googleapis.com/auth/gmail.metadata",
 		].join(" "),
 		state: id,
 	};

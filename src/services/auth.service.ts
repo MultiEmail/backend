@@ -44,8 +44,8 @@ interface IGoogleTokenResult {
 }
 
 /**
- * This service will get tokens from google api
- * @param code code received from google concent screen
+ * This service will get tokens from Google api
+ * @param code code received from Google consent screen
  *
  * @author aayushchugh
  */
