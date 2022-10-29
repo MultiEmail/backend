@@ -167,6 +167,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "bonganibg",
+      "name": "Bongani Gumbo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88882571?v=4",
+      "profile": "http://bonganibg.github.io",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
