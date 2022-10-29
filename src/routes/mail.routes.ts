@@ -35,7 +35,7 @@ mailRouter
  * @author tharun634
  */
 mailRouter.get(
-	"/mail/:id/gmail/:email",
+	"/mail/:id/gmail/:email/:messageId",
 	validateRequest(getEmailFromGmailSchema),
 	deserializeUser,
 	requireSameUser,
