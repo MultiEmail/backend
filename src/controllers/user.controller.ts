@@ -36,7 +36,7 @@ export const getAllUsersHandler = async (
 
 		const limit = +size;
 		const skip = (+page - 1) * limit;
-		const query = receiveMarketingEmails ? { receiveMarketingEmails } : {};
+		const query = receiveMarketingEmails ? { receive_marketing_emails: true } : {};
 
 		const records = await findUsersService(query).limit(limit).skip(skip);
 
