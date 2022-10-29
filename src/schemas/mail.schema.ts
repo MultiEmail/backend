@@ -48,3 +48,22 @@ export const postSendGmailSchema = z.object({
  * @author aayushchugh
  */
 export type PostSendGmailSchema = z.TypeOf<typeof postSendGmailSchema>;
+
+/**
+ * This schema will validate `/mail/:id/gmail/:email/:messageId` route
+ *
+ * @author tharun634
+ */
+export const getEmailFromGmailSchema = z.object({
+	params: z.object({
+		email: z.string({ required_error: "Email is required" }),
+		messageId: z.string({ required_error: "messageId is required" }),
+	}),
+});
+
+/**
+ * This type is generated using `getEmailFromGmailSchema`
+ *
+ * @author tharun634
+ */
+export type GetEmailFromGmailSchema = z.TypeOf<typeof getEmailFromGmailSchema>;

@@ -106,7 +106,7 @@ authRouter.patch(
 authRouter.get("/auth/refresh", refreshAccessTokenHandler);
 
 /**
- * This route will redirect user to google concent screen
+ * This route will redirect user to google consent screen
  *
  * @author NullableDev, aayushchugh
  */
