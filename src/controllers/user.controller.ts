@@ -29,15 +29,16 @@ export const getAllUsersHandler = async (
 	res: Response,
 ) => {
 	try {
-		let { page, size } = req.query;
+		let { page, size, receiveMarketingEmails } = req.query;
 
 		if (!page) page = "1";
 		if (!size) size = "10";
 
 		const limit = +size;
 		const skip = (+page - 1) * limit;
+		const query = receiveMarketingEmails ? { receiveMarketingEmails } : {};
 
-		const records = await findUsersService().limit(limit).skip(skip);
+		const records = await findUsersService(query).limit(limit).skip(skip);
 
 		return res.status(StatusCodes.OK).json({
 			message: "Users fetched successfully",
