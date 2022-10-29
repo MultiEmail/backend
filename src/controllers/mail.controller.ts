@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import axios from "axios";
 import { StatusCodes } from "http-status-codes";
-import { GetEmailsFromGmailSchema } from "../schemas/mail.schema";
+import { GetEmailsFromGmailSchema, PostSendGmailSchema } from "../schemas/mail.schema";
 import { ConnectedServices, User } from "../models/user.model";
 import logger from "../utils/logger.util";
 import { URLSearchParams } from "url";
+import { createTransport, SendMailOptions, Transporter } from "nodemailer";
 
 /**
  * This function will fetch all the emails from gmail
@@ -59,6 +60,61 @@ export const getEmailsFromGmailHandler = async (
 	} catch (err) {
 		logger.error(err);
 
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+};
+
+/**
+ * This controller will send a email from users gmail account
+ * @param req express request
+ * @param res express response
+ *
+ * @author aayushchugh
+ */
+export const postSendGmailHandler = async (
+	req: Request<PostSendGmailSchema["params"], {}, PostSendGmailSchema["body"]>,
+	res: Response,
+) => {
+	const { email } = req.params;
+	const { to, subject, html } = req.body;
+	const user = res.locals.user as User;
+
+	try {
+		const connectedAccount = user.connected_services.find((service) => service.email === email);
+
+		if (!connectedAccount) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "Account not connected",
+			});
+		}
+
+		const transporter: Transporter = createTransport({
+			service: "gmail",
+			auth: {
+				type: "OAuth2",
+				user: email,
+				clientId: process.env.GOOGLE_CLIENT_ID,
+				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+				refreshToken: connectedAccount.refresh_token,
+				accessToken: connectedAccount.access_token,
+			},
+		});
+
+		const mailOptions: SendMailOptions = {
+			from: user.email,
+			to,
+			subject,
+			html,
+		};
+
+		await transporter.sendMail(mailOptions);
+
+		return res.status(StatusCodes.OK).json({
+			message: "Email sent successfully",
+		});
+	} catch (err) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal Server Error",
 		});

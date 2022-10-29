@@ -13,6 +13,7 @@ import adminRouter from "./routes/admin.routes";
 import mailRouter from "./routes/mail.routes";
 import deserializeUser from "./middleware/deserializeUser.middleware";
 import requireAdminRole from "./middleware/requireAdminRole.middleware";
+import requireSameUser from "./middleware/requireSameUser.middleware";
 
 config();
 
@@ -27,7 +28,7 @@ app.use(express.json());
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", ticketRouter);
-app.use("/api", mailRouter);
+app.use("/api", deserializeUser, requireSameUser, mailRouter);
 app.use("/api", deserializeUser, requireAdminRole, adminRouter);
 
 logger.info("Current Environment: " + process.env.NODE_ENV);
