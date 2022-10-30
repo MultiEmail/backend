@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema, DeleteUserSchema } from "../schemas/admin.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
-import { findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService, unbscribeUserByIdService } from "../services/user.service";
+import { findUserByIdService, findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService, unbscribeUserByIdService } from "../services/user.service";
 import logger from "../utils/logger.util";
 
 
@@ -191,13 +191,22 @@ export const patchMarkUserAdminHandler = async (
 };
 
 export const updateUnsubcribeUser = async (
-	req: Request<PatchUserSchema["params"], {}, PatchUserSchema["body"]>,
+	req: Request<PatchUserSchema["params"]>,
 	res: Response,
 ) => {
 	const { id } = req.params;
 
 	try {
-		const updateUser = await unbscribeUserByIdService(id);
+		// check if receiveMarketingEmails is already false
+		const UserWithreceiveMarketingEmailsTrue = await findUserByIdService(id || "");
+
+		if (!UserWithreceiveMarketingEmailsTrue.receiveMarketingEmails) {
+			return res.status(StatusCodes.CONFLICT).json({
+				error: "User is already unsubcribe",
+			});
+		}
+		const updateUser = await updateUserByIdService(id, {receiveMarketingEmails:
+			false});
 
 		if (!updateUser) {
 			return res.status(StatusCodes.NOT_FOUND).json({
@@ -206,7 +215,7 @@ export const updateUnsubcribeUser = async (
 		}
 
 		return res.status(StatusCodes.OK).json({
-			message: "User updated successfully",
+			message: "User unsubcribe",
 		});
 	} catch (err) {
 		logger.error(err);
