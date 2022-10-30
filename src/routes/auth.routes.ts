@@ -5,7 +5,7 @@ import {
 	googleOauthHandler,
 	loginHandler,
 	logoutHandler,
-	redirectToGoogleConcentScreenHandler,
+	redirectToGoogleConsentScreenHandler,
 	refreshAccessTokenHandler,
 	resetPasswordHandler,
 	signupHandler,
@@ -16,7 +16,7 @@ import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	forgotPasswordSchema,
 	loginSchema,
-	redirectToGoogleConcentScreenHandlerSchema,
+	redirectToGoogleConsentScreenHandlerSchema,
 	resetPasswordSchema,
 	signupSchema,
 	verifyUserSchema,
@@ -106,19 +106,19 @@ authRouter.patch(
 authRouter.get("/auth/refresh", refreshAccessTokenHandler);
 
 /**
- * This route will redirect user to google concent screen
+ * This route will redirect user to google consent screen
  *
  * @author NullableDev, aayushchugh
  */
 authRouter.get(
 	"/auth/oauth/google",
-	validateRequest(redirectToGoogleConcentScreenHandlerSchema),
-	redirectToGoogleConcentScreenHandler,
+	validateRequest(redirectToGoogleConsentScreenHandlerSchema),
+	redirectToGoogleConsentScreenHandler,
 );
 
 /**
  * This route will redirect to /fail and /success route
- * from google concent screen
+ * from Google consent screen
  *
  * @author NullableDev, aayushchugh
  */
