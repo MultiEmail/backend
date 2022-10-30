@@ -190,6 +190,14 @@ export const patchMarkUserAdminHandler = async (
 	}
 };
 
+/**
+ * This controller will unscribe user marketing mail.
+ *
+ * @param req request
+ * @param res response
+ *
+ * @author arbaz23
+ */
 export const updateUnsubcribeUser = async (
 	req: Request<PatchUserSchema["params"]>,
 	res: Response,
