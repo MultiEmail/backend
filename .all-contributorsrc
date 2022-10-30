@@ -158,6 +158,33 @@
         "security",
         "ideas"
       ]
+    },
+    {
+      "login": "YashJain2409",
+      "name": "yash jain",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60182679?v=4",
+      "profile": "https://yash-jain-portfolio.netlify.app/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "bonganibg",
+      "name": "Bongani Gumbo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88882571?v=4",
+      "profile": "http://bonganibg.github.io",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "shikhar13012001",
+      "name": "Shikhar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75368010?v=4",
+      "profile": "https://portfolio-shikhar13012001.vercel.app/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
