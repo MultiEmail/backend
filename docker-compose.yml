@@ -14,7 +14,8 @@ services:
         container_name: Server
         build: .
         volumes:
-            - .:/usr/src/app
+            - ./src:/usr/src/app/src
+            - ./bin:/usr/src/app/bin
         ports:
             - 3001:3001
         depends_on:
