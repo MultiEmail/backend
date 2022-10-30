@@ -1,13 +1,14 @@
 import { Router } from "express";
 import {
+	getDraftsFromGmailHandler,
 	getEmailFromGmailHandler,
 	getEmailsFromGmailHandler,
 	postSendGmailHandler,
 } from "../controllers/mail.controller";
-import deserializeUser from "../middleware/deserializeUser.middleware";
 import getCurrentConnectedService from "../middleware/getCurrentConnectedService.middleware";
 import requireSameUser from "../middleware/requireSameUser.middleware";
 import {
+	getDraftsFromGmailSchema,
 	getEmailFromGmailSchema,
 	getEmailsFromGmailSchema,
 	postSendGmailSchema,
@@ -39,10 +40,24 @@ mailRouter
  */
 mailRouter.get(
 	"/mail/:id/gmail/:email/:messageId",
-	validateRequest(getEmailFromGmailSchema),
-	deserializeUser,
 	requireSameUser,
+	validateRequest(getEmailFromGmailSchema),
+	getCurrentConnectedService,
 	getEmailFromGmailHandler,
+);
+
+/**
+ * This route does following things
+ * GET -> fetch drafts from Gmail
+ *
+ * @author tharun634
+ */
+mailRouter.get(
+	"/mail/:id/gmail/:email/drafts",
+	requireSameUser,
+	validateRequest(getDraftsFromGmailSchema),
+	getCurrentConnectedService,
+	getDraftsFromGmailHandler,
 );
 
 export default mailRouter;
