@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema, DeleteUserSchema } from "../schemas/admin.schema";
 
-import { PatchUserSchema } from "../schemas/user.schema";
-import { findUserByIdService, findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService, unbscribeUserByIdService } from "../services/user.service";
+import { PatchUserSchema, UpdateUnsubscribeUserSchema } from "../schemas/user.schema";
+import { findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService } from "../services/user.service";
 import logger from "../utils/logger.util";
 
 
@@ -191,36 +191,29 @@ export const patchMarkUserAdminHandler = async (
 };
 
 /**
- * This controller will unscribe user marketing mail.
+ * This controller will unsubscribe user marketing mail.
  *
  * @param req request
  * @param res response
  *
  * @author arbaz23
  */
-export const updateUnsubcribeUser = async (
-	req: Request<PatchUserSchema["params"]>,
+export const updateUnsubscribeUser = async (
+	req: Request<UpdateUnsubscribeUserSchema["params"]>,
 	res: Response,
 ) => {
 	const { id } = req.params;
 
 	try {
-		// check if receiveMarketingEmails is already false
-		const UserWithreceiveMarketingEmailsTrue = await findUserByIdService(id || "");
 
-		if (!UserWithreceiveMarketingEmailsTrue.receiveMarketingEmails) {
+		if (!res.locals.user.receiveMarketingEmails) {
 			return res.status(StatusCodes.CONFLICT).json({
 				error: "User is already unsubcribe",
 			});
 		}
+		
 		const updateUser = await updateUserByIdService(id, {receiveMarketingEmails:
 			false});
-
-		if (!updateUser) {
-			return res.status(StatusCodes.NOT_FOUND).json({
-				error: "User not found",
-			});
-		}
 
 		return res.status(StatusCodes.OK).json({
 			message: "User unsubcribe",
