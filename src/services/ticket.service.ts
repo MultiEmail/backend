@@ -1,4 +1,4 @@
-import { FilterQuery, DocumentDefinition, UpdateQuery } from "mongoose";
+import { DocumentDefinition, FilterQuery, UpdateQuery } from "mongoose";
 import TicketModel, { Ticket } from "../models/ticket.model";
 
 /**

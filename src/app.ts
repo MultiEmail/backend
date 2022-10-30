@@ -13,8 +13,6 @@ import adminRouter from "./routes/admin.routes";
 import mailRouter from "./routes/mail.routes";
 import deserializeUser from "./middleware/deserializeUser.middleware";
 import requireAdminRole from "./middleware/requireAdminRole.middleware";
-import requireSameUser from "./middleware/requireSameUser.middleware";
-import getCurrentConnectedService from "./middleware/getCurrentConnectedService.middleware";
 
 config();
 

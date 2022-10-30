@@ -1,4 +1,4 @@
-import { getModelForClass, prop, Ref, index } from "@typegoose/typegoose";
+import { getModelForClass, index, prop, Ref } from "@typegoose/typegoose";
 import { User } from "./user.model";
 
 @index<Session>({ expireAt: 1 })

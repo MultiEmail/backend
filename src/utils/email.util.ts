@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { SendMailOptions, SentMessageInfo, createTransport } from "nodemailer";
+import { createTransport, SendMailOptions, SentMessageInfo } from "nodemailer";
 
 config();
 

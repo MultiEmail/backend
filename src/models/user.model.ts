@@ -1,5 +1,5 @@
-import { genSalt, hash, compare } from "bcrypt";
-import { pre, prop, index, getModelForClass, Severity } from "@typegoose/typegoose";
+import { compare, genSalt, hash } from "bcrypt";
+import { getModelForClass, index, pre, prop, Severity } from "@typegoose/typegoose";
 import { generateRandomOTP } from "../utils/otp.util";
 
 export const userModalPrivateFields = [
