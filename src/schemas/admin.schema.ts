@@ -67,6 +67,7 @@ export const getAllUsersSchema = z.object({
 	query: z.object({
 		page: z.string().min(1, "page must be greater than 0").optional(),
 		size: z.string().min(1, "limit must be greater than 0").optional(),
+		receiveMarketingEmails: z.boolean().optional(),
 	}),
 });
 
