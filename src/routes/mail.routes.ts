@@ -1,15 +1,25 @@
 import { Router } from "express";
-import { getEmailsFromGmailHandler } from "../controllers/mail.controller";
-import deserializeUser from "../middleware/deserializeUser.middleware";
+import { getEmailsFromGmailHandler, postSendGmailHandler } from "../controllers/mail.controller";
+import getCurrentConnectedService from "../middleware/getCurrentConnectedService.middleware";
 import requireSameUser from "../middleware/requireSameUser.middleware";
+import validateRequest from "../middleware/validateRequest.middleware";
+import { getEmailsFromGmailSchema, postSendGmailSchema } from "../schemas/mail.schema";
 
 const mailRouter = Router();
 
-mailRouter.get(
-	"/mail/:id/gmail/:email",
-	deserializeUser,
-	requireSameUser,
-	getEmailsFromGmailHandler,
-);
+mailRouter
+	.route("/mail/:id/gmail/:email")
+	.get(
+		requireSameUser,
+		validateRequest(getEmailsFromGmailSchema),
+		getCurrentConnectedService,
+		getEmailsFromGmailHandler,
+	)
+	.post(
+		requireSameUser,
+		validateRequest(postSendGmailSchema),
+		getCurrentConnectedService,
+		postSendGmailHandler,
+	);
 
 export default mailRouter;

@@ -59,7 +59,7 @@ export const signupHandler = async (req: Request<{}, {}, SignupSchema["body"]>, 
 
 		sendEmail(
 			email,
-			"OTP for Multi Email",
+			"Verify your Multi Email account",
 			`<h2>Welcome to Multi Email</h2>
 			<h4>please visit this URL and enter your OTP</h4>
 			<p>
