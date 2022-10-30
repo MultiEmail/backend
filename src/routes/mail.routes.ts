@@ -2,14 +2,17 @@ import { Router } from "express";
 import {
 	getEmailFromGmailHandler,
 	getEmailsFromGmailHandler,
+	postSendGmailHandler,
 } from "../controllers/mail.controller";
 import deserializeUser from "../middleware/deserializeUser.middleware";
-import { postSendGmailHandler } from "../controllers/mail.controller";
 import getCurrentConnectedService from "../middleware/getCurrentConnectedService.middleware";
 import requireSameUser from "../middleware/requireSameUser.middleware";
-import { getEmailFromGmailSchema, getEmailsFromGmailSchema } from "../schemas/mail.schema";
+import {
+	getEmailFromGmailSchema,
+	getEmailsFromGmailSchema,
+	postSendGmailSchema,
+} from "../schemas/mail.schema";
 import validateRequest from "../middleware/validateRequest.middleware";
-import { postSendGmailSchema } from "../schemas/mail.schema";
 
 const mailRouter = Router();
 

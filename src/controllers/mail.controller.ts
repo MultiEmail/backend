@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import axios from "axios";
 import { StatusCodes } from "http-status-codes";
-import { GetEmailFromGmailSchema, GetEmailsFromGmailSchema } from "../schemas/mail.schema";
-import { ConnectedServices, User } from "../models/user.model";
-import { GetEmailsFromGmailSchema, PostSendGmailSchema } from "../schemas/mail.schema";
+import {
+	GetEmailFromGmailSchema,
+	GetEmailsFromGmailSchema,
+	PostSendGmailSchema,
+} from "../schemas/mail.schema";
 import { ConnectedServices } from "../models/user.model";
 import logger from "../utils/logger.util";
 import { URLSearchParams } from "url";
@@ -122,24 +124,13 @@ export const getEmailFromGmailHandler = async (
 ) => {
 	try {
 		const { email, messageId } = req.params;
-		const user = res.locals.user as User;
-
-		// get email accessToken
-		const foundService = user.connected_services.find(
-			(service: ConnectedServices) => service.email === email,
-		);
-
-		if (!foundService) {
-			return res.status(StatusCodes.NOT_FOUND).json({
-				error: "Account not connected",
-			});
-		}
+		const currentConnectedService = res.locals.currentConnectedService as ConnectedServices;
 
 		const response = await axios.get(
 			`https://gmail.googleapis.com/gmail/v1/users/${email}/messages/${messageId}`,
 			{
 				headers: {
-					Authorization: `Bearer ${foundService.access_token}`,
+					Authorization: `Bearer ${currentConnectedService.access_token}`,
 					"Content-type": "application/json",
 				},
 			},
