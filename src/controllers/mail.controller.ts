@@ -6,6 +6,7 @@ import { ConnectedServices } from "../models/user.model";
 import logger from "../utils/logger.util";
 import { URLSearchParams } from "url";
 import { createTransport, SendMailOptions, Transporter } from "nodemailer";
+import DOMPurify from "isomorphic-dompurify";
 
 /**
  * This function will fetch all the emails from gmail
@@ -71,6 +72,8 @@ export const postSendGmailHandler = async (
 	const currentConnectedService = res.locals.currentConnectedService as ConnectedServices;
 
 	try {
+		const cleanedHTML = DOMPurify.sanitize(html);
+
 		const transporter: Transporter = createTransport({
 			service: "gmail",
 			auth: {
@@ -87,7 +90,7 @@ export const postSendGmailHandler = async (
 			from: currentConnectedService.email,
 			to,
 			subject,
-			html,
+			html: cleanedHTML,
 		};
 
 		await transporter.sendMail(mailOptions);
