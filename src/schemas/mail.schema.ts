@@ -71,6 +71,30 @@ export const getEmailFromGmailSchema = z.object({
 export type GetEmailFromGmailSchema = z.TypeOf<typeof getEmailFromGmailSchema>;
 
 /**
+ * This schema will validate `/mail/:id/gmail/:email/drafts` route
+ *
+ * @author tharun634
+ */
+export const getDraftsFromGmailSchema = z.object({
+	params: z.object({
+		email: z.string({ required_error: "Email is required" }),
+	}),
+	query: z.object({
+		maxResults: z.string().optional(),
+		pageToken: z.string().optional(),
+		q: z.string().optional(),
+		includeSpamTrash: z.string().optional(),
+	}),
+});
+
+/**
+ * This type is generated using `getDraftsFromGmailSchema`
+ *
+ * @author tharun634
+ */
+export type GetDraftsFromGmailSchema = z.TypeOf<typeof getDraftsFromGmailSchema>;
+
+/**
  * This schema will validate `DELETE /mail/:id/gmail/:email/:messageId` route
  *
  * @author aayushchugh
