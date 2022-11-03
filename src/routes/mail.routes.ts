@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+	deleteEmailFromGmailHandler,
 	getEmailFromGmailHandler,
 	getEmailsFromGmailHandler,
 	postSendGmailHandler,
@@ -8,6 +9,7 @@ import deserializeUser from "../middleware/deserializeUser.middleware";
 import getCurrentConnectedService from "../middleware/getCurrentConnectedService.middleware";
 import requireSameUser from "../middleware/requireSameUser.middleware";
 import {
+	deleteEmailFromGmailSchema,
 	getEmailFromGmailSchema,
 	getEmailsFromGmailSchema,
 	postSendGmailSchema,
@@ -34,15 +36,25 @@ mailRouter
 /**
  * This route does following things
  * GET -> fetch single message from Gmail
+ * DELETE -> delete single message from Gmail
  *
- * @author tharun634
+ * @author tharun634, aayushchugh
  */
-mailRouter.get(
-	"/mail/:id/gmail/:email/:messageId",
-	validateRequest(getEmailFromGmailSchema),
-	deserializeUser,
-	requireSameUser,
-	getEmailFromGmailHandler,
-);
+mailRouter
+	.route("/mail/:id/gmail/:email/:messageId")
+	.get(
+		validateRequest(getEmailFromGmailSchema),
+		deserializeUser,
+		getCurrentConnectedService,
+		requireSameUser,
+		getEmailFromGmailHandler,
+	)
+	.delete(
+		validateRequest(deleteEmailFromGmailSchema),
+		deserializeUser,
+		getCurrentConnectedService,
+		requireSameUser,
+		deleteEmailFromGmailHandler,
+	);
 
 export default mailRouter;

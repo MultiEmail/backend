@@ -5,7 +5,7 @@ import {
 	GetAllUsersSchema,
 	PatchMarkUserAdminSchema,
 	PatchMarkUserVerifiedSchema,
-} from "../schemas/admin.schema";
+} from "../schemas/user.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
 import {

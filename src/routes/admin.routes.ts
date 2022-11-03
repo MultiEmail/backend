@@ -15,7 +15,7 @@ import {
 	getAllUsersSchema,
 	patchMarkUserAdminSchema,
 	patchMarkUserVerifiedSchema,
-} from "../schemas/admin.schema";
+} from "../schemas/user.schema";
 import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
 
 const adminRouter: Router = Router();

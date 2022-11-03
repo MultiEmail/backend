@@ -4,7 +4,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import logger from "./utils/logger.util";
-
 import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
 import ticketRouter from "./routes/ticket.routes";
@@ -13,8 +12,6 @@ import adminRouter from "./routes/admin.routes";
 import mailRouter from "./routes/mail.routes";
 import deserializeUser from "./middleware/deserializeUser.middleware";
 import requireAdminRole from "./middleware/requireAdminRole.middleware";
-import requireSameUser from "./middleware/requireSameUser.middleware";
-import getCurrentConnectedService from "./middleware/getCurrentConnectedService.middleware";
 
 config();
 
@@ -31,13 +28,11 @@ app.use("/api", userRouter);
 app.use("/api", ticketRouter);
 app.use("/api", deserializeUser, mailRouter);
 app.use("/api", deserializeUser, requireAdminRole, adminRouter);
-
 logger.info("Current Environment: " + process.env.NODE_ENV);
 
 if (process.env.NODE_ENV?.trim() !== "test") {
 	mongoose.connect(process.env.DB_URI as string, () => {
 		const PORT = process.env.PORT || 3001;
-
 		logger.info("Connected to Database!");
 
 		app.listen(PORT, () => {
