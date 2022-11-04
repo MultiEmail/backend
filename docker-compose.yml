@@ -18,6 +18,8 @@ services:
             - ./bin:/usr/src/app/bin
         ports:
             - 3001:3001
+        env_file:
+            - .env
         depends_on:
             - mongo_db
 volumes:

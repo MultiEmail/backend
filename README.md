@@ -1,5 +1,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Technologies Used
@@ -103,7 +105,7 @@ or if you want to use [mongodb compass](https://www.mongodb.com/products/compass
 this connection string
 
 ```
-mongodb://mongo_db:27017/multiemail
+mongodb://localhost:2717/
 ```
 
 ## Manually

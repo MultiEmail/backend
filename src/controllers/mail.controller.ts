@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import axios from "axios";
 import { StatusCodes } from "http-status-codes";
 import {
+	DeleteEmailFromGmailSchema,
 	GetDraftsFromGmailSchema,
 	GetEmailFromGmailSchema,
 	GetEmailsFromGmailSchema,
@@ -193,6 +194,35 @@ export const getDraftsFromGmailHandler = async (
 	} catch (err: any) {
 		logger.error(err.response);
 
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+};
+
+export const deleteEmailFromGmailHandler = async (
+	req: Request<DeleteEmailFromGmailSchema["params"]>,
+	res: Response,
+) => {
+	try {
+		const { messageId } = req.params;
+		const currentConnectedService = res.locals.currentConnectedService as ConnectedServices;
+
+		await axios.delete(
+			`https://gmail.googleapis.com/gmail/v1/users/${currentConnectedService.email}/messages/${messageId}`,
+			{
+				headers: {
+					Authorization: `Bearer ${currentConnectedService.access_token}`,
+					"Content-type": "application/json",
+				},
+			},
+		);
+
+		return res.status(StatusCodes.OK).json({
+			message: "Email deleted successfully",
+		});
+	} catch (err) {
+		logger.error(err);
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal Server Error",
 		});

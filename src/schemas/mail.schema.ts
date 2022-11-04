@@ -56,7 +56,9 @@ export type PostSendGmailSchema = z.TypeOf<typeof postSendGmailSchema>;
  */
 export const getEmailFromGmailSchema = z.object({
 	params: z.object({
-		email: z.string({ required_error: "Email is required" }),
+		email: z
+			.string({ required_error: "Email is required" })
+			.email("Please enter a valid email"),
 		messageId: z.string({ required_error: "messageId is required" }),
 	}),
 });
@@ -91,3 +93,24 @@ export const getDraftsFromGmailSchema = z.object({
  * @author tharun634
  */
 export type GetDraftsFromGmailSchema = z.TypeOf<typeof getDraftsFromGmailSchema>;
+
+/**
+ * This schema will validate `DELETE /mail/:id/gmail/:email/:messageId` route
+ *
+ * @author aayushchugh
+ */
+export const deleteEmailFromGmailSchema = z.object({
+	params: z.object({
+		email: z
+			.string({ required_error: "Email is required" })
+			.email("Please enter a valid email"),
+		messageId: z.string({ required_error: "messageId is required" }),
+	}),
+});
+
+/**
+ * This type is generated using `deleteEmailFromGmailSchema`
+ *
+ * @author aayushchugh
+ */
+export type DeleteEmailFromGmailSchema = z.TypeOf<typeof deleteEmailFromGmailSchema>;
