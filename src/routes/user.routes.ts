@@ -19,6 +19,8 @@ userRouter
 	.route("/users/:id")
 	.patch(validateRequest(patchUserSchema), deserializeUser, requireSameUser, patchUserHandler);
 
-userRouter.get("/users/marketing-emails/unsubscribe/:id", validateRequest(updateUnsubscribeUserSchema),deserializeUser, updateUnsubscribeUser)
+userRouter
+	.route("/users/:id/marketing-emails/unsubscribe")
+	.get(validateRequest(updateUnsubscribeUserSchema), deserializeUser, updateUnsubscribeUser);
 
 export default userRouter;

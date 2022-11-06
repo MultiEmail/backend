@@ -22,10 +22,7 @@ export const patchUserSchema = z.object({
  export const updateUnsubscribeUserSchema = z.object({
 	params: z.object({
 		id: z.string({ required_error: "Id is required" }),
-	}),
-	body: z.object({
-		receiveMarketingEmails : z.boolean().optional(),
-	}),
+	})
 });
 
 /**

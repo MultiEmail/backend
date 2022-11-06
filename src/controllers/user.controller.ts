@@ -1,9 +1,18 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { PatchMarkUserAdminSchema, PatchMarkUserVerifiedSchema, DeleteUserSchema } from "../schemas/admin.schema";
+import {
+	PatchMarkUserAdminSchema,
+	PatchMarkUserVerifiedSchema,
+	DeleteUserSchema,
+} from "../schemas/admin.schema";
 
 import { PatchUserSchema, UpdateUnsubscribeUserSchema } from "../schemas/user.schema";
-import { findUserByUsernameService, updateUserByIdService, deleteUserByIdService, findUsersService } from "../services/user.service";
+import {
+	findUserByUsernameService,
+	updateUserByIdService,
+	deleteUserByIdService,
+	findUsersService,
+} from "../services/user.service";
 import logger from "../utils/logger.util";
 
 
@@ -208,15 +217,14 @@ export const updateUnsubscribeUser = async (
 
 		if (!res.locals.user.receiveMarketingEmails) {
 			return res.status(StatusCodes.CONFLICT).json({
-				error: "User is already unsubcribe",
+				error: "User is already unsubscribed",
 			});
 		}
 		
-		const updateUser = await updateUserByIdService(id, {receiveMarketingEmails:
-			false});
+		const updateUser = await updateUserByIdService(id, { receive_marketing_emails: false });
 
 		return res.status(StatusCodes.OK).json({
-			message: "User unsubcribe",
+			message: "User unsubscribe",
 		});
 	} catch (err) {
 		logger.error(err);

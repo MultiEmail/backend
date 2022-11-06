@@ -740,7 +740,7 @@ describe("Endpoints Test", () => {
 				newUser.refresh_token = loginRes.body.refresh_token;
 				
 			const res = await supertest(app)
-				.get(`/api/users/marketing-emails/unsubscribe/${userId}`)
+				.get(`/api/users/${userId}/marketing-emails/unsubscribe`)
 				.set('Accept', 'application/json')
 				.set('Authorization', `Bearer ${newUser.access_token}`)
 			console.log(res.body);
