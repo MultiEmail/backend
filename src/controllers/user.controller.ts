@@ -5,6 +5,7 @@ import {
 	GetAllUsersSchema,
 	PatchMarkUserAdminSchema,
 	PatchMarkUserVerifiedSchema,
+	UnsubscribeUserFromMarketingEmailSchema,
 } from "../schemas/user.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
@@ -203,6 +204,40 @@ export const patchMarkUserAdminHandler = async (
 
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal Server Error",
+		});
+	}
+};
+
+/**
+ * This controller will unsubscribe user from marketing emails
+ *
+ * @param req express request
+ * @param res express response
+ *
+ * @author aayushchugh
+ */
+export const getUnsubscribeUserFromMarketingEmailHandler = async (
+	req: Request<UnsubscribeUserFromMarketingEmailSchema["params"]>,
+	res: Response,
+) => {
+	try {
+		const { id } = req.params;
+
+		const updatedUser = await updateUserByIdService(id, { receive_marketing_emails: false });
+
+		if (!updatedUser) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		res.status(StatusCodes.OK).json({
+			message: "User unsubscribed successfully",
+		});
+	} catch (err) {
+		logger.error(err);
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal server error",
 		});
 	}
 };
