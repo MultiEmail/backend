@@ -6,7 +6,10 @@ import {
 import deserializeUser from "../middleware/deserializeUser.middleware";
 import requireSameUser from "../middleware/requireSameUser.middleware";
 import validateRequest from "../middleware/validateRequest.middleware";
-import { patchUserSchema, unsubscribeUserFromMarketingEmailSchema } from "../schemas/user.schema";
+import {
+	patchUserSchema,
+	getUnsubscribeUserFromMarketingEmailSchema,
+} from "../schemas/user.schema";
 
 const userRouter = Router();
 
@@ -15,7 +18,6 @@ const userRouter = Router();
 /**
  * This route does following things
  * PATCH -> update user's username
-//
  * @author aayushchugh
  */
 userRouter
@@ -24,7 +26,7 @@ userRouter
 
 userRouter.get(
 	"/users/:id/marketing-emails/unsubscribe",
-	validateRequest(unsubscribeUserFromMarketingEmailSchema),
+	validateRequest(getUnsubscribeUserFromMarketingEmailSchema),
 	getUnsubscribeUserFromMarketingEmailHandler,
 );
 export default userRouter;

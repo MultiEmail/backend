@@ -5,7 +5,7 @@ import {
 	GetAllUsersSchema,
 	PatchMarkUserAdminSchema,
 	PatchMarkUserVerifiedSchema,
-	UnsubscribeUserFromMarketingEmailSchema,
+	GetUnsubscribeUserFromMarketingEmailSchema,
 } from "../schemas/user.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
@@ -217,7 +217,7 @@ export const patchMarkUserAdminHandler = async (
  * @author aayushchugh
  */
 export const getUnsubscribeUserFromMarketingEmailHandler = async (
-	req: Request<UnsubscribeUserFromMarketingEmailSchema["params"]>,
+	req: Request<GetUnsubscribeUserFromMarketingEmailSchema["params"]>,
 	res: Response,
 ) => {
 	try {

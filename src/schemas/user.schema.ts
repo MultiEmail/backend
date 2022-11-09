@@ -102,11 +102,11 @@ export const patchUserSchema = z.object({
 export type PatchUserSchema = z.infer<typeof patchUserSchema>;
 
 /**
- * This schema is used to validate `POST /users/:id/marketing-emails/unsubscribe` request
+ * This schema is used to validate `GET /users/:id/marketing-emails/unsubscribe` request
  *
  * @author aayushchugh
  */
-export const unsubscribeUserFromMarketingEmailSchema = z.object({
+export const getUnsubscribeUserFromMarketingEmailSchema = z.object({
 	params: z.object({
 		id: z.string({ required_error: "id is required" }),
 	}),
@@ -118,6 +118,6 @@ export const unsubscribeUserFromMarketingEmailSchema = z.object({
  *
  * @author aayushchugh
  */
-export type UnsubscribeUserFromMarketingEmailSchema = z.TypeOf<
-	typeof unsubscribeUserFromMarketingEmailSchema
+export type GetUnsubscribeUserFromMarketingEmailSchema = z.TypeOf<
+	typeof getUnsubscribeUserFromMarketingEmailSchema
 >;
