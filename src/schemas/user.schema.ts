@@ -100,3 +100,24 @@ export const patchUserSchema = z.object({
  * @author aayushchugh
  */
 export type PatchUserSchema = z.infer<typeof patchUserSchema>;
+
+/**
+ * This schema is used to validate `GET /users/:id/marketing-emails/unsubscribe` request
+ *
+ * @author aayushchugh
+ */
+export const getUnsubscribeUserFromMarketingEmailSchema = z.object({
+	params: z.object({
+		id: z.string({ required_error: "id is required" }),
+	}),
+});
+
+// eslint-disable-next-line no-secrets/no-secrets
+/**
+ * This type is generated using `unsubscribeUserFromMarketingEmailSchema`
+ *
+ * @author aayushchugh
+ */
+export type GetUnsubscribeUserFromMarketingEmailSchema = z.TypeOf<
+	typeof getUnsubscribeUserFromMarketingEmailSchema
+>;

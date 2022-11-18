@@ -37,6 +37,16 @@ export const createMarketingEmailHandler = async (
 		}
 
 		/**
+		 * this helper function will generate url to unsubscribe user from marketing emails
+		 * @param userId id of the user
+		 *
+		 * @author aayushchugh
+		 */
+		const unsubscribeUserURLGenerator = (userId: string) => {
+			return `<a href="${process.env.BASE_URL}/api/users/${userId}/marketing-emails/unsubscribe">Unsubscribe</a>`;
+		};
+
+		/**
 		 * Send email to all the users those have selected the checkbox
 		 */
 		if (allUsers) {
@@ -48,7 +58,14 @@ export const createMarketingEmailHandler = async (
 				});
 			}
 
-			users.forEach(async (user) => await sendEmail(user.email, subject, html));
+			users.forEach(
+				async (user) =>
+					await sendEmail(
+						user.email,
+						subject,
+						`${html}${unsubscribeUserURLGenerator(user._id)}`,
+					),
+			);
 
 			await createMarketingEmailService({
 				subject,
@@ -73,7 +90,11 @@ export const createMarketingEmailHandler = async (
 				async (user) =>
 					user &&
 					user.receive_marketing_emails &&
-					(await sendEmail(user.email, subject, html)),
+					(await sendEmail(
+						user.email,
+						subject,
+						`${html}${unsubscribeUserURLGenerator(user._id)}`,
+					)),
 			);
 
 			await createMarketingEmailService({

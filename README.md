@@ -145,6 +145,7 @@ To run this project, you will need to add the following environment variables to
 
 | Name                      | Description                                                       | Example                                                                               |
 | ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| BASE_URL                  | Base URL on which server is running                               | http://localhost:3001/api                                                             |
 | DB_URI                    | URI on which database is running                                  | mongodb://localhost:27017/multiemail                                                  |
 | FRONTEND_URL              | URI on which frontend is running                                  | http://localhost:3000                                                                 |
 | GOOGLE_CLIENT_ID          | Client ID obtained while creating google oauth concent screen     | 758327950938-90jskrnp9b8d2e6ljpqrstd8fdl2k9fljkhchasnnrnj8.apps.googleusercontent.com |
