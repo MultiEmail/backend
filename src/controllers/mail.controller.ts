@@ -8,11 +8,69 @@ import {
 	GetEmailsFromGmailSchema,
 	PostSendGmailSchema,
 } from "../schemas/mail.schema";
-import { ConnectedServices } from "../models/user.model";
+import { ConnectedServices, User } from "../models/user.model";
 import logger from "../utils/logger.util";
 import { URLSearchParams } from "url";
 import { createTransport, SendMailOptions, Transporter } from "nodemailer";
 import DOMPurify from "isomorphic-dompurify";
+import { findUserByIdService, updateUserByIdService } from "../services/user.service";
+
+/**
+ * This interceptor will refresh the access token if it is expired
+ *
+ * @author aayushchugh
+ */
+axios.interceptors.response.use(
+	(res) => res,
+	async (err) => {
+		if (err.request.host === "gmail.googleapis.com") {
+			const originalRequest = err.config;
+			const userEmail = originalRequest.url
+				.split("/")
+				.find((email: string) => email.includes("@"));
+			const userId = originalRequest.url.split("=").pop();
+
+			if (
+				userEmail.split("@")[1] === "gmail.com" &&
+				err.response.status === 401 &&
+				!originalRequest._retry
+			) {
+				const user = (await findUserByIdService(userId)) as User;
+
+				const refreshToken = user?.connected_services.find(
+					(service) => service.email === userEmail,
+				)?.refresh_token;
+
+				const refreshAccessTokenQuery = new URLSearchParams({
+					client_id: process.env.GOOGLE_CLIENT_ID as string,
+					client_secret: process.env.GOOGLE_CLIENT_SECRET as string,
+					refresh_token: refreshToken as string,
+					grant_type: "refresh_token",
+				});
+
+				const responseFromGoogle = await axios.post(
+					`https://oauth2.googleapis.com/token?${refreshAccessTokenQuery.toString()}}`,
+					{
+						Headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+						},
+					},
+				);
+
+				const newAccessToken = responseFromGoogle.data.access_token;
+				const connectedServices = user.connected_services;
+				const serviceIndex = connectedServices.findIndex(
+					(service) => service.email === userEmail,
+				);
+				connectedServices[serviceIndex].access_token = newAccessToken;
+
+				await updateUserByIdService(userId, { connected_services: connectedServices });
+
+				return Promise.reject(new Error("Please try again"));
+			}
+		}
+	},
+);
 
 /**
  * This function will fetch all the emails from gmail
@@ -34,6 +92,7 @@ export const getEmailsFromGmailHandler = async (
 			pageToken: pageToken || "",
 			q: q || "",
 			includeSpamTrash: includeSpamTrash || "false",
+			state: res.locals.user._id,
 		});
 
 		const response = await axios.get(
@@ -55,7 +114,7 @@ export const getEmailsFromGmailHandler = async (
 			nextPageToken: response.data.nextPageToken,
 		});
 	} catch (err: any) {
-		logger.error(err.response);
+		logger.error(err);
 
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal Server Error",
@@ -129,7 +188,7 @@ export const getEmailFromGmailHandler = async (
 		const currentConnectedService = res.locals.currentConnectedService as ConnectedServices;
 
 		const response = await axios.get(
-			`https://gmail.googleapis.com/gmail/v1/users/${currentConnectedService.email}/messages/${messageId}`,
+			`https://gmail.googleapis.com/gmail/v1/users/${currentConnectedService.email}/messages/${messageId}?state=${res.locals.user._id}`,
 			{
 				headers: {
 					Authorization: `Bearer ${currentConnectedService.access_token}`,
@@ -171,6 +230,7 @@ export const getDraftsFromGmailHandler = async (
 			pageToken: pageToken || "",
 			q: q || "",
 			includeSpamTrash: includeSpamTrash || "false",
+			state: res.locals.user._id,
 		});
 
 		const response = await axios.get(
@@ -209,7 +269,7 @@ export const deleteEmailFromGmailHandler = async (
 		const currentConnectedService = res.locals.currentConnectedService as ConnectedServices;
 
 		await axios.delete(
-			`https://gmail.googleapis.com/gmail/v1/users/${currentConnectedService.email}/messages/${messageId}`,
+			`https://gmail.googleapis.com/gmail/v1/users/${currentConnectedService.email}/messages/${messageId}?state=${res.locals.user._id}`,
 			{
 				headers: {
 					Authorization: `Bearer ${currentConnectedService.access_token}`,

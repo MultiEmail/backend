@@ -65,7 +65,7 @@ export class User {
 	@prop({ required: true, default: false })
 	public receive_marketing_emails: boolean;
 
-	@prop()
+	@prop({ default: [] })
 	public connected_services: [ConnectedServices];
 
 	/**
