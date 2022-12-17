@@ -44,6 +44,8 @@ export const getAllUsersHandler = async (
 		return res.status(StatusCodes.OK).json({
 			message: "Users fetched successfully",
 			records,
+			page: +page,
+			size: +size,
 		});
 	} catch (err) {
 		logger.error(err);
