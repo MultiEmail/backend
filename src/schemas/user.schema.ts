@@ -72,6 +72,25 @@ export const getAllUsersSchema = z.object({
 });
 
 /**
+ * This schema is used to validate `GET /admin/users/:id` request
+ *
+ * @author aayushchugh
+ */
+export const getSingleUserSchema = z.object({
+	params: z.object({
+		id: z.string({ required_error: "Id is required" }),
+	}),
+});
+
+/**
+ * This type is generated using `getSingleUserSchema` and can be used
+ * as express Request type generic
+ *
+ * @author aayushchugh
+ */
+export type GetSingleUserSchema = z.infer<typeof getSingleUserSchema>;
+
+/**
  * This type is generated using `getAllUsersHandler` and can be used
  * as express Request type generic
  *
