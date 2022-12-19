@@ -6,16 +6,20 @@ import {
 	PatchMarkUserAdminSchema,
 	PatchMarkUserVerifiedSchema,
 	GetUnsubscribeUserFromMarketingEmailSchema,
+	GetSingleUserSchema,
 } from "../schemas/user.schema";
 
 import { PatchUserSchema } from "../schemas/user.schema";
 import {
 	deleteUserByIdService,
+	findUserByIdService,
 	findUserByUsernameService,
 	findUsersService,
 	updateUserByIdService,
 } from "../services/user.service";
 import logger from "../utils/logger.util";
+import { omit } from "lodash";
+import { userModalPrivateFields } from "../models/user.model";
 
 /**
  * This controller will get all users from database
@@ -41,9 +45,13 @@ export const getAllUsersHandler = async (
 
 		const records = await findUsersService(query).limit(limit).skip(skip);
 
+		const removedPrivateFiledFromRecords = records.map((record) =>
+			omit(record.toJSON(), userModalPrivateFields),
+		);
+
 		return res.status(StatusCodes.OK).json({
 			message: "Users fetched successfully",
-			records,
+			records: removedPrivateFiledFromRecords,
 			page: +page,
 			size: +size,
 		});
@@ -133,6 +141,44 @@ export const patchUserHandler = async (
 		logger.error(err);
 
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			error: "Internal Server Error",
+		});
+	}
+};
+
+/**
+ * This controller will get single user from database with given id
+ *
+ * @param req express request
+ * @param res express response
+ *
+ * @author aayushchugh
+ */
+export const getSingleUserHandler = async (
+	req: Request<GetSingleUserSchema["params"]>,
+	res: Response,
+) => {
+	try {
+		const { id } = req.params;
+
+		const user = await findUserByIdService(id);
+
+		if (!user) {
+			return res.status(StatusCodes.NOT_FOUND).json({
+				error: "User not found",
+			});
+		}
+
+		const removedUserPrivateFields = omit(user.toJSON(), userModalPrivateFields);
+
+		return res.status(StatusCodes.OK).json({
+			message: "User fetched successfully",
+			user: removedUserPrivateFields,
+		});
+	} catch (err) {
+		logger.error(err);
+
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
 			error: "Internal Server Error",
 		});
 	}

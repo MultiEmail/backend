@@ -6,6 +6,7 @@ import {
 import {
 	deleteUserHandler,
 	getAllUsersHandler,
+	getSingleUserHandler,
 	patchMarkUserAdminHandler,
 	patchMarkUserVerifiedHandler,
 } from "../controllers/user.controller";
@@ -13,6 +14,7 @@ import validateRequest from "../middleware/validateRequest.middleware";
 import {
 	deleteUserSchema,
 	getAllUsersSchema,
+	getSingleUserSchema,
 	patchMarkUserAdminSchema,
 	patchMarkUserVerifiedSchema,
 } from "../schemas/user.schema";
@@ -21,6 +23,7 @@ import { createMarketingEmailSchema } from "../schemas/marketingEmail.schema";
 const adminRouter: Router = Router();
 
 // NOTE: all routes defined with `adminRouter` will be pre-fixed with `/api`
+// NOTE: all routes in this file are protected by `deserializeUser` and `requireAdminRole` middlewares
 
 /**
  * This route will get all users
@@ -37,18 +40,24 @@ adminRouter.get("/admin/users", validateRequest(getAllUsersSchema), getAllUsersH
  * @author aayushchugh, is-it-ayush
  */
 adminRouter.patch(
-	"/admin/users/markverified/:id",
+	"/admin/users/:id/mark-verified",
 	validateRequest(patchMarkUserVerifiedSchema),
 	patchMarkUserVerifiedHandler,
 );
 
 /**
- * This route will delete a user
  * protected for admin
+ * This route will do following things
+ *
+ * GET -> get single user
+ * DELETE -> delete single user
  *
  * @author aayushchugh, is-it-ayush
  */
-adminRouter.route("/admin/users/:id").delete(validateRequest(deleteUserSchema), deleteUserHandler);
+adminRouter
+	.route("/admin/users/:id")
+	.get(validateRequest(getSingleUserSchema), getSingleUserHandler)
+	.delete(validateRequest(deleteUserSchema), deleteUserHandler);
 
 /**
  * This route will send marketing emails
@@ -67,7 +76,7 @@ adminRouter
  * @author tharun634
  */
 adminRouter
-	.route("/admin/users/markadmin/:id")
+	.route("/admin/users/:id/mark-admin")
 	.patch(validateRequest(patchMarkUserAdminSchema), patchMarkUserAdminHandler);
 
 export default adminRouter;
