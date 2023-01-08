@@ -56,7 +56,7 @@ than prefix all bash commands with <code>sudo</code></p>
 <a href="#create-new-directory-and-clone-the-repository" id="create-new-directory-and-clone-the-repository" style="color: inherit; text-decoration: none;">
   <h3>Create new directory and clone the repository</h3>
 </a>
-<pre><code class="language-bash"><span class="hl-0">mkdir multi-email</span><br/><span class="hl-1">cd</span><span class="hl-0"> multi-email</span><br/><span class="hl-0">git clone https://github.com/MultiEmail/backend.git</span><br/><span class="hl-1">cd</span><span class="hl-0"> backend</span>
+<pre><code class="language-bash"><span class="hl-0">mkdir </span><span class="hl-1">multi-email</span><br/><span class="hl-2">cd</span><span class="hl-0"> </span><span class="hl-1">multi-email</span><br/><span class="hl-0">git </span><span class="hl-1">clone</span><span class="hl-0"> </span><span class="hl-1">https://github.com/MultiEmail/backend.git</span><br/><span class="hl-2">cd</span><span class="hl-0"> </span><span class="hl-1">backend</span>
 </code></pre>
 
 <a href="#using-docker" id="using-docker" style="color: inherit; text-decoration: none;">
@@ -74,28 +74,28 @@ than prefix all bash commands with <code>sudo</code></p>
 <a href="#run-server" id="run-server" style="color: inherit; text-decoration: none;">
   <h3>Run Server</h3>
 </a>
-<pre><code class="language-bash"><span class="hl-0">docker compose --env-file ./.env up</span>
+<pre><code class="language-bash"><span class="hl-0">docker </span><span class="hl-1">compose</span><span class="hl-0"> </span><span class="hl-1">--env-file</span><span class="hl-0"> </span><span class="hl-1">./.env</span><span class="hl-0"> </span><span class="hl-1">up</span>
 </code></pre>
 
 <a href="#to-rebuild-the-image" id="to-rebuild-the-image" style="color: inherit; text-decoration: none;">
   <h3>To rebuild the image</h3>
 </a>
-<pre><code class="language-bash"><span class="hl-0">docker compose --env-file ./.env up --build</span>
+<pre><code class="language-bash"><span class="hl-0">docker </span><span class="hl-1">compose</span><span class="hl-0"> </span><span class="hl-1">--env-file</span><span class="hl-0"> </span><span class="hl-1">./.env</span><span class="hl-0"> </span><span class="hl-1">up</span><span class="hl-0"> </span><span class="hl-1">--build</span>
 </code></pre>
 
 <a href="#create-admin-user" id="create-admin-user" style="color: inherit; text-decoration: none;">
   <h3>Create admin user</h3>
 </a>
 <p>List current running docker containers</p>
-<pre><code class="language-bash"><span class="hl-0">docker ps</span>
+<pre><code class="language-bash"><span class="hl-0">docker </span><span class="hl-1">ps</span>
 </code></pre>
 <p>Output</p>
-<pre><code class="language-bash"><span class="hl-0">CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                         NAMES</span><br/><span class="hl-0">d07f06c78445   backend-api    </span><span class="hl-2">&quot;docker-entrypoint.s…&quot;</span><span class="hl-0">   46 minutes ago   Up 46 minutes   0.0.0.0:3001-&gt;3001/tcp, :::3001-&gt;3001/tcp     Server</span><br/><span class="hl-0">91826c111b76   mongo:latest   </span><span class="hl-2">&quot;docker-entrypoint.s…&quot;</span><span class="hl-0">   52 minutes ago   Up 46 minutes   0.0.0.0:2717-&gt;27017/tcp, :::2717-&gt;27017/tcp   Database</span><br/>
+<pre><code class="language-bash"><span class="hl-0">CONTAINER </span><span class="hl-1">ID</span><span class="hl-0">   </span><span class="hl-1">IMAGE</span><span class="hl-0">          </span><span class="hl-1">COMMAND</span><span class="hl-0">                  </span><span class="hl-1">CREATED</span><span class="hl-0">          </span><span class="hl-1">STATUS</span><span class="hl-0">          </span><span class="hl-1">PORTS</span><span class="hl-0">                                         </span><span class="hl-1">NAMES</span><br/><span class="hl-0">d07f06c78445   </span><span class="hl-1">backend-api</span><span class="hl-0">    </span><span class="hl-1">&quot;docker-entrypoint.s…&quot;</span><span class="hl-0">   </span><span class="hl-3">46</span><span class="hl-0"> </span><span class="hl-1">minutes</span><span class="hl-0"> </span><span class="hl-1">ago</span><span class="hl-0">   </span><span class="hl-1">Up</span><span class="hl-0"> </span><span class="hl-3">46</span><span class="hl-0"> </span><span class="hl-1">minutes</span><span class="hl-0">   </span><span class="hl-1">0.0.0.0:</span><span class="hl-3">3001</span><span class="hl-0">-&gt;</span><span class="hl-3">3001</span><span class="hl-1">/tcp,</span><span class="hl-0"> </span><span class="hl-1">:::</span><span class="hl-3">3001</span><span class="hl-0">-&gt;</span><span class="hl-3">3001</span><span class="hl-1">/tcp</span><span class="hl-0">     </span><span class="hl-1">Server</span><br/><span class="hl-0">91826c111b76   mongo:latest</span><span class="hl-1">   &quot;docker-entrypoint.s…&quot;</span><span class="hl-0">   </span><span class="hl-3">52</span><span class="hl-0"> minutes ago   Up </span><span class="hl-3">46</span><span class="hl-0"> minutes   0.0.0.0:</span><span class="hl-3">2717</span><span class="hl-0">-&gt;</span><span class="hl-3">27017</span><span class="hl-0">/tcp, :::</span><span class="hl-3">2717</span><span class="hl-0">-&gt;</span><span class="hl-3">27017</span><span class="hl-0">/tcp   Database</span><br/>
 </code></pre>
 <p>now copy the <code>CONTAINER ID</code> of image/container <code>backend-api</code> and replace <code>&lt;container_id&gt;</code> in the below mentioned commands and execute them</p>
-<pre><code class="language-bash"><span class="hl-3"># build and install the command line tool in docker container</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;container_id&gt; yarn build</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;container_id&gt; npm i -g </span><span class="hl-1">.</span>
+<pre><code class="language-bash"><span class="hl-4"># build and install the command line tool in docker container</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;</span><span class="hl-1">container_i</span><span class="hl-0">d&gt; </span><span class="hl-1">yarn</span><span class="hl-0"> </span><span class="hl-1">build</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;</span><span class="hl-1">container_i</span><span class="hl-0">d&gt; </span><span class="hl-1">npm</span><span class="hl-0"> </span><span class="hl-1">i</span><span class="hl-0"> </span><span class="hl-1">-g</span><span class="hl-0"> </span><span class="hl-1">.</span>
 </code></pre>
-<pre><code class="language-bash"><span class="hl-3"># create new admin user in database in docker container</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;container_id&gt; multi-email-admin -e &lt;email&gt; -u &lt;username&gt; -p &lt;password&gt;</span>
+<pre><code class="language-bash"><span class="hl-4"># create new admin user in database in docker container</span><br/><span class="hl-0">docker </span><span class="hl-1">exec</span><span class="hl-0"> &lt;</span><span class="hl-1">container_i</span><span class="hl-0">d&gt; </span><span class="hl-1">multi-email-admin</span><span class="hl-0"> </span><span class="hl-1">-e</span><span class="hl-0"> &lt;</span><span class="hl-1">emai</span><span class="hl-0">l&gt; </span><span class="hl-1">-u</span><span class="hl-0"> &lt;</span><span class="hl-1">usernam</span><span class="hl-0">e&gt; </span><span class="hl-1">-p</span><span class="hl-0"> &lt;</span><span class="hl-1">passwor</span><span class="hl-0">d&gt;</span>
 </code></pre>
 
 <a href="#extra39s-port-forwarding-for-docker-containers" id="extra39s-port-forwarding-for-docker-containers" style="color: inherit; text-decoration: none;">
@@ -121,11 +121,11 @@ than prefix all bash commands with <code>sudo</code></p>
 </tr>
 </tbody></table>
 <p>if you want to access database inside docker container from host than use</p>
-<pre><code class="language-bash"><span class="hl-0">mongosh --port 2717</span>
+<pre><code class="language-bash"><span class="hl-0">mongosh </span><span class="hl-1">--port</span><span class="hl-0"> </span><span class="hl-3">2717</span>
 </code></pre>
 <p>or if you want to use <a href="https://www.mongodb.com/products/compass">mongodb compass</a> than you can use
 this connection string</p>
-<pre><code><span class="hl-4">mongodb</span><span class="hl-0">:</span><span class="hl-3">//localhost:2717/</span>
+<pre><code><span class="hl-5">mongodb</span><span class="hl-0">:</span><span class="hl-4">//localhost:2717/</span>
 </code></pre>
 
 <a href="#manually" id="manually" style="color: inherit; text-decoration: none;">
@@ -146,19 +146,19 @@ this connection string</p>
   <h3>Install all the required dependencies</h3>
 </a>
 <p>this project use <a href="https://yarnpkg.com/">Yarn</a> as package manager</p>
-<pre><code class="language-bash"><span class="hl-0">yarn install</span>
+<pre><code class="language-bash"><span class="hl-0">yarn </span><span class="hl-1">install</span>
 </code></pre>
 
 <a href="#run-the-server" id="run-the-server" style="color: inherit; text-decoration: none;">
   <h3>Run the server</h3>
 </a>
-<pre><code class="language-bash"><span class="hl-0">yarn dev</span>
+<pre><code class="language-bash"><span class="hl-0">yarn </span><span class="hl-1">dev</span>
 </code></pre>
 
 <a href="#create-admin-user-1" id="create-admin-user-1" style="color: inherit; text-decoration: none;">
   <h1>Create admin user</h1>
 </a>
-<pre><code class="language-bash"><span class="hl-0">yarn build</span><br/><span class="hl-0">npm i -g </span><span class="hl-1">.</span><br/><span class="hl-0">multi-email-admin -e &lt;email&gt; -u &lt;username&gt; -p &lt;password&gt;</span>
+<pre><code class="language-bash"><span class="hl-0">yarn </span><span class="hl-1">build</span><br/><span class="hl-0">npm </span><span class="hl-1">i</span><span class="hl-0"> </span><span class="hl-1">-g</span><span class="hl-0"> </span><span class="hl-1">.</span><br/><span class="hl-0">multi-email-admin </span><span class="hl-1">-e</span><span class="hl-0"> &lt;</span><span class="hl-1">emai</span><span class="hl-0">l&gt; </span><span class="hl-1">-u</span><span class="hl-0"> &lt;</span><span class="hl-1">usernam</span><span class="hl-0">e&gt; </span><span class="hl-1">-p</span><span class="hl-0"> &lt;</span><span class="hl-1">passwor</span><span class="hl-0">d&gt;</span>
 </code></pre>
 
 <a href="#environment-variables" id="environment-variables" style="color: inherit; text-decoration: none;">
