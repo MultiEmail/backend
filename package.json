@@ -59,7 +59,7 @@
 		"eslint-config-google": "0.14.0",
 		"eslint-config-prettier": "8.6.0",
 		"eslint-import-resolver-typescript": "3.5.3",
-		"eslint-plugin-import": "2.27.2",
+		"eslint-plugin-import": "2.27.4",
 		"eslint-plugin-jsonc": "2.6.0",
 		"eslint-plugin-no-secrets": "0.8.9",
 		"eslint-plugin-no-unsanitized": "4.0.2",
