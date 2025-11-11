@@ -73,7 +73,7 @@
 		"mongodb-memory-server": "8.15.1",
 		"prettier": "2.8.8",
 		"prettier-eslint": "15.0.1",
-		"supertest": "6.3.3",
+		"supertest": "6.3.4",
 		"ts-jest": "29.0.5",
 		"ts-node": "10.9.1",
 		"ts-node-dev": "2.0.0",
